@@ -1,0 +1,32 @@
+{
+  "canisters": {
+    "ICX": {
+      "main": "motoko/Main.mo",
+      "type": "motoko"
+    },
+    "ICXFactory": {
+      "main": "motoko/Factory.mo",
+      "type": "motoko"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "dfx": "0.8.4",
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    },
+    "ic": {
+      "providers": [
+        "https://mainnet.dfinity.network"
+      ],
+      "type": "persistent"
+    }
+  },
+  "version": 1
+}

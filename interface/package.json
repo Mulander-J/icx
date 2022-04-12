@@ -1,0 +1,36 @@
+{
+  "name": "vite-project",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "dev:debug": "vite --debug",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@dfinity/agent": "0.10.0",
+    "@dfinity/auth-client": "0.10.0",
+    "@dfinity/authentication": "0.10.0",
+    "@dfinity/principal": "0.10.0",
+    "@dfinity/candid": "0.10.0",
+    "@dfinity/identity": "0.10.0",
+    "vue": "^3.2.23",
+    "vue-router": "^4.0.12"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.6",    
+    "@vitejs/plugin-vue": "^1.10.2",
+    "@rollup/plugin-inject": "^4.0.4",
+    "@vue/compiler-sfc": "^3.0.5",        
+    "buffer": "^6.0.3",
+    "typescript": "^4.4.4",
+    "vite": "2.6.14",
+    "vue-tsc": "^0.28.10"
+  },
+  "overrides": {
+    "esbuild": "0.14.34"
+  },
+  "resolutions": {
+    "esbuild": "0.14.34"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "AppAssets":{
+    "dependencies": [
+      "ICX","ICXFactory"
+    ],
+    "frontend": {
+      "entrypoint": "interface/dist/index.html"
+    },
+    "source": [
+      "interface/dist/"
+    ],
+    "type": "assets"
+  }
+}
