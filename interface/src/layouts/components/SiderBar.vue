@@ -6,14 +6,26 @@
       </router-link>
     </ul>
     <div>
+      <div class="cursor-pointer" @click="triggerDark">{{darkTheme}}</div>
       <div>Cycle</div>
       <div>Power</div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import {appRoutes} from '@/router'
+import { computed } from 'vue'
+import { appRoutes } from '@/router'
+import { useAppStore } from "@/store/modules/app"
+import { setDark,getDark } from '@/utils/dark'
+
+const appStore  = useAppStore()
 const menus = appRoutes
+const triggerDark = ()=>{
+  const _theme = getDark() === 'dark' ? 'light' : 'dark'
+  setDark(_theme)
+  appStore.setDark(_theme)
+}
+const darkTheme = computed(()=>appStore.dark)
 </script>
 <style>
 .active{

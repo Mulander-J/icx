@@ -74,10 +74,3 @@ Large|Medium|Small|Loading
 
 Good : Quality \ Repeat \ Clean
 Bad : Vulgar \ Empty \ AD
-
-## Layout
-
----------------------------------------------------
-SignIn Logo Switch More
----------------------------------------------------
-OnChain OffChain

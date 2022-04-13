@@ -55,4 +55,11 @@ const router = createRouter({
   },
 });
 
+router.beforeEach((to, from) => {
+  document.title = 'ICX-' + to?.name?.toString().toLocaleUpperCase() || 'APP'
+  // 返回 false 以取消导航
+  // return false
+  return true
+})
+
 export default router;

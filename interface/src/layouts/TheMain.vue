@@ -1,10 +1,14 @@
 <template>
-  <div class="bg-blue-200">
+  <div>
     <SiderBar class="hidden lg:flex w-20" />
     <div class="flex flex-col grow min-h-screen ml-0 lg:ml-20">
       <MyHeader />
       <main class="grow">
-        <router-view />
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
       </main>      
       <MyFooter class="hidden lg:block" />
       <NavBar class="lg:hidden" />
@@ -17,7 +21,7 @@ import MyFooter from './components/Footer.vue'
 import SiderBar from './components/SiderBar.vue'
 import NavBar from './components/NavBar.vue'
 export default {
-  name: "Main",
+  name: "TheMain",
   components: {
     MyHeader,
     MyFooter,
