@@ -4,7 +4,9 @@ body {
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: linear-gradient(25deg, #e81a91, #c865b3, #978cd8, #03acfd)
 }
+
 /* Fade transition*/
 .fade-enter-active,
 .fade-leave-active {

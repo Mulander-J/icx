@@ -1,1 +1,3 @@
-<template>rank</template>
+<template>
+  <div>rank</div>
+</template>

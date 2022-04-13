@@ -1,1 +1,5 @@
-<template>activity</template>
+<template>
+  <div>
+    activity
+  </div>
+</template>

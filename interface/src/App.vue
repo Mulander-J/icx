@@ -1,6 +1,6 @@
 <template>
   <TheMain />
-  <Auth />
+  <Bot />
 </template>
 
 <script lang="ts">
@@ -8,13 +8,13 @@ import {defineComponent,watch, onBeforeMount} from 'vue'
 import { useAppStore } from "@/store/modules/app";
 import { updateDark } from '@/utils/dark'
 import TheMain from './layouts/TheMain.vue'
-import Auth from "./layouts/components/Auth.vue"
+import Bot from './layouts/components/bot/index.vue'
 
 export default defineComponent({
   name: "App",
   components: {
     TheMain,
-    Auth,
+    Bot
   },
   setup() {
     const appStore  = useAppStore()

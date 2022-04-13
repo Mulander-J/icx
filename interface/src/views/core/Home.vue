@@ -1,5 +1,6 @@
-<template>
+<template>  
   <div class="App-header">
+    <CoreHeader class="sticky top-0 w-full"/>  
     <img src="img/logo-dark.svg" class="App-logo" alt="logo" />
     <p style="font-size: 2em; margin-bottom: 0.5em">Ready. Lets build the new web</p>
     <div
@@ -52,11 +53,13 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from "vue"
+import { ref, onMounted,defineComponent } from "vue"
+import CoreHeader from '@/components/core/CoreHeader.vue'
 //import { counter } from "canisters/counter"
 
-export default {
+export default defineComponent({
   name: "Intro",
+  components:{CoreHeader},
   setup: () => {
     const count = ref(0)
 
@@ -75,22 +78,23 @@ export default {
 
     return { increment, count }
   },
-}
+})
 </script>
 
 <style scoped>
-.App-logo {
-  height: 15vmin;
-  pointer-events: none;
-}
 
 .App-header {
-  margin-top: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+}
+
+.App-logo {
+  height: 15vmin;
+  pointer-events: none;
+  margin-top: 150px;
 }
 
 .App-link {

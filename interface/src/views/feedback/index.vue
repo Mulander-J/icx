@@ -1,1 +1,3 @@
-<template>feedback</template>
+<template>
+  <div>feedback</div>
+</template>

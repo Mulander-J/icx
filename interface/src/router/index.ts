@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { getServeRunning } from '@/utils'
 
 export const appRoutes:Array<RouteRecordRaw> = [
   {
@@ -56,9 +57,15 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
-  document.title = 'ICX-' + to?.name?.toString().toLocaleUpperCase() || 'APP'
-  // 返回 false 以取消导航
-  // return false
+  const _isRuning = getServeRunning()
+  console.log('[_isRuning]',_isRuning)
+  if(to.path!=='/sat' && !_isRuning){
+    router.push({path: '/sat'})
+    return false
+  }
+
+  document.title = 'ICX-' + to?.name?.toString().toLocaleUpperCase() || 'APP'  
+  
   return true
 })
 

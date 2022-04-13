@@ -1,12 +1,12 @@
 <template>
-  <div class="bg-red-400 fixed h-full flex-col">
+  <div class="flex-col">
     <ul class="grow">
       <router-link v-for="men in menus" :key="men.name" :to="men" custom v-slot="{navigate, isActive, isExactActive}">
         <li class="cursor-pointer" @click="navigate" :class="{active: isActive, exactActive: isExactActive}">{{men.name}}</li>
       </router-link>
     </ul>
     <div>
-      <div class="cursor-pointer" @click="triggerDark">{{darkTheme}}</div>
+      <div class="cursor-pointer" v-throttle @click="triggerDark">{{darkTheme}}</div>
       <div>Cycle</div>
       <div>Power</div>
     </div>

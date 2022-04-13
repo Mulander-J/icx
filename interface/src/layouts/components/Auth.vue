@@ -68,14 +68,10 @@ export default {
 
 <style scoped>
 .auth-section {
-  padding: 1em;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   text-align: right;
-  position: fixed;
-  top: 0;
-  right: 0;
 }
 
 .auth-button {
