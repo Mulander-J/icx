@@ -70,9 +70,14 @@ Large|Medium|Small|Loading
 - Private Data on Client:FE
   - Local Collections
 
-## Draft
-
-All Access : Update \ Create \ Delete
+## Roles
 
 Good : Quality \ Repeat \ Clean
-Bad : Vulgar \ Empty \ AD  
+Bad : Vulgar \ Empty \ AD
+
+## Layout
+
+---------------------------------------------------
+SignIn Logo Switch More
+---------------------------------------------------
+OnChain OffChain

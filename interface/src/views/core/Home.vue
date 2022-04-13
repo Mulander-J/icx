@@ -1,5 +1,5 @@
 <template>
-  <header class="App-header">
+  <div class="App-header">
     <img src="img/logo-dark.svg" class="App-logo" alt="logo" />
     <p style="font-size: 2em; margin-bottom: 0.5em">Ready. Lets build the new web</p>
     <div
@@ -48,7 +48,7 @@
       This counter is running inside a canister
     </p>
     <p style="font-size: 0.4em;">by <a href="https://twitter.com/miamaruq">@miamaruq</a></p>
-  </header>
+  </div>
 </template>
 
 <script lang="ts">
