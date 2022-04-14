@@ -26,7 +26,7 @@ module{
     content: Text;
     ref: Text;
     timestamp: Time.Time;
-    opreator: Principal;
+    opreator: Text;
   };
   public type WorkInstance = actor {
     insertLogger : (

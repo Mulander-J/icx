@@ -45,6 +45,23 @@ export const useAppStore = defineStore({
     },
     removeMsg(key:string){
       this.icMsgs = this.icMsgs.filter(e=>e.key!==key)
+    },
+    async handleCall(name:string,cmd:any,cbk:any,rej :any, ...args){
+      try{        
+        console.log(`Call-Start-${name||"Func"}`)        
+        this.addCall()
+        const _res = await cmd(...args)
+        console.log(`Call-Recept-${name||"Func"}`,_res)
+        cbk && cbk(_res)
+      }catch(err:any){
+        console.error(`Call-Error-${name||"Func"}`,err)
+        const _msg = err?.message || 'System Error'
+        this.addMsg(_msg, MessageType.ERROR)
+        rej && rej(err)
+      }finally{
+        this.removeCall()
+        console.log(`Call-End-${name||"Func"}`)   
+      }
     }
   }
 });

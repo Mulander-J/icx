@@ -1,5 +1,5 @@
 <template>
-  <div class="main-warpper">
+  <div class="main-warpper lg:app-h">
     <SiderBar class="main-bg main-sider" />
     <perfect-scrollbar ref="mainCtx" class="main-bg main-ctx">
       <div class="flex flex-col h-full">      
@@ -33,7 +33,7 @@ watch(()=>route,()=>{
 </script>
 <style>
 .main-warpper{
-  @apply overflow-clip flex m-0 lg:m-10 h-screen lg:app-h;
+  @apply overflow-clip flex m-0 lg:m-10 h-screen;
 }
 .main-bg{
   @apply bg-gray-800/[.4] dark:bg-gray-800/[.8];
