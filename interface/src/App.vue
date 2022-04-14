@@ -1,6 +1,6 @@
 <template>
   <TheMain />
-  <Bot />
+  <Bot v-if="!isMobile"  class="hidden lg:block fixed right-10 bottom-10 m-5"/>
 </template>
 
 <script lang="ts">
@@ -20,6 +20,9 @@ export default defineComponent({
     const appStore  = useAppStore()
     watch(()=>appStore.dark,updateDark)
     onBeforeMount(updateDark)
+    return {
+      isMobile: appStore.isMobile
+    }
   },
 })
 </script>

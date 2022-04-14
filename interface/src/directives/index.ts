@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
-import { App, computed } from 'vue'
+import { App } from 'vue'
 // import useClipboard from 'vue-clipboard3'
 const throttle = {
   mounted(el: HTMLElement, binding: { value: any }) {

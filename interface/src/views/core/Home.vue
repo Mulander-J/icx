@@ -1,6 +1,6 @@
 <template>  
   <div class="App-header">
-    <CoreHeader class="sticky top-0 w-full"/>  
+    <CoreHeader class="sticky top-0 w-full z-10"/>  
     <img src="img/logo-dark.svg" class="App-logo" alt="logo" />
     <p style="font-size: 2em; margin-bottom: 0.5em">Ready. Lets build the new web</p>
     <div

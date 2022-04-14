@@ -6,6 +6,11 @@
       twitter
       telegram
       discord
+      doc
+    </div>
+    <div>
+      User/
+      Point
     </div>
     <section class="text-center">
       <h1>ICX</h1>

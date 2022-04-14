@@ -6,26 +6,41 @@ export const appRoutes:Array<RouteRecordRaw> = [
     path: '/',
     name: 'home',
     component: () => import('@/views/core/Home.vue'),
+    meta: {
+      icon: 'hi-solid-home'
+    }
   },
   {
     path: '/activity',
     name: 'activity',
     component: () => import('@/views/activity/index.vue'),
-  },
-  {
-    path: '/feedback',
-    name: 'feedback',
-    component: () => import('@/views/feedback/index.vue'),
+    meta: {
+      icon: 'oi-clock'
+    }
   },
   {
     path: '/rank',
     name: 'rank',
     component: () => import('@/views/rank/index.vue'),
+    meta: {
+      icon: 'gi-rank-3'
+    }
+  },
+  {
+    path: '/feedback',
+    name: 'feedback',
+    component: () => import('@/views/feedback/index.vue'),
+    meta: {
+      icon: 'md-feedback-round'
+    }
   },
   {
     path: '/about',
     name: 'about',
     component: () => import('@/views/about/index.vue'),
+    meta: {
+      icon: 'ri-questionnaire-fill'
+    }
   },
 ]
 

@@ -2,18 +2,24 @@
   <div class="flex-col">
     <ul class="grow">
       <router-link v-for="men in menus" :key="men.name" :to="men" custom v-slot="{navigate, isActive, isExactActive}">
-        <li class="cursor-pointer" @click="navigate" :class="{active: isActive, exactActive: isExactActive}">{{men.name}}</li>
+        <li class="navItem" @click="navigate" :class="{exactActive: isExactActive}">          
+          <v-icon :name="men?.meta?.icon || 'ci-icp'" />
+        </li>
       </router-link>
     </ul>
-    <div>
-      <div class="cursor-pointer" v-throttle @click="triggerDark">{{darkTheme}}</div>
-      <div>Cycle</div>
-      <div>Power</div>
+    <div class="flex flex-col items-center justify-center">
+      <div class="btmBtn" v-throttle @click="triggerDark">
+        <transition name="slide" mode="out-in">
+          <v-icon v-if="appStore.getIsDark" name="bi-moon-stars" />
+          <v-icon v-else name="bi-sun" />
+        </transition>
+      </div>
+      <v-icon class="btmBtn" name="md-batterychargingfull-outlined" />
+      <v-icon class="btmBtn" name="io-power" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { appRoutes } from '@/router'
 import { useAppStore } from "@/store/modules/app"
 import { setDark,getDark } from '@/utils/dark'
@@ -25,13 +31,15 @@ const triggerDark = ()=>{
   setDark(_theme)
   appStore.setDark(_theme)
 }
-const darkTheme = computed(()=>appStore.dark)
 </script>
 <style>
-.active{
-  background: blue;
+.navItem{
+  @apply cursor-pointer rounded-lg mb-2 py-1 bg-slate-400/[.4] text-center hover:bg-slate-300/[.4]
 }
 .exactActive{
-  background: orange;
+  @apply bg-sky-400 hover:bg-sky-300/[.6];
+}
+.btmBtn{
+  @apply cursor-pointer mt-2
 }
 </style>
