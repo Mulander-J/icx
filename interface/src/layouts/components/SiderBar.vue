@@ -7,16 +7,17 @@
         </li>
       </router-link>
     </ul>
-    <div class="flex flex-col items-center justify-center">
-      <div class="btmBtn" v-throttle @click="triggerDark">
+    <ul>
+      <li class="navItem" v-throttle  @click="triggerDark">                
         <transition name="slide" mode="out-in">
           <v-icon v-if="appStore.getIsDark" name="bi-moon-stars" />
           <v-icon v-else name="bi-sun" />
         </transition>
-      </div>
-      <v-icon class="btmBtn" name="md-batterychargingfull-outlined" />
-      <v-icon class="btmBtn" name="io-power" />
-    </div>
+      </li>
+      <li class="navItem" v-throttle @click="triggerOnChain">
+        <v-icon name="io-power" />
+      </li>
+    </ul>
   </div>
 </template>
 <script lang="ts" setup>
@@ -31,15 +32,15 @@ const triggerDark = ()=>{
   setDark(_theme)
   appStore.setDark(_theme)
 }
+const triggerOnChain = ()=>{
+  appStore.setIsOnChain(!appStore.isOnChain)
+}
 </script>
 <style>
 .navItem{
-  @apply cursor-pointer rounded-lg mb-2 py-1 bg-slate-400/[.4] text-center hover:bg-slate-300/[.4]
+  @apply cursor-pointer rounded-lg mb-2 py-1 text-center overflow-hidden bg-slate-400/[.4] hover:bg-slate-300/[.4]
 }
 .exactActive{
-  @apply bg-sky-400 hover:bg-sky-300/[.6];
-}
-.btmBtn{
-  @apply cursor-pointer mt-2
+  @apply bg-sky-400 hover:bg-sky-400/[.8];
 }
 </style>

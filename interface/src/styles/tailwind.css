@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+	.wh-full{
+		@apply w-full h-full;	
+	}
 	.ctx-center {
-    @apply flex flex-col justify-center items-center w-full h-full;
+    @apply flex flex-col justify-center items-center;
   }
 	.app-h{
 		height: calc(100vh - 5rem);

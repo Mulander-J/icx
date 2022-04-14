@@ -1,6 +1,7 @@
 <template>  
   <div class="App-header">
-    <CoreHeader class="sticky top-0 w-full z-10"/>  
+    <CoreHeader class="sticky top-0 w-full z-10"/>
+    <p>OnChain: {{appStore.isOnChain}}</p>
     <img src="img/logo-dark.svg" class="App-logo" alt="logo" />
     <p style="font-size: 2em; margin-bottom: 0.5em">Ready. Lets build the new web</p>
     <div
@@ -55,12 +56,14 @@
 <script lang="ts">
 import { ref, onMounted,defineComponent } from "vue"
 import CoreHeader from '@/components/core/CoreHeader.vue'
+import { useAppStore } from '@/store/modules/app'
 //import { counter } from "canisters/counter"
 
 export default defineComponent({
   name: "Intro",
   components:{CoreHeader},
   setup: () => {
+    const appStore = useAppStore()
     const count = ref(0)
 
     const refreshCounter = async () => {
@@ -76,7 +79,7 @@ export default defineComponent({
 
     onMounted(refreshCounter)
 
-    return { increment, count }
+    return { increment, count, appStore }
   },
 })
 </script>

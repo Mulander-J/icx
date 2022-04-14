@@ -1,6 +1,6 @@
 <template>
   <TheMain />
-  <Bot v-if="!isMobile"  class="hidden lg:block fixed right-10 bottom-10 m-5"/>
+  <Bot v-if="!isMobile"  class="bot-wrapper"/>
 </template>
 
 <script lang="ts">
@@ -26,6 +26,8 @@ export default defineComponent({
   },
 })
 </script>
-
 <style>
+.bot-wrapper{
+  @apply hidden lg:flex fixed right-10 bottom-10 m-5
+}
 </style>

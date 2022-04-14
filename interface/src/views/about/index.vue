@@ -1,5 +1,5 @@
 <template>
-  <div class="ctx-center justify-between py-10">
+  <div class="ctx-center wh-full justify-between py-10">
     <div class="font-sc">
       <div>Logo</div>
       github
@@ -9,8 +9,7 @@
       doc
     </div>
     <div>
-      User/
-      Point
+      Cycle
     </div>
     <section class="text-center">
       <h1>ICX</h1>

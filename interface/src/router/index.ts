@@ -73,7 +73,7 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   const _isRuning = getServeRunning()
-  console.log('[_isRuning]',_isRuning)
+  // console.log('[_isRuning]',_isRuning)
   if(to.path!=='/sat' && !_isRuning){
     router.push({path: '/sat'})
     return false
