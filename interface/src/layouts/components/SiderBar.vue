@@ -2,13 +2,13 @@
   <div class="flex-col">
     <ul class="grow">
       <router-link v-for="men in menus" :key="men.name" :to="men" custom v-slot="{navigate, isActive, isExactActive}">
-        <li class="navItem" @click="navigate" :class="{exactActive: isExactActive}">          
+        <li class="slate-btn navItem" @click="navigate" :class="{exactActive: isExactActive}">          
           <v-icon :name="men?.meta?.icon || 'ci-icp'" />
         </li>
       </router-link>
     </ul>
     <ul>
-      <li class="navItem" v-throttle  @click="triggerDark">                
+      <li class="navItem slate-btn" v-throttle  @click="triggerDark">                
         <transition name="slide" mode="out-in">
           <v-icon v-if="appStore.getIsDark" name="bi-moon-stars" />
           <v-icon v-else name="bi-sun" />
@@ -38,9 +38,9 @@ const triggerOnChain = ()=>{
 </script>
 <style>
 .navItem{
-  @apply cursor-pointer rounded-lg mb-2 py-1 text-center overflow-hidden bg-slate-400/[.4] hover:bg-slate-300/[.4]
+  @apply cursor-pointer rounded-lg mb-2 py-1 text-center overflow-hidden
 }
 .exactActive{
-  @apply bg-sky-400 hover:bg-sky-400/[.8];
+  @apply bg-sky-400 hover:bg-sky-400/[.8] !important;
 }
 </style>

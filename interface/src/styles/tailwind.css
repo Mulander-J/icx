@@ -16,3 +16,9 @@
 		font-size: calc(100% + 2vmin);
 	}
 }
+
+@layer components{
+	.slate-btn{
+		@apply bg-slate-400/[.4] hover:bg-slate-300/[.4]
+	}
+}

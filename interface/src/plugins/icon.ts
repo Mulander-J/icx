@@ -3,13 +3,13 @@ import { OhVueIcon, addIcons } from "oh-vue-icons";
 import { 
   CiIcp,IoClose,IoPower,BiMoonStars,BiSun,
   HiSolidHome,MdFeedbackRound,RiQuestionnaireFill,
-  OiClock, GiRank3,
+  OiClock, GiRank3,IoRefresh,
 } from 'oh-vue-icons/icons'
 
 addIcons(
   CiIcp,IoClose,IoPower,BiMoonStars,BiSun,
   HiSolidHome,MdFeedbackRound,RiQuestionnaireFill,
-  OiClock, GiRank3,
+  OiClock, GiRank3,IoRefresh,
 );
 
 
