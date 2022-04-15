@@ -1,33 +1,33 @@
 <template>
-  <TheMain />
-  <Bot v-if="!isMobile"  class="bot-wrapper"/>
+  <TheMain :showBot="!appStore.isMobile"/>
+  <Loading class="app-loading" :loading="appStore.getIsLoading">
+    <p>Loading...({{appStore.icCalls}})</p>
+  </Loading>
 </template>
 
-<script lang="ts">
-import {defineComponent,watch, onBeforeMount} from 'vue'
+<script lang="ts" setup>
+import { watch, onBeforeMount } from 'vue'
 import { useAppStore } from "@/store/modules/app";
+import { useAuthStore } from "@/store/modules/auth"
 import { updateDark } from '@/utils/dark'
 import TheMain from './layouts/TheMain.vue'
-import Bot from './layouts/components/bot/index.vue'
+import Loading from './layouts/Loading.vue';
 
-export default defineComponent({
-  name: "App",
-  components: {
-    TheMain,
-    Bot
-  },
-  setup() {
-    const appStore  = useAppStore()
-    watch(()=>appStore.dark,updateDark)
-    onBeforeMount(updateDark)
-    return {
-      isMobile: appStore.isMobile
-    }
-  },
+
+const appStore = useAppStore()
+const {initAuth} = useAuthStore()
+
+watch(()=>appStore.dark,updateDark)
+onBeforeMount(()=>{
+  updateDark()
+  initAuth()
 })
+
 </script>
 <style>
-.bot-wrapper{
-  @apply hidden lg:flex fixed right-10 bottom-10 m-5
+.app-loading{
+  @apply fixed top-0 bottom-0 left-0 right-0 flex flex-col justify-center items-center;
+  z-index: 10000;
+  background: radial-gradient(#ddbbbb, transparent);
 }
 </style>

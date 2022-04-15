@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+	.dn-text{
+		@apply text-gray-900 dark:text-white
+	}
 	.wh-full{
 		@apply w-full h-full;	
 	}
@@ -19,6 +22,11 @@
 
 @layer components{
 	.slate-btn{
-		@apply bg-slate-400/[.4] hover:bg-slate-300/[.4]
+		@apply bg-slate-400/[.4] hover:bg-slate-300/[.4] cursor-pointer
+	}
+	.icoBtn {
+		@apply rounded-lg flex items-center justify-center p-2;
+    min-height: 2rem;
+    min-width: 2rem;
 	}
 }

@@ -13,6 +13,7 @@
         <NavBar class="lg:hidden" />
       </div>
     </perfect-scrollbar>
+    <MyBot v-if="showBot"  class="main-bot"/>
   </div>
 </template>
 <script lang="ts" setup>
@@ -20,6 +21,11 @@ import { watch, getCurrentInstance } from 'vue'
 import { useRoute } from 'vue-router'
 import SiderBar from './components/SiderBar.vue'
 import NavBar from './components/NavBar.vue'
+import MyBot from './components/bot/index.vue'
+
+const props = defineProps({
+  showBot: Boolean
+})
 
 const { proxy } = getCurrentInstance() as any
 const route = useRoute()
@@ -43,5 +49,8 @@ watch(()=>route,()=>{
 }
 .main-ctx{
   @apply grow rounded-none lg:rounded-lg ml-0 lg:ml-1;
+}
+.main-bot{
+  @apply hidden lg:flex fixed right-10 bottom-10 top-60;
 }
 </style>
