@@ -1,18 +1,21 @@
 <template>
   <div class="p-5 min-h-full relative">
-    <rt-btn class="absolute top-5 right-5 z-50" v-throttle :loading="appStore.getIsLoading" @click="getList" />
+    <rt-btn class="absolute top-5 right-5 z-50" :loading="appStore.getIsLoading" v-throttle @click="getList" />
+    <div>search bar create refresh</div>
     <data-view :isFull="true" :isError="_fetchErr" :isEmpty="_isEmpty" :retry="getList">
-      <ul class="m-12 ml-4" v-if="!_isEmpty">
-        <li class="my-4" v-for="(l,i) in _fdbks" :key="i">
-          <p class="text-zinc-400 mb-2 text-sm indent-1">{{$filters.dateStr(l.timestamp)}}</p>
-          <section class="log-item">                  
-            <p>
-              <label>Opreator:</label>              
-              <span>{{$filters.strSlice(l.opreator)}}</span>              
-            </p>
-          </section>        
-        </li>
-      </ul>
+      <template v-slot:default>
+        <ul class="m-12 ml-4" v-if="!_isEmpty">
+          <li class="my-4" v-for="(l,i) in _fdbks" :key="i">
+            <p class="text-zinc-400 mb-2 text-sm indent-1">{{$filters.dateStr(l.timestamp)}}</p>
+            <section class="log-item">                  
+              <p>
+                <label>Opreator:</label>              
+                <span>{{$filters.strSlice(l.opreator)}}</span>              
+              </p>
+            </section>        
+          </li>
+        </ul>
+      </template>
     </data-view>
   </div>
 </template>
