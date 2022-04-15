@@ -19,3 +19,7 @@
   font-display: swap;
   src: url('/fonts/Inter-Bold.woff2') format('woff2');
 }
+@font-face {
+  font-family: ProcrastinatingPixie;
+  src: url('/fonts/ProcrastinatingPixie.ttf') format('woff2');
+}

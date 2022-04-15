@@ -12,7 +12,7 @@
   </transition>
   <div class="my-2 grid grid-cols-3 gap-x-4 items-center" v-if="msgZero>0">    
     <div class="slate-btn icoBtn" @click="msgShow = !msgShow">
-      <v-icon :flip="msgShow?'normal':'vertical'" name="md-expandmore-round"/>
+      <v-icon :flip="msgShow?'horizontal':'vertical'" name="md-expandmore-round"/>
     </div>
     <div>
       <span class="mr-2">{{msgZero}}</span>

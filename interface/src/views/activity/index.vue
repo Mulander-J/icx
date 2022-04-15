@@ -1,9 +1,9 @@
 <template>
   <div class="p-5 min-h-full relative">
-    <div class="bg-sky-500 left-5 top-5 bottom-5 w-1 absolute rounded-lg" />
-    <rt-btn v-throttle :loading="appStore.getIsLoading" @click="getList" />
-    <transition name="fade" mode="out-in">
-      <ul class="m-12 ml-4" v-if="_logs.length>0">
+    <div class="bg-zinc-200/[.6] left-5 top-5 bottom-5 w-1 absolute rounded-lg" />
+    <rt-btn class="absolute top-5 right-5 z-50" v-throttle :loading="appStore.getIsLoading" @click="getList" />
+    <data-view :isFull="true" :isError="_fetchErr" :isEmpty="_isEmpty" :retry="getList">
+      <ul class="m-12 ml-4" v-if="!_isEmpty">
         <li class="my-4" v-for="(l,i) in _logs" :key="i">
           <p class="text-zinc-400 mb-2 text-sm indent-1">{{$filters.dateStr(l.timestamp)}}</p>
           <section class="log-item">                  
@@ -29,26 +29,33 @@
           </section>        
         </li>
       </ul>
-      <no-data v-else :isFull="true" />
-    </transition>
+    </data-view>
   </div>
 </template>
 <script lang="ts" setup>
-import { onBeforeMount,ref } from 'vue'
+import { onBeforeMount,ref,computed } from 'vue'
 import { useAppStore } from "@/store/modules/app"
 import { InsICXFactory } from "@/hooks/useCanister"
 import { WorkEvent } from '@/hooks/canisters/ICXFactory/type'
 
 const appStore = useAppStore()
+const _fetchErr = ref(false)
 const _logs = ref<WorkEvent[]>([])
+const _isEmpty = computed(()=>_logs.value.length<=0)
 
 const getList = async ()=>{
   if(appStore.getIsLoading) return
   await appStore.handleCall(
     "WorkEvents",
     InsICXFactory.WorkEvents,
-    (res:any)=>{_logs.value = res},
-    ()=>{_logs.value = []}
+    (res:any)=>{
+      _fetchErr.value = false
+      _logs.value = res
+    },
+    ()=>{
+      _fetchErr.value = true
+      _logs.value = []      
+    }
   )
 }
 

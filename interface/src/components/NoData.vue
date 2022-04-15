@@ -1,9 +1,9 @@
 <template>
     <div class="ctx-center" :class="{'no-data-ab':isFull}">
-      <div class="no-data-avatar mb-2"></div>
-      <slot>
-        <p v-if="!hideText">No Data</p>
-      </slot>
+      <div class="no-data-avatar"></div>
+      <div class="pix-h2 mt-4 ctx-center" v-if="!hideText">
+        <slot>NO DATA</slot>
+      </div>
     </div>
 </template>
 <script lang="ts">

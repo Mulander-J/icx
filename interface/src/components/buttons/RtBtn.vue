@@ -1,5 +1,5 @@
 <template>
-  <div class="icoBtn slate-btn dn-text absolute top-5 right-5 z-50">
+  <div class="icoBtn slate-btn dn-text">
     <v-icon v-bind="iconVal" />
   </div>
 </template>

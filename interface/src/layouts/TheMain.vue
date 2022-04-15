@@ -8,7 +8,7 @@
             <transition name="fade" mode="out-in">
               <component :is="Component" />
             </transition>
-          </router-view>
+          </router-view>        
         </main>
         <NavBar class="lg:hidden" />
       </div>

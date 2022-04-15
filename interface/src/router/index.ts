@@ -11,19 +11,19 @@ export const appRoutes:Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/activity',
-    name: 'activity',
-    component: () => import('@/views/activity/index.vue'),
-    meta: {
-      icon: 'oi-clock'
-    }
-  },
-  {
     path: '/rank',
     name: 'rank',
     component: () => import('@/views/rank/index.vue'),
     meta: {
       icon: 'gi-rank-3'
+    }
+  },
+  {
+    path: '/activity',
+    name: 'activity',
+    component: () => import('@/views/activity/index.vue'),
+    meta: {
+      icon: 'oi-clock'
     }
   },
   {

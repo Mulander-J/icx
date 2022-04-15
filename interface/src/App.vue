@@ -1,7 +1,7 @@
 <template>
   <TheMain :showBot="!appStore.isMobile"/>
   <Loading class="app-loading" :loading="appStore.getIsLoading">
-    <p>Loading...({{appStore.icCalls}})</p>
+    <p class="pix-h2">LOADING...[{{appStore.icCalls}}]</p>
   </Loading>
 </template>
 

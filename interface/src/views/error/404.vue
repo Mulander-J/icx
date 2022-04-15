@@ -1,5 +1,5 @@
 <template>
-  <div class="ctx-center wh-full">
-      <p class="font-sc">Not Found</p>
+  <div class="ctx-center wh-full text-orange-500">
+      <no-data>NOT FOUND</no-data>
   </div>
 </template>
