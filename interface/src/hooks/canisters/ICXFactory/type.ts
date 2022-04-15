@@ -1,9 +1,9 @@
 import type { Principal } from '@dfinity/principal';
 export interface FeedbackBody {
-  'group' : IssueType,
+  'group' : string,
   'message' : string,
   'timestamp' : Time,
-  'opreator' : Principal,
+  'opreator' : string,
 }
 export interface ICXFactory {
   'EmptyFeedbacks' : () => Promise<bigint>,
@@ -32,7 +32,7 @@ export type Time = bigint;
 export interface WorkEvent {
   'ref' : string,
   'content' : string,
-  'work' : WorkType,
+  'work' : string,
   'level' : bigint,
   'timestamp' : Time,
   'opreator' : string,

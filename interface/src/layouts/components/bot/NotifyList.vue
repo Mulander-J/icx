@@ -41,7 +41,7 @@ const getNotifyCls = (type:number)=>{
 </script>
 <style>
 .notify-rows{
-  @apply flex flex-col grow justify-end items-end;
+  @apply flex flex-col grow justify-end items-end w-full mr-12;
 }
 .notifyer{
   @apply relative rounded-md p-2 my-2 text-left w-max flex items-center justify-center;
@@ -65,15 +65,15 @@ const getNotifyCls = (type:number)=>{
 }
 
 .notify-info{
-  @apply bg-blue-300;
+  @apply bg-blue-400/[.8];
 }
 .notify-success{
-  @apply bg-green-300;
+  @apply bg-green-400/[.8];
 }
 .notify-warn{
-  @apply bg-amber-300;
+  @apply bg-amber-400/[.8];
 }
 .notify-error{
-  @apply bg-rose-300;
+  @apply bg-rose-400/[.8];
 }
 </style>

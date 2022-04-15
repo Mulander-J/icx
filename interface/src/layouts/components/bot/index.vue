@@ -23,11 +23,4 @@ onMounted(()=>{
   height: 10em;
   width: 10em;
 }
-.signBtn{
-  margin: 0 auto;
-  text-align: center;
-  padding: 0.4rem 0.6rem;
-  background: rgba(255,255,255,.8);
-  border-radius: 12px;
-}
 </style>

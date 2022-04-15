@@ -56,10 +56,10 @@ shared(msg) actor class ICXFactory() {
     ) : async Nat {
         _feedbacks := List.push<Work.FeedbackBody>(
             {
-                group = _group_;
+                group = Work.itToText(_group_);
                 message = _message_;
                 timestamp = Time.now();
-                opreator = caller;
+                opreator = Principal.toText(caller);
             },
             _feedbacks
         );
@@ -76,7 +76,7 @@ shared(msg) actor class ICXFactory() {
             _loggers := List.push<Work.WorkEvent>(
                 {
                     level = _level_;
-                    work = _work_;
+                    work = Work.wtToText(_work_);
                     content = _content_;                    
                     ref = _ref_;
                     timestamp = Time.now();

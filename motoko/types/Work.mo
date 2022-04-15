@@ -8,10 +8,10 @@ module{
     #suggestion;
   };
   public type FeedbackBody = {
-    group: IssueType;
+    group: Text;
     message: Text;
     timestamp: Time.Time;
-    opreator: Principal;
+    opreator: Text;
   };
   /*EventLogger*/
   public type WorkType = {
@@ -22,7 +22,7 @@ module{
   };
   public type WorkEvent = {
     level: Nat;
-    work: WorkType;
+    work: Text;
     content: Text;
     ref: Text;
     timestamp: Time.Time;
@@ -36,5 +36,22 @@ module{
         _ref_: Text,
         _op_: Principal,      
     ) -> async Int;
+  };
+
+  public func wtToText(_wt_: WorkType) : Text {
+    switch _wt_ {
+        case (#initial) {"initial"};
+        case (#create) {"create"};
+        case (#delete) {"delete"};
+        case (#update) {"update"};
+    };
+  };
+
+  public func itToText(_it_: IssueType) : Text {
+    switch _it_ {
+        case (#bug) {"bug"};
+        case (#feature) {"feature"};
+        case (#suggestion) {"suggestion"};
+    };
   };
 };
