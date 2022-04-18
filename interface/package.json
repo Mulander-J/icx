@@ -19,7 +19,8 @@
     "pinia": "^2.0.0-rc.10",
     "vue": "^3.2.23",
     "vue-router": "^4.0.12",
-    "vue3-perfect-scrollbar": "^1.6.0"
+    "vue3-perfect-scrollbar": "^1.6.0",
+    "vue-clipboard3":"2.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-inject": "^4.0.4",

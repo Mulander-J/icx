@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 import { App } from 'vue'
-// import useClipboard from 'vue-clipboard3'
+import useClipboard from 'vue-clipboard3'
 const throttle = {
   mounted(el: HTMLElement, binding: { value: any }) {
     let throttleTime = binding.value // duration
@@ -27,51 +27,37 @@ const throttle = {
 }
 
 
-// let copyText
-// interface CopyText {
-//   linkUrl: string
-//   message: string
-// }
+let copyText
+interface CopyText {
+  ctx: string
+  message?: string
+}
 
-// const copy = {
-//   mounted(el: HTMLElement, binding: { value: CopyText }) {
-//     copyText = binding.value
-//     el.addEventListener(
-//       'click',
-//       async () => {
-//         const { toClipboard } = useClipboard()
-//         const { linkUrl, message } = copyText
-//         try {
-//           await toClipboard(linkUrl)
-//           ElMessage.success(message)
-//         } catch (e) {
-//           ElMessage.error('copy fail')
-//           console.error(e)
-//         }
-//       },
-//       true,
-//     )
-//   },
-//   updated(el: HTMLElement, binding: { value: string }) {
-//     copyText = binding.value
-//   },
-// }
-
-// const stopPropagation = {
-//   beforeMount(el: HTMLElement) {
-//     el.addEventListener(
-//       'click',
-//       (event: MouseEvent) => {
-//         event.stopPropagation()
-//         return false
-//       },
-//       true,
-//     )
-//   },
-// }
+const copy = {
+  mounted(el: HTMLElement, binding: { value: CopyText }) {
+    copyText = binding.value
+    el.addEventListener(
+      'click',
+      async () => {
+        const { toClipboard } = useClipboard()
+        const { ctx } = copyText
+        try {
+          await toClipboard(ctx)
+        } catch (e) {
+          console.error(e)
+        }
+      },
+      true,
+    )
+  },
+  updated(el: HTMLElement, binding: { value: string }) {
+    copyText = binding.value
+  },
+}
 
 const directives = {
   throttle,
+  copy,
 }
 const registDirectives = (app: App) => {
   Object.entries(directives).forEach(([k, v]) => {

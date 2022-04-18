@@ -1,3 +1,4 @@
+import ExperimentalCycles "mo:base/ExperimentalCycles";
 import Debug "mo:base/Debug";
 import HashMap "mo:base/HashMap";
 import List "mo:base/List";
@@ -13,6 +14,7 @@ import User "./types/User";
 import Work "./types/Work";
 import XN "./modules/XNode";
 import DT "./modules/DateTime";
+import Base "./types/Base";
 
 shared({ caller = _owner }) actor class ICX() {
   //  Static val
@@ -86,13 +88,17 @@ shared({ caller = _owner }) actor class ICX() {
       };
       case null  {
         _addrUserMap.put(_key_, {
-          id = _key_;
+          id = Principal.toText(_key_);
           no = _addrUserMap.size()+1;
           point = _point_;
         });
         return false;
       };
     }
+  };
+
+  public func acceptCycles() : async Nat {
+      return ExperimentalCycles.accept(ExperimentalCycles.available());
   };
 
   /*update call*/
@@ -208,10 +214,27 @@ shared({ caller = _owner }) actor class ICX() {
   /*query call*/
   
   public shared query func Users() : async [User.UserInfo]{
-    Iter.toArray(_addrUserMap.vals())
+    Iter.toArray(_addrUserMap.vals());
   };
-  public shared query func UserById(pid : Principal) : async ?User.UserInfo {
-    _addrUserMap.get(pid);
+  private func UserById(_pid_ : Text) : (Nat, [User.UserInfo]) {
+    switch (_addrUserMap.get(Principal.fromText(_pid_))){
+      case (?user){
+        return (1,[user]);
+      };
+      case _ {
+        return (0,[]);
+      };
+    };
+  };
+  public shared query func PageUser(_pgSize_:Nat,_pgNo_:Nat,_pid_:?Text) : async (Nat,[User.UserInfo]){
+    switch(_pid_){
+      case (?txt){
+        UserById(txt);
+      };
+      case _ {
+        Base.getPageArr<User.UserInfo>(_pgSize_,_pgNo_,Iter.toList(_addrUserMap.vals()));
+      };
+    };
   };
   public shared query func AppInfo() : async ?XN.Node {
     XN.getNode(_nodes, #root);
@@ -221,6 +244,9 @@ shared({ caller = _owner }) actor class ICX() {
   };
   public shared query func NodeByPid(_pid_: Nat) : async [XN.Node] {
     List.toArray(XN.getNodes(_nodes,#pid(_pid_)));
+  };
+  public query func getCycles() : async Nat {
+      ExperimentalCycles.balance();
   };
 
 

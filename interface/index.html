@@ -5,6 +5,11 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ICX-APP</title>
+  <style>
+    html{
+      background-image: linear-gradient(45deg, #e81a91, #c865b3, #978cd8, #03acfd)
+    }
+  </style>
   <script>
     window.global = window
   </script>
@@ -17,7 +22,12 @@
   </script>
 </head>
 <body class="antialiased dn-text">
-<div id="root"></div>
+<div id="root">
+  <div style="position: fixed;left: 0;right: 0; bottom: 0; top: 0; display:flex;justify-content: center;align-items: center;flex-direction: column;  background: radial-gradient(#ddbbbb, transparent);">
+    <img style="width: 20em;height: 20em;" src="img/human.gif" alt="">
+    <p style="font-size: calc(12px + 2vmin);font-weight: bolder;">LOADING...</p>
+  </div>
+</div>
 <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

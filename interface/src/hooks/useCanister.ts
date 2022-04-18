@@ -1,9 +1,11 @@
 import { Actor, HttpAgent } from "@dfinity/agent";
 
 // Imports and re-exports candid interface
+import { idlFactory as idlICX } from './canisters/ICX/ICX.did';
 import { idlFactory as idlICXFactory } from './canisters/ICXFactory/ICXFactory.did';
+import { idlFactory as idlCycle } from './canisters/Cycle/cycle.did'
 // CANISTER_ID is replaced by webpack based on node environment
-export const cidICXFactory = process.env.ICXFACTORY_CANISTER_ID;
+import { cidICX,cidICXFactory } from './canisters'
 
 /**
  * 
@@ -32,6 +34,9 @@ export const cidICXFactory = process.env.ICXFACTORY_CANISTER_ID;
   
 /**
  * A ready-to-use agent for the ICXFactory canister
- * @type {import("@dfinity/agent").ActorSubclass<import("./ICXFactory.did.js")._SERVICE>}
  */
+ export const InsICX = createActor(cidICX, idlICX);
+
  export const InsICXFactory = createActor(cidICXFactory, idlICXFactory);
+
+ export const InsCycle = (cycle:string)=>createActor(cycle, idlCycle);

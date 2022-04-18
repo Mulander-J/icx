@@ -5,7 +5,7 @@
         <h2 class="pix-h2">ACTIVITY</h2>
         <div class="flex">
           <input class="slate-widget form-widget dn-text px-2" type="text" placeholder="Search">
-          <rt-btn class="mx-2" icon="io-search" :loading="_loading" v-throttle @click="queryList" />
+          <rt-btn class="mx-2" icon="io-search" :loading="_loading" v-throttle @click="initPagination" />
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@ import usePagination from '@/hooks/usePagination'
 const {
   _isError,_isEmpty, _isEnd,
   _loading,list,
-  queryList,initPagination,nextPage,
+  initPagination,nextPage,
 } = usePagination<WorkEvent>({
   name:'PageWorkEvent',
   cmd:InsICXFactory.PageWorkEvent,

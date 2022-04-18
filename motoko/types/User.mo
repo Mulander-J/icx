@@ -1,6 +1,6 @@
 module{
   public type UserInfo = {
-    id: Principal;
+    id: Text;
     no: Nat;
     point: Nat;
   };

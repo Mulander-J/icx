@@ -1,3 +1,4 @@
+import { MessageType } from './../model/msg';
 import { reactive, toRefs, watch, computed, Ref, nextTick } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 
@@ -33,23 +34,30 @@ const usePagination = <T>(
 
     try {
       const generatePayloads = getPayloads
-        ? getPayloads({ pageSize:state.pageSize, pageNum:state.pageNum}) 
+        ? getPayloads({ pageSize:state.pageSize, pageNum:state.pageNum,setErr:setError}) 
         : [state.pageSize,state.pageNum]
+
+      if(generatePayloads==null){
+        return
+      }
 
       res = await appStore.handleCall({
         ...callOpt
       },...generatePayloads)
-
       state.list = (
         [...(state.list || []), ...res[1]]
       ) as T[]
-      state.total = Number(res[0])   
+      state.total = Number(res[0])
       state._isError = false
     } catch (err) {
       state._isError = true
     } finally{
       state.loading = false
     }
+  }
+
+  const setError = (msg:string)=>{
+    appStore.addMsg(msg,MessageType.ERROR)
   }
 
   const initPagination = async () => {

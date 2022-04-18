@@ -3,8 +3,7 @@ body {
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Inter,
   sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient(25deg, #e81a91, #c865b3, #978cd8, #03acfd)
+  -moz-osx-font-smoothing: grayscale;  
 }
 .font-inter{
   font-family: Inter,sans-serif !important;

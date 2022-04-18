@@ -23,7 +23,7 @@
 @layer components{
 	/*page-header*/
 	.p-header{
-		@apply relative;
+		@apply relative z-10;
 	}
 	.main-above .p-header{
 		@apply sticky top-0 py-4;
