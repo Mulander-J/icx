@@ -2,7 +2,7 @@
   <div class="flex-col">
     <ul class="grow">
       <router-link v-for="men in menus" :key="men.name" :to="men" custom v-slot="{navigate, isActive, isExactActive}">
-        <li class="slate-widget navItem" @click="navigate" :class="{exactActive: isExactActive}">          
+        <li class="slate-widget navItem" @click="navigate" :class="{exactActive: isExactActive||isActive}">          
           <v-icon :name="men?.meta?.icon || 'ci-icp'" />
         </li>
       </router-link>

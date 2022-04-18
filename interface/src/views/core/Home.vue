@@ -1,123 +1,83 @@
-<template>  
-  <div class="App-header">
-    <CoreHeader class="sticky top-0 w-full z-10"/>
-    <p>OnChain: {{appStore.isOnChain}}</p>
-    <p style="font-size: 2em; margin-bottom: 0.5em">Ready. Lets build the new web</p>
-    <div
-      style="display: flex; font-size: 0.7em; text-align: left; padding: 2em; border-radius: 30px; flex-direction: column; background: rgb(220 218 224 / 25%);">
-      <div>
-        <code>npm run dev:</code>
-        <span> Runs the development server</span>
-      </div>
-      <div>
-        <code>npm run build:</code>
-        <span> Builds your frontend for production</span>
-      </div>
-      <div>
-        <code>npm run serve:</code>
-        <span> Serves your production-built frontend locally</span>
-      </div>
-      <hr />
-      <div>
-        <code>dfx deploy:</code>
-        <span> Compiles & deploys your canisters</span>
-      </div>
-      <div style="text-align: center; font-size: 0.8em; margin-top: 2em;">
-        <a
-          class="App-link"
-          href="https://vitejs.dev/guide/features.html"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Vite Docs
-        </a>
-        {{" | "}}
-        <a
-          class="App-link"
-          href="https://sdk.dfinity.org/docs/developers-guide/sdk-guide.html"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          IC SDK Docs
-        </a>
+<template>
+  <div class="p-5 min-h-full relative">
+    <div class="p-header">
+      <div class="ph-box">
+        <h2 class="pix-h2">HOME</h2>
+        <div class="flex">
+          <input class="slate-widget form-widget dn-text px-2" type="text" placeholder="Search" v-model="_query">
+          <rt-btn class="mx-2" icon="io-search" :loading="_loading" v-throttle @click="initPagination" />
+          <rt-btn icon="md-add-round" :loading="_loading" v-throttle @click="goCreate" />
+        </div>
       </div>
     </div>
-    <button class="demo-button" @click="increment()">
-      Count is: {{ count }}
-    </button>
-    <p style="font-size: 0.6em;">
-      This counter is running inside a canister
-    </p>
-    <p style="font-size: 0.4em;">by <a href="https://twitter.com/miamaruq">@miamaruq</a></p>
+    <data-view 
+      :count="list.length" 
+      :isFull="true" :isEnd="_isEnd" 
+      :isError="_isError" :isEmpty="_isEmpty" 
+      :retry="initPagination" :create="goCreate" :nextPage="nextPage"
+    >
+      <template v-slot:default>
+        <ul v-if="!_isEmpty">
+          <li class="my-4" v-for="(l,i) in list" :key="i">
+            <p class="text-zinc-400 mb-2 text-sm indent-1">{{$filters.dateStr(l.timestamp)}}</p>
+            <section class="log-item">
+              <p><span class="font-extrabold" :class="[`wt-${l.group||'suggestion'}`]"><v-icon name="ci-icp"/>#{{l.group}}</span></p>
+              <p>
+                <label>Content:</label>
+                <span>{{l.message}}</span>
+              </p>         
+              <p>
+                <label>Opreator:</label>              
+                <span>
+                  <a class="text-blue-600 hover:text-blue-600/[.8]" :href="$filters.accountExplor(l.opreator)" target="_blank">{{$filters.strSlice(l.opreator)}}</a>              
+                </span>            
+              </p>
+            </section>        
+          </li>          
+        </ul>
+      </template>
+    </data-view>
   </div>
 </template>
+<script lang="ts" setup>
+import { onBeforeMount,ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { InsICXFactory } from "@/hooks/useCanister"
+import { FeedbackBody } from '@/hooks/canisters/ICXFactory/type'
+import usePagination from '@/hooks/usePagination'
 
-<script lang="ts">
-import { ref, onMounted,defineComponent } from "vue"
-import CoreHeader from '@/components/core/CoreHeader.vue'
-import { useAppStore } from '@/store/modules/app'
-//import { counter } from "canisters/counter"
+const router = useRouter()
 
-export default defineComponent({
-  name: "Intro",
-  components:{CoreHeader},
-  setup: () => {
-    const appStore = useAppStore()
-    const count = ref(0)
+const _query = ref('')
 
-    const refreshCounter = async () => {
-      // const res: any = await counter.getValue()
-      // count.value = res.toString()
-      count.value = count.value + 1
-    }
+const {
+  _isError,_isEmpty, _isEnd,
+  _loading,list,
+  initPagination,nextPage,
+} = usePagination<FeedbackBody>({
+  name:'PageFeedback',
+  cmd:InsICXFactory.PageFeedback,
+})
 
-    const increment = async () => {
-      // await counter.increment()
-      refreshCounter()
-    }
+const goCreate = ()=>{  
+  router.push('/add')
+}
 
-    onMounted(refreshCounter)
-
-    return { increment, count, appStore }
-  },
+onBeforeMount(()=>{
+  initPagination()
 })
 </script>
-
-<style scoped>
-
-.App-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+<style>
+.log-item{
+  @apply p-4 rounded-xl bg-white/40 grid gap-y-2
 }
-
-.App-logo {
-  height: 15vmin;
-  pointer-events: none;
-  margin-top: 150px;
+.wt-bug{
+  @apply text-rose-700
 }
-
-.App-link {
-  color: rgb(26, 117, 255);
+.wt-suggestion{
+  @apply text-lime-400
 }
-
-.demo-button {
-  background: #a02480;
-  padding: 0 1.3em;
-  margin-top: 1em;
-  border-radius: 60px;
-  font-size: 0.7em;
-  height: 35px;
-  outline: 0;
-  border: 0;
-  cursor: pointer;
-  color: white;
-}
-
-.demo-button:active {
-  color: white;
-  background: #979799;
+.wt-feature{
+  @apply text-amber-400
 }
 </style>

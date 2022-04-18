@@ -5,10 +5,28 @@ export const appRoutes:Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: () => import('@/views/core/Home.vue'),
+    component: () => import('@/layouts/ParentView.vue'),
+    redirect:'/list',
     meta: {
       icon: 'hi-solid-home'
-    }
+    },
+    children:[
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/core/Home.vue'),
+      },
+      {
+        path: 'add',
+        name: 'NodeCreate',
+        component: () => import('@/views/core/Create.vue'),
+      },
+      {
+        path: 'info/:id(\\d+)',
+        name: 'Info',
+        component: () => import('@/views/core/Info.vue'),
+      },
+    ]
   },
   {
     path: '/rank',
@@ -47,14 +65,9 @@ export const appRoutes:Array<RouteRecordRaw> = [
 const routes: Array<RouteRecordRaw> = [
   ...appRoutes,
   {
-    path: '/info/:id(\\d+)',
-    name: 'info',
-    component: () => import('@/views/core/Info.vue'),
-  },  
-  {
     path: '/feedback/create',
     name: 'FeedbackCreate',
-    component: () => import('@/views/feedback/create.vue'),
+    component: () => import('@/views/feedback/Create.vue'),
   },
   {
     path: '/sat',
