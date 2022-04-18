@@ -4,14 +4,16 @@ import {
   CiIcp,IoClose,IoPower,BiMoonStars,BiSun,
   HiSolidHome,MdFeedbackRound,RiQuestionnaireFill,
   OiClock, GiRank3,MdRefresh,MdExpandmoreRound,
-  IoChatboxEllipses,IoTrashBin,
+  IoChatboxEllipses,IoTrashBin,IoAdd,IoSearch,
+  RiArrowGoBackLine,
 } from 'oh-vue-icons/icons'
 
 addIcons(
   CiIcp,IoClose,IoPower,BiMoonStars,BiSun,
   HiSolidHome,MdFeedbackRound,RiQuestionnaireFill,
   OiClock, GiRank3,MdRefresh,MdExpandmoreRound,
-  IoChatboxEllipses,IoTrashBin,
+  IoChatboxEllipses,IoTrashBin,IoAdd,IoSearch,
+  RiArrowGoBackLine,
 );
 
 

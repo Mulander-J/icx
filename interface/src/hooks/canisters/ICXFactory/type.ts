@@ -11,6 +11,12 @@ export interface ICXFactory {
   'Feedbacks' : () => Promise<Array<FeedbackBody>>,
   'Mainner' : () => Promise<Principal>,
   'Owner' : () => Promise<Principal>,
+  'PageFeedback' : (arg_0: bigint, arg_1: bigint) => Promise<
+      [bigint, Array<FeedbackBody>]
+    >,
+  'PageWorkEvent' : (arg_0: bigint, arg_1: bigint) => Promise<
+      [bigint, Array<WorkEvent>]
+    >,
   'WorkEvents' : () => Promise<Array<WorkEvent>>,
   'acceptCycles' : () => Promise<bigint>,
   'getCycles' : () => Promise<bigint>,

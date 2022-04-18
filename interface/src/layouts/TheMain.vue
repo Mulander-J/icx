@@ -1,7 +1,7 @@
 <template>
   <div class="main-warpper lg:app-h">
     <SiderBar class="main-bg main-sider" />
-    <perfect-scrollbar ref="mainCtx" class="main-bg main-ctx">
+    <perfect-scrollbar ref="mainCtx" class="main-bg main-ctx" @ps-scroll-y="onScroll">
       <div class="flex flex-col h-full">      
         <main class="grow">
           <router-view v-slot="{ Component }">
@@ -19,6 +19,7 @@
 <script lang="ts" setup>
 import { watch, getCurrentInstance } from 'vue'
 import { useRoute } from 'vue-router'
+import { useAppStore } from '@/store/modules/app'
 import SiderBar from './components/SiderBar.vue'
 import NavBar from './components/NavBar.vue'
 import MyBot from './components/bot/index.vue'
@@ -26,8 +27,8 @@ import MyBot from './components/bot/index.vue'
 const props = defineProps({
   showBot: Boolean
 })
-
 const { proxy } = getCurrentInstance() as any
+const {setOffsetY} = useAppStore()
 const route = useRoute()
 
 watch(()=>route,()=>{
@@ -36,6 +37,15 @@ watch(()=>route,()=>{
     proxy.$refs['mainCtx'].$el.scrollLeft = 0
   }catch{}
 },{deep:true})
+
+const onScroll = (event:any)=>{
+  const ay = proxy.$refs?.['mainCtx']?.ps?.scrollbarYTop || 0
+  if(ay>200){
+    proxy.$refs['mainCtx'].$el.classList.add('main-above')
+  }else{
+    proxy.$refs['mainCtx'].$el.classList.remove('main-above')
+  }
+}
 </script>
 <style>
 .main-warpper{

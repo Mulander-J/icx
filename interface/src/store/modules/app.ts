@@ -5,10 +5,10 @@ import { isMobile } from '@/utils/getClient'
 import dealErr from '@/utils/dealErr'
 
 export const useAppStore = defineStore({
-  // id is required so that Pinia can connect the store to the devtools
   id: "app",
   state: () => ({
     dark: 'light',
+    offsetY:0,
     isMobile: isMobile(),
     isOnChain: false,
     icCalls: 0,
@@ -23,6 +23,9 @@ export const useAppStore = defineStore({
     }
   },
   actions: {
+    setOffsetY(oy:number){
+      this.offsetY = oy;
+    },
     setDark(dark:'light'|'dark'){
       this.dark = dark
     },
@@ -50,22 +53,40 @@ export const useAppStore = defineStore({
     clearMsg(){
       this.icMsgs.length = 0
     },
-    async handleCall(name:string,cmd:any,cbk:any,rej :any, ...args){
+    async handleCall(opt:CallOpt, ...args:any){
+      const {
+        name,cmd,
+        cbk=null,rej=null,
+        apartLoad = false,okTip=false
+      } = opt
       try{
         console.log(`%c [Call-Start]-${name||"Func"}`,'color:skyblue')
-        this.addCall()
+        !apartLoad && this.addCall()
+        args.length > 0  && console.log(`%c [Call-Payloads]-${name||"Func"}`,'color:purple',args)
         const _res = await cmd(...args)
         console.log(`%c [Call-Recept]-${name||"Func"}`,'color:green' ,_res)
+        okTip && this.addMsg(`${name} Success`, MessageType.SUCCESS)
         cbk && cbk(_res)
+        return _res
       }catch(err:any){
         console.log(`%c [Call-Error]-${name||"Func"}`, 'color:red',err)
         const _msg = dealErr(err)
         this.addMsg(_msg, MessageType.ERROR)
         rej && rej(err)
+        return null
       }finally{
-        this.removeCall()
+        !apartLoad && setTimeout(this.removeCall,800) // for animation loading
         console.log(`%c [Call-End]-${name||"Func"}`,'color:skyblue')   
       }
     }
   }
 });
+
+type CallOpt = {
+  name:string, // func name
+  cmd:any,  //  func need to be excuted
+  cbk?:any, //  ok-callback
+  rej?:any, //  err-callback
+  apartLoad?:boolean, // not add into global loading
+  okTip?:boolean  // show tips when success
+}

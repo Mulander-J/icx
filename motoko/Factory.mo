@@ -6,6 +6,7 @@ import Time "mo:base/Time";
 import List "mo:base/List";
 import Nat "mo:base/Nat";
 import Work "./types/Work";
+import Base "./types/Base";
 
 shared(msg) actor class ICXFactory() {
     /*define var*/
@@ -96,6 +97,12 @@ shared(msg) actor class ICXFactory() {
     };
     public shared query func WorkEvents() :async [Work.WorkEvent]{
         List.toArray(_loggers);
+    };
+    public shared query func PageFeedback(_pgSize_:Nat,_pgNo_:Nat) :async (Nat,[Work.FeedbackBody]){
+        Base.getPageArr<Work.FeedbackBody>(_pgSize_,_pgNo_,_feedbacks);
+    };
+    public shared query func PageWorkEvent(_pgSize_:Nat,_pgNo_:Nat) :async (Nat,[Work.WorkEvent]){
+        Base.getPageArr<Work.WorkEvent>(_pgSize_,_pgNo_,_loggers);
     };
     public shared query func Owner() :async Principal{
         _owner;

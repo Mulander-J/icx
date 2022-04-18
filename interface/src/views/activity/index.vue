@@ -1,10 +1,22 @@
 <template>
   <div class="p-5 min-h-full relative">
-    <div class="bg-zinc-200/[.6] left-5 top-5 bottom-5 w-1 absolute rounded-lg" />
-    <rt-btn class="absolute top-5 right-5 z-50" v-throttle :loading="appStore.getIsLoading" @click="getList" />
-    <data-view :isFull="true" :isError="_fetchErr" :isEmpty="_isEmpty" :retry="getList">
-      <ul class="m-12 ml-4" v-if="!_isEmpty">
-        <li class="my-4" v-for="(l,i) in _logs" :key="i">
+     <div class="p-header">
+      <div class="ph-box">
+        <h2 class="pix-h2">ACTIVITY</h2>
+        <div class="flex">
+          <input class="slate-widget form-widget dn-text px-2" type="text" placeholder="Search">
+          <rt-btn class="mx-2" icon="io-search" :loading="_loading" v-throttle @click="queryList" />
+        </div>
+      </div>
+    </div>
+    <data-view 
+      :count="list.length" 
+      :isFull="true" :hideCreate="true" 
+      :isEnd="_isEnd" :isError="_isError" :isEmpty="_isEmpty" 
+      :retry="initPagination" :nextPage="nextPage"
+    >
+      <ul v-if="!_isEmpty">
+        <li class="my-4" v-for="(l,i) in list" :key="i">
           <p class="text-zinc-400 mb-2 text-sm indent-1">{{$filters.dateStr(l.timestamp)}}</p>
           <section class="log-item">                  
             <p>            
@@ -24,7 +36,9 @@
             </p>
             <p>
               <label>Opreator:</label>              
-              <span>{{$filters.strSlice(l.opreator)}}</span>              
+              <span>
+                <a class="text-blue-600 hover:text-blue-600/[.8]" :href="$filters.accountExplor(l.opreator)" target="_blank">{{$filters.strSlice(l.opreator)}}</a>              
+              </span>              
             </p>
           </section>        
         </li>
@@ -33,34 +47,22 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onBeforeMount,ref,computed } from 'vue'
-import { useAppStore } from "@/store/modules/app"
+import { onBeforeMount } from 'vue'
 import { InsICXFactory } from "@/hooks/useCanister"
 import { WorkEvent } from '@/hooks/canisters/ICXFactory/type'
+import usePagination from '@/hooks/usePagination'
 
-const appStore = useAppStore()
-const _fetchErr = ref(false)
-const _logs = ref<WorkEvent[]>([])
-const _isEmpty = computed(()=>_logs.value.length<=0)
-
-const getList = async ()=>{
-  if(appStore.getIsLoading) return
-  await appStore.handleCall(
-    "WorkEvents",
-    InsICXFactory.WorkEvents,
-    (res:any)=>{
-      _fetchErr.value = false
-      _logs.value = res
-    },
-    ()=>{
-      _fetchErr.value = true
-      _logs.value = []      
-    }
-  )
-}
+const {
+  _isError,_isEmpty, _isEnd,
+  _loading,list,
+  queryList,initPagination,nextPage,
+} = usePagination<WorkEvent>({
+  name:'PageWorkEvent',
+  cmd:InsICXFactory.PageWorkEvent,
+})
 
 onBeforeMount(()=>{
-  getList()
+  initPagination()
 })
 </script>
 <style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="icoBtn slate-btn dn-text">
+  <div class="btn icoBtn slate-widget dn-text">
     <v-icon v-bind="iconVal" />
   </div>
 </template>

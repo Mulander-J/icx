@@ -31,6 +31,16 @@ export const idlFactory = ({ IDL }) => {
     'Feedbacks' : IDL.Func([], [IDL.Vec(FeedbackBody)], ['query']),
     'Mainner' : IDL.Func([], [IDL.Principal], ['query']),
     'Owner' : IDL.Func([], [IDL.Principal], ['query']),
+    'PageFeedback' : IDL.Func(
+        [IDL.Nat, IDL.Nat],
+        [IDL.Nat, IDL.Vec(FeedbackBody)],
+        ['query'],
+      ),
+    'PageWorkEvent' : IDL.Func(
+        [IDL.Nat, IDL.Nat],
+        [IDL.Nat, IDL.Vec(WorkEvent)],
+        ['query'],
+      ),
     'WorkEvents' : IDL.Func([], [IDL.Vec(WorkEvent)], ['query']),
     'acceptCycles' : IDL.Func([], [IDL.Nat], []),
     'getCycles' : IDL.Func([], [IDL.Nat], ['query']),

@@ -11,14 +11,14 @@
     </transition-group>
   </transition>
   <div class="my-2 grid grid-cols-3 gap-x-4 items-center" v-if="msgZero>0">    
-    <div class="slate-btn icoBtn" @click="msgShow = !msgShow">
+    <div class="slate-widget btn icoBtn" @click="msgShow = !msgShow">
       <v-icon :flip="msgShow?'horizontal':'vertical'" name="md-expandmore-round"/>
     </div>
     <div>
       <span class="mr-2">{{msgZero}}</span>
       <v-icon flip="horizontal" name="io-chatbox-ellipses" />
     </div>
-    <div class="slate-btn icoBtn" @click="appStore.clearMsg">
+    <div class="slate-widget btn icoBtn" @click="appStore.clearMsg">
       <v-icon name="io-trash-bin"/>
     </div>
   </div>

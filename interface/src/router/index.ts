@@ -52,6 +52,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/core/Info.vue'),
   },  
   {
+    path: '/feedback/create',
+    name: 'FeedbackCreate',
+    component: () => import('@/views/feedback/create.vue'),
+  },
+  {
     path: '/sat',
     name: 'sat',
     component: () => import('@/views/error/Sat.vue'),

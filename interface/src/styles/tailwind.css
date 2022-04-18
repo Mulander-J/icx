@@ -21,12 +21,54 @@
 }
 
 @layer components{
-	.slate-btn{
-		@apply bg-slate-400/[.4] hover:bg-slate-300/[.4] cursor-pointer
+	/*page-header*/
+	.p-header{
+		@apply relative;
+	}
+	.main-above .p-header{
+		@apply sticky top-0 py-4;
+	}
+	.p-header .ph-box{
+		@apply z-50 relative;
+	}
+	.p-header::after{
+		@apply z-40 absolute bg-transparent;
+		content: '';
+    top: -100%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+		transition: background .3s ease;
+	}
+	.main-above .p-header::after{
+		@apply bg-white dark:bg-gray-600;
+	}
+	/*button*/
+	.slate-widget{
+		@apply bg-slate-400/[.4] hover:bg-slate-300/[.4] rounded-lg
+	}
+	.btn{
+		@apply cursor-pointer;
+	}
+	.lgBtn{
+		@apply w-min mt-6 py-2 px-8;
 	}
 	.icoBtn {
-		@apply rounded-lg flex items-center justify-center p-2;
+		@apply  flex items-center justify-center  p-2;
     height: 2rem;
     width: 2rem;
+	}
+	/*form*/
+	.form-item{
+		@apply flex flex-col my-2
+	}
+	.form-item label{
+		@apply mb-2 text-lg text-gray-800 dark:text-gray-400
+	}
+	.form-widget{
+		@apply align-baseline caret-sky-500;
+	}
+	.form-widget::-webkit-input-placeholder {
+		@apply text-gray-800/[.8] dark:text-gray-400/[.8];
 	}
 }

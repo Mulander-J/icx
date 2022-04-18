@@ -1,69 +1,74 @@
 <template>
   <div class="p-5 min-h-full relative">
-    <rt-btn class="absolute top-5 right-5 z-50" :loading="appStore.getIsLoading" v-throttle @click="getList" />
-    <div>search bar create refresh</div>
-    <data-view :isFull="true" :isError="_fetchErr" :isEmpty="_isEmpty" :retry="getList">
+    <div class="p-header">
+      <div class="ph-box">
+        <h2 class="pix-h2">FEEDBACK</h2>
+        <div class="flex">
+          <input class="slate-widget form-widget dn-text px-2" type="text" placeholder="Search" v-model="_query">
+          <rt-btn class="mx-2" icon="io-search" :loading="_loading" v-throttle @click="queryList" />
+          <rt-btn icon="io-add" :loading="_loading" v-throttle @click="goCreate" />
+        </div>
+      </div>
+    </div>
+    <data-view 
+      :count="list.length" 
+      :isFull="true" :isEnd="_isEnd" 
+      :isError="_isError" :isEmpty="_isEmpty" 
+      :retry="initPagination" :create="goCreate" :nextPage="nextPage"
+    >
       <template v-slot:default>
-        <ul class="m-12 ml-4" v-if="!_isEmpty">
-          <li class="my-4" v-for="(l,i) in _fdbks" :key="i">
+        <ul v-if="!_isEmpty">
+          <li class="my-4" v-for="(l,i) in list" :key="i">
             <p class="text-zinc-400 mb-2 text-sm indent-1">{{$filters.dateStr(l.timestamp)}}</p>
-            <section class="log-item">                  
+            <section class="log-item">
+              <p><span class="font-extrabold"><v-icon name="ci-icp"/>#{{l.group}}</span></p>
+              <p>
+                <label>Content:</label>
+                <span>{{l.message}}</span>
+              </p>         
               <p>
                 <label>Opreator:</label>              
-                <span>{{$filters.strSlice(l.opreator)}}</span>              
+                <span>
+                  <a class="text-blue-600 hover:text-blue-600/[.8]" :href="$filters.accountExplor(l.opreator)" target="_blank">{{$filters.strSlice(l.opreator)}}</a>              
+                </span>            
               </p>
             </section>        
-          </li>
+          </li>          
         </ul>
       </template>
     </data-view>
   </div>
 </template>
 <script lang="ts" setup>
-import { onBeforeMount,ref,computed } from 'vue'
-import { useAppStore } from "@/store/modules/app"
+import { onBeforeMount,ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { InsICXFactory } from "@/hooks/useCanister"
 import { FeedbackBody } from '@/hooks/canisters/ICXFactory/type'
+import usePagination from '@/hooks/usePagination'
 
-const appStore = useAppStore()
-const _fetchErr = ref(false)
-const _fdbks = ref<FeedbackBody[]>([])
-const _isEmpty = computed(()=>_fdbks.value.length<=0)
+const router = useRouter()
 
-const getList = async ()=>{
-  if(appStore.getIsLoading) return
-  await appStore.handleCall(
-    "Feedbacks",
-    InsICXFactory.Feedbacks,
-    (res:any)=>{
-      _fetchErr.value = false
-      _fdbks.value = res
-    },
-    ()=>{
-      _fetchErr.value = true
-      _fdbks.value = []      
-    }
-  )
+const _query = ref('')
+
+const {
+  _isError,_isEmpty, _isEnd,
+  _loading,list,
+  queryList,initPagination,nextPage,
+} = usePagination<FeedbackBody>({
+  name:'PageFeedback',
+  cmd:InsICXFactory.PageFeedback,
+})
+
+const goCreate = ()=>{  
+  router.push('/feedback/create')
 }
 
 onBeforeMount(()=>{
-  getList()
+  initPagination()
 })
 </script>
 <style>
 .log-item{
   @apply p-4 rounded-xl bg-white/40 grid gap-y-2
-}
-.wt-delete{
-  @apply text-rose-700
-}
-.wt-create{
-  @apply text-lime-400
-}
-.wt-update{
-  @apply text-amber-400
-}
-.wt-initial{
-  @apply text-purple-500
 }
 </style>

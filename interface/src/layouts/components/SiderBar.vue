@@ -2,13 +2,13 @@
   <div class="flex-col">
     <ul class="grow">
       <router-link v-for="men in menus" :key="men.name" :to="men" custom v-slot="{navigate, isActive, isExactActive}">
-        <li class="slate-btn navItem" @click="navigate" :class="{exactActive: isExactActive}">          
+        <li class="slate-widget navItem" @click="navigate" :class="{exactActive: isExactActive}">          
           <v-icon :name="men?.meta?.icon || 'ci-icp'" />
         </li>
       </router-link>
     </ul>
     <ul>
-      <li class="navItem slate-btn" v-throttle  @click="triggerDark">                
+      <li class="slate-widget navItem" v-throttle  @click="triggerDark">                
         <transition name="slide" mode="out-in">
           <v-icon v-if="appStore.getIsDark" name="bi-moon-stars" />
           <v-icon v-else name="bi-sun" />

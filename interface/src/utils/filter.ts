@@ -17,7 +17,10 @@ export default {
     return `${str.slice(0, front)}${front < str.length ? '...' : ''}${
       behind === 0 ? '' : str.slice(-behind)
     }`
+  },
+  accountExplor:(id:string)=>{
+    // console.log('princple',id)
+    const publicKey = 'c12f2ae8518172d965a0e504e2a1e9d492435c3226ede2616b1b9492b93b2805'
+    return `https://dashboard.internetcomputer.org/account/${publicKey}`
   }
 }
-
-// https://dashboard.internetcomputer.org/account/c12f2ae8518172d965a0e504e2a1e9d492435c3226ede2616b1b9492b93b2805

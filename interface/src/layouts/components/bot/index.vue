@@ -16,8 +16,22 @@ onMounted(()=>{
 </script>
 <style>
 .bot-wrapper{
-  @apply flex flex-col items-center justify-end overflow-hidden;
+  @apply flex flex-col items-center justify-end overflow-hidden rounded-lg;
   width: 14em;
+}
+.bot-wrapper::after{
+  content: '';
+  position: absolute;
+  z-index: -1;
+  background: transparent;
+  width: 40em;
+  height: 40em;
+  bottom: -20em;
+  left: 0;
+  border-radius: 100%;
+}
+.bot-wrapper:hover.bot-wrapper::after{
+  background: radial-gradient(#201d32, transparent);
 }
 .liquid-crystal {
   height: 10em;
