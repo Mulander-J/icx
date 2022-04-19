@@ -10,7 +10,7 @@
       </div>
     </div>
     <data-view 
-      :count="list.length" 
+      :count="total" 
       :isFull="true" :hideCreate="true" 
       :isEnd="_isEnd" :isError="_isError" :isEmpty="_isEmpty" 
       :retry="initPagination" :nextPage="nextPage"
@@ -54,7 +54,7 @@ import usePagination from '@/hooks/usePagination'
 
 const {
   _isError,_isEmpty, _isEnd,
-  _loading,list,
+  _loading,list,total,
   initPagination,nextPage,
 } = usePagination<WorkEvent>({
   name:'PageWorkEvent',

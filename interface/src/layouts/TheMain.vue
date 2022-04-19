@@ -7,7 +7,7 @@
           <transition name="fade" mode="out-in">
             <component :is="Component" />
           </transition>
-        </router-view>        
+        </router-view>
       </main>
       <NavBar class="lg:hidden" />
     </div>
@@ -57,6 +57,7 @@ const onScroll = ()=>{
   @apply grow rounded-none lg:rounded-lg ml-0 lg:ml-1 flex flex-col h-full overflow-hidden;
 }
 .main-bot{
-  @apply hidden lg:flex fixed right-10 bottom-10 top-60;
+  @apply hidden lg:flex fixed right-10 bottom-10;
+  min-height: 20em;
 }
 </style>

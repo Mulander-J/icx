@@ -13,7 +13,7 @@ export const appRoutes:Array<RouteRecordRaw> = [
     children:[
       {
         path: 'list',
-        name: 'List',
+        name: 'NodeList',
         component: () => import('@/views/core/Home.vue'),
       },
       {

@@ -11,7 +11,7 @@
       </div>
     </div>
     <data-view 
-      :count="list.length" 
+      :count="total" 
       :isFull="true" :isEnd="_isEnd" 
       :isError="_isError" :isEmpty="_isEmpty" 
       :retry="initPagination" :create="goCreate" :nextPage="nextPage"
@@ -52,7 +52,7 @@ const _query = ref('')
 
 const {
   _isError,_isEmpty, _isEnd,
-  _loading,list,
+  _loading,list,total,
   initPagination,nextPage,
 } = usePagination<FeedbackBody>({
   name:'PageFeedback',

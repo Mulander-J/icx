@@ -17,7 +17,7 @@ export const idlFactory = ({ IDL }) => {
     'base' : BaseInfo,
     'main' : MainInfo,
     'lastUpdate' : Time,
-    'authors' : IDL.Vec(IDL.Principal),
+    'authors' : IDL.Vec(IDL.Text),
   });
   const Address = IDL.Text;
   const UserInfo = IDL.Record({
@@ -31,7 +31,9 @@ export const idlFactory = ({ IDL }) => {
   const Result = IDL.Variant({ 'ok' : IDL.Bool, 'err' : IDL.Text });
   const ICX = IDL.Service({
     'AppInfo' : IDL.Func([], [IDL.Opt(Node)], ['query']),
+    'L2Nodes' : IDL.Func([], [IDL.Vec(Node)], ['query']),
     'NodeArrs' : IDL.Func([], [IDL.Vec(Node)], ['query']),
+    'NodeById' : IDL.Func([IDL.Nat], [IDL.Opt(Node)], ['query']),
     'NodeByPid' : IDL.Func([IDL.Nat], [IDL.Vec(Node)], ['query']),
     'PageUser' : IDL.Func(
         [IDL.Nat, IDL.Nat, IDL.Opt(IDL.Text)],

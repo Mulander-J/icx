@@ -21,7 +21,7 @@ module{
   public type Node = {
     base: BaseInfo;
     main: MainInfo;
-    authors: [Principal];
+    authors: [Text];
     lastUpdate: Time.Time;  
   };
 
@@ -45,9 +45,10 @@ module{
           };
       };
   };
-  public func addAuthors( _tar_ : [Principal], _id_: Principal) : [Principal] {        
-      if(Option.isNull(Array.find<Principal>(_tar_, func (e){e==_id_}))){
-        return Array.append<Principal>(_tar_, [_id_])
+  public func addAuthors( _tar_ : [Text], _id_: Principal) : [Text] {
+      let _p = Principal.toText(_id_);
+      if(Option.isNull(Array.find<Text>(_tar_, func (e){e==_p}))){
+        return Array.append<Text>(_tar_, [_p]);
       }else{
         _tar_;
       }

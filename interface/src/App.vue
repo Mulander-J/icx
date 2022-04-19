@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, onBeforeMount } from 'vue'
+import { watch, onBeforeMount, onMounted } from 'vue'
 import { useAppStore } from "@/store/modules/app";
 import { useAuthStore } from "@/store/modules/auth"
 import { updateDark } from '@/utils/dark'
@@ -18,9 +18,14 @@ const appStore = useAppStore()
 const {initAuth} = useAuthStore()
 
 watch(()=>appStore.dark,updateDark)
+
 onBeforeMount(()=>{
   updateDark()
   initAuth()
+})
+
+onMounted(async ()=>{
+  await appStore.getAppNode()
 })
 
 </script>

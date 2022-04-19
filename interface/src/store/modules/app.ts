@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { INITIAL_MSG, MessageType } from '@/model/msg'
+import { InsICX } from "@/hooks/useCanister"
 import { uuid } from '@/utils'
 import { isMobile } from '@/utils/getClient'
 import dealErr from '@/utils/dealErr'
@@ -12,13 +13,17 @@ export const useAppStore = defineStore({
     isOnChain: false,
     icCalls: 0,
     icMsgs: [INITIAL_MSG],
+    appInfo: INITIAL_APP,
   }),
   getters: {
     getIsDark(state) {
-      return state.dark === 'dark';
+      return state.dark === 'dark'
     },
     getIsLoading(state) {
-      return state.icCalls > 0;
+      return state.icCalls > 0
+    },
+    isAppFetched(state){
+      return !state.appInfo?.unFetched
     }
   },
   actions: {
@@ -27,6 +32,9 @@ export const useAppStore = defineStore({
     },
     setIsOnChain(ioc:boolean){
       this.isOnChain = ioc
+    },
+    setAppInfo(app:any){
+      this.appInfo = {...app}
     },
     addCall(){
       this.icCalls++
@@ -74,6 +82,14 @@ export const useAppStore = defineStore({
         !apartLoad && setTimeout(this.removeCall,800) // for animation loading
         console.log(`%c [Call-End]-${name||"Func"}`,'color:skyblue')   
       }
+    },
+    getAppNode(){
+      return this.handleCall({
+        name:'AppInfo',
+        cmd: InsICX.AppInfo,
+        cbk:(res:any)=>{this.setAppInfo(res[0]||INITIAL_APP)},
+        rej:()=>{this.setAppInfo(INITIAL_APP)}
+      })
     }
   }
 });
@@ -85,4 +101,17 @@ type CallOpt = {
   rej?:any, //  err-callback
   apartLoad?:boolean, // not add into global loading
   okTip?:boolean  // show tips when success
+}
+
+const INITIAL_APP = {
+  unFetched: true,
+  main:{
+    title : "ICX",
+    desc : "The X-DApp on IC",
+    cover : "",
+    content : "Web2sites Organizing-Tool for web2.5ers built by web3ers"
+  },
+  base:{},
+  authors:[],
+  lastUpdate:0
 }

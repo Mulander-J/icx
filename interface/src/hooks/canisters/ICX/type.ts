@@ -9,7 +9,9 @@ export interface BaseInfo {
 }
 export interface ICX {
   'AppInfo' : () => Promise<[] | [Node]>,
+  'L2Nodes' : () => Promise<Array<Node>>,
   'NodeArrs' : () => Promise<Array<Node>>,
+  'NodeById' : (arg_0: bigint) => Promise<[] | [Node]>,
   'NodeByPid' : (arg_0: bigint) => Promise<Array<Node>>,
   'PageUser' : (arg_0: bigint, arg_1: bigint, arg_2: [] | [string]) => Promise<
       [bigint, Array<UserInfo>]
@@ -32,7 +34,7 @@ export interface Node {
   'base' : BaseInfo,
   'main' : MainInfo,
   'lastUpdate' : Time,
-  'authors' : Array<Principal>,
+  'authors' : Array<string>,
 }
 export type Result = { 'ok' : boolean } |
   { 'err' : string };

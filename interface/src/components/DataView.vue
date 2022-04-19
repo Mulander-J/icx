@@ -16,7 +16,7 @@
         <p class="overflow-hidden relative text-center">
           <span class="dw-hr relative px-4 align-baseline">COUNT - <strong>{{count}}</strong></span>
         </p>
-        <div class="w-">
+        <div v-if="!hidePageNext">
           <span v-if="isEnd">END</span>
           <div v-else class="slate-widget btn icoBtn mx-auto" v-throttle @click="nextPage">
             <v-icon name="md-expandmore-round"/>
@@ -37,6 +37,7 @@
 
     hideCreate: Boolean,
     hidePageFooter: Boolean,
+    hidePageNext: Boolean,
 
     retry: {},
     create: {},

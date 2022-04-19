@@ -14,7 +14,7 @@
       </div>
     </div>
     <data-view 
-      :count="list.length" 
+      :count="total" 
       :isFull="true" :hideCreate="true" 
       :isEnd="_isEnd" :isError="_isError" :isEmpty="_isEmpty" 
       :retry="initPagination" :nextPage="nextPage"
@@ -58,17 +58,17 @@ const _dialogOpt = ref<any>({
 const {
   _isError,_isEmpty, _isEnd,
   _loading,list,total,
-  initPagination,nextPage,
+  initPagination,nextPage,setError
 } = usePagination<UserInfo>({
   name:'PageUser',
   cmd:InsICX.PageUser,
-},({pageSize,pageNum,setErr})=>{
+},({pageSize,pageNum})=>{
   let querys:any = []
   if(!!_query.value){
     if(isPrincipal(_query.value)){
       querys = [_query.value]
     }else{
-      setErr("Invalid Principal")
+      setError("Invalid Principal")
       return null
     }
   }

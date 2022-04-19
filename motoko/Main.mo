@@ -127,7 +127,7 @@ shared({ caller = _owner }) actor class ICX() {
           level = 1;
           isRoot = true;
         };
-        authors = [caller];
+        authors = [Principal.toText(caller)];
         lastUpdate = Time.now();
     }, List.nil());
 
@@ -151,7 +151,7 @@ shared({ caller = _owner }) actor class ICX() {
             level = level;
             isRoot = false;
           };
-          authors = [caller];
+          authors = [Principal.toText(caller)];
           lastUpdate = Time.now();
         }, _nodes);
 
@@ -160,7 +160,7 @@ shared({ caller = _owner }) actor class ICX() {
         ignore _updateUser(caller, MODIFY_POINT);
         ignore await _wk.insertLogger(#create,level,_main_.title,item.main.title,caller);
         
-        return #ok(_nextNodeId);
+        return #ok(_nextNodeId - 1);
       };
       case (#err(e)){
         return #err(e);
@@ -246,6 +246,12 @@ shared({ caller = _owner }) actor class ICX() {
   };
   public shared query func NodeArrs() : async [XN.Node] {
     List.toArray(_nodes);
+  };
+  public shared query func L2Nodes() : async [XN.Node] {
+    List.toArray(XN.getNodes(_nodes, #level(2)));
+  };
+  public shared query func NodeById(_id_: Nat) : async ?XN.Node {
+    XN.getNode(_nodes,#item(_id_));
   };
   public shared query func NodeByPid(_pid_: Nat) : async [XN.Node] {
     List.toArray(XN.getNodes(_nodes,#pid(_pid_)));
