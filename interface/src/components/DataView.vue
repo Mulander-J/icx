@@ -49,7 +49,7 @@
   }
  }
 </script>
-<style>
+<style scoped>
 .dw-hr::before,
 .dw-hr::after{
   content: '';

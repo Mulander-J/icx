@@ -6,11 +6,11 @@
         <h2 class="pix-h2">{{ca.label}}</h2>
         <p>{{ca.desc}}</p>
         <p>
-          <label>IC-Rock:</label>
+          <label class="mr-2">IC-Rock:</label>
           <a class="text-amber-600 hover:text-amber-600/[.8]" :href="$filters.rockExplor(ca.canisterId)" target="_blank">{{$filters.strSlice(ca.canisterId)}}</a>
         </p>
         <p>
-          <label>Cycle:</label>
+          <label class="mr-2">Cycle:</label>
           <strong>{{ca.cycle}}</strong>
         </p>
       </li>
@@ -56,7 +56,7 @@ onBeforeMount(()=>{
 })
 
 </script>
-<style>
+<style scoped>
 .logo-avatar{
   @apply bg-slate-800/[.6] dark:bg-white/[.8];
   mask-image: url('/img/logo.svg');

@@ -1,4 +1,5 @@
 import type { Principal } from '@dfinity/principal';
+export type Address = string;
 export interface BaseInfo {
   'id' : bigint,
   'pid' : bigint,
@@ -38,5 +39,11 @@ export type Result = { 'ok' : boolean } |
 export type Result_1 = { 'ok' : bigint } |
   { 'err' : string };
 export type Time = bigint;
-export interface UserInfo { 'id' : string, 'no' : bigint, 'point' : bigint }
+export interface UserInfo {
+  'id' : string,
+  'no' : bigint,
+  'alias' : string,
+  'account' : Address,
+  'point' : bigint,
+}
 export interface _SERVICE extends ICX {}

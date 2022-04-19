@@ -11,7 +11,7 @@ export default {
   props:["hideText","isFull"]
 }
 </script>
-<style>
+<style scoped>
 .no-data-ab{
   position: absolute;
   width: 100%;

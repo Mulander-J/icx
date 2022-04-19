@@ -38,6 +38,24 @@ body {
   transform: translateX(50%);
   opacity: 0;
 }
+
+.topScale-enter-active {
+  animation: top-change 0.2s;
+}
+.topScale-leave-active {
+  animation: top-change 0.2s reverse;
+}
+
+@keyframes top-change {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
 /* slide-left + righr */
 /* .slide-right-enter-active,
 .slide-right-leave-active,

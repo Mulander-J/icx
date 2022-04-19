@@ -8,7 +8,7 @@
       </router-link>
     </ul>
     <ul>
-      <li class="slate-widget navItem" v-throttle  @click="triggerDark">                
+      <li class="slate-widget navItem"  @click="triggerDark">                
         <transition name="slide" mode="out-in">
           <v-icon v-if="appStore.getIsDark" name="bi-moon-stars" />
           <v-icon v-else name="bi-sun" />

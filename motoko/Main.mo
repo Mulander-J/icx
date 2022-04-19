@@ -14,6 +14,7 @@ import User "./types/User";
 import Work "./types/Work";
 import XN "./modules/XNode";
 import DT "./modules/DateTime";
+import AID "./modules/AID/AccountId";
 import Base "./types/Base";
 
 shared({ caller = _owner }) actor class ICX() {
@@ -82,6 +83,8 @@ shared({ caller = _owner }) actor class ICX() {
          _addrUserMap.put(_key_, {
           id = user.id;
           no = user.no;
+          account = user.account;
+          alias = user.alias;
           point = user.point+_point_;
         });
         return true;
@@ -91,6 +94,8 @@ shared({ caller = _owner }) actor class ICX() {
           id = Principal.toText(_key_);
           no = _addrUserMap.size()+1;
           point = _point_;
+          account = AID.fromPrincipal(_key_,null);
+          alias = "Anonymous";
         });
         return false;
       };

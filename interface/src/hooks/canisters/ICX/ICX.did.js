@@ -19,9 +19,12 @@ export const idlFactory = ({ IDL }) => {
     'lastUpdate' : Time,
     'authors' : IDL.Vec(IDL.Principal),
   });
+  const Address = IDL.Text;
   const UserInfo = IDL.Record({
     'id' : IDL.Text,
     'no' : IDL.Nat,
+    'alias' : IDL.Text,
+    'account' : Address,
     'point' : IDL.Nat,
   });
   const Result_1 = IDL.Variant({ 'ok' : IDL.Nat, 'err' : IDL.Text });
