@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 min-h-full relative">
+  <div class="min-h-full relative">
      <div class="p-header">
       <div class="ph-box">
         <h2 class="pix-h2">ACTIVITY</h2>
@@ -15,7 +15,7 @@
       :isEnd="_isEnd" :isError="_isError" :isEmpty="_isEmpty" 
       :retry="initPagination" :nextPage="nextPage"
     >
-      <ul v-if="!_isEmpty">
+      <ul v-if="!_isEmpty" class="p-body">
         <li class="my-4" v-for="(l,i) in list" :key="i">
           <p class="text-zinc-400 mb-2 text-sm indent-1">{{$filters.dateStr(l.timestamp)}}</p>
           <section class="log-item">                  

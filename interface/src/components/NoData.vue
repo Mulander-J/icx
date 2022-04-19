@@ -14,9 +14,12 @@ export default {
 <style scoped>
 .no-data-ab{
   position: absolute;
-  width: 100%;
-  height: 80%;
+  width: max-content;
+  height: max-content;
   box-sizing: border-box;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  top: 50%;
 }
 .no-data-avatar{
   mask-image: url('/img/dfinity-lx.svg');

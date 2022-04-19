@@ -8,7 +8,6 @@ export const useAppStore = defineStore({
   id: "app",
   state: () => ({
     dark: 'light',
-    offsetY:0,
     isMobile: isMobile(),
     isOnChain: false,
     icCalls: 0,
@@ -23,9 +22,6 @@ export const useAppStore = defineStore({
     }
   },
   actions: {
-    setOffsetY(oy:number){
-      this.offsetY = oy;
-    },
     setDark(dark:'light'|'dark'){
       this.dark = dark
     },

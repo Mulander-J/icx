@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 min-h-full relative">
+  <div class="min-h-full relative">
      <div class="p-header">
       <div class="ph-box">
         <h2 class="pix-h2">RANK ~ {{total}}</h2>
@@ -19,7 +19,7 @@
       :isEnd="_isEnd" :isError="_isError" :isEmpty="_isEmpty" 
       :retry="initPagination" :nextPage="nextPage"
     >
-      <ul class="grid grid-cols-1 gap-y-4 my-4" v-if="!_isEmpty">
+      <ul class="p-body grid grid-cols-1 gap-y-4 my-4" v-if="!_isEmpty">
         <li class="userCard" v-for="(l,i) in list" :key="i">
             <div class="user-avatar"></div>
             <div class="flex flex-col h-full justify-evenly">

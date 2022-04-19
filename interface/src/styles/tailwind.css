@@ -23,25 +23,14 @@
 @layer components{
 	/*page-header*/
 	.p-header{
-		@apply relative z-10;
+		@apply sticky top-0 p-5 z-50;
+		transition: .3s ease;
 	}
 	.main-above .p-header{
-		@apply sticky top-0 py-4;
-	}
-	.p-header .ph-box{
-		@apply z-50 relative;
-	}
-	.p-header::after{
-		@apply z-40 absolute bg-transparent;
-		content: '';
-    top: -100%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-		transition: background .3s ease;
-	}
-	.main-above .p-header::after{
 		@apply bg-white dark:bg-gray-600;
+	}
+	.p-body{
+		@apply p-5 pt-0;
 	}
 	/*button*/
 	.slate-widget{
