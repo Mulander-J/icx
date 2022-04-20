@@ -17,3 +17,11 @@ export const isAlphabet = (str:string)=>{
   }
   return null
 }
+
+
+const regxUrl = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)/
+
+export const okHref =(str:string|any)=>{
+  if(!str) return false
+  return regxUrl.test(str)
+}

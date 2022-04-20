@@ -12,7 +12,7 @@ export const useAppStore = defineStore({
   state: () => ({
     dark: 'light',
     isMobile: isMobile(),
-    isOnChain: 'offline',
+    isOnChain: 'write',
     icCalls: 0,
     icMsgs: [INITIAL_MSG],
     appInfo: INITIAL_APP,
@@ -20,6 +20,9 @@ export const useAppStore = defineStore({
   getters: {
     getIsDark(state) {
       return state.dark === 'dark'
+    },
+    getIsOnline(state) {
+      return state.isOnChain === 'write'
     },
     getIsLoading(state) {
       return state.icCalls > 0
@@ -40,15 +43,15 @@ export const useAppStore = defineStore({
       this.setDark(getDark()==='dark'?'dark':'light')
     },
 
-    setIsOnChain(ioc:'online'|'offline'){
+    setIsOnChain(ioc:'write'|'read'){
       this.isOnChain = ioc
       setPower(ioc)
     },
     triggerPower(){
-      this.setIsOnChain(this.isOnChain === 'online' ? 'offline' : 'online')
+      this.setIsOnChain(this.isOnChain === 'write' ? 'read' : 'write')
     },
     initialPower(){
-      this.setIsOnChain(getPower()==='online'?'online':'offline')
+      this.setIsOnChain(getPower()==='read'?'read':'write')
     },
 
     setAppInfo(app:any){
@@ -86,21 +89,34 @@ export const useAppStore = defineStore({
       } = opt
       try{
         console.log(`%c [Call-Start]-${name||"Func"}`,'color:skyblue')
+        
         !apartLoad && this.addCall()
+        
         args.length > 0  && console.log(`%c [Call-Payloads]-${name||"Func"}`,'color:purple',args)
+        
         const _res = await cmd(...args)
+        
         console.log(`%c [Call-Recept]-${name||"Func"}`,'color:green' ,_res)
+        
+        if(_res?.err) throw Error(_res.err)
+
         okTip && this.addMsg(`${name} Success`, MessageType.SUCCESS)
+        
         cbk && cbk(_res)
+        
         return _res
-      }catch(err:any){
+      }catch(err:any){        
         console.log(`%c [Call-Error]-${name||"Func"}`, 'color:red',err)
+        
         const _msg = dealErr(err)
         this.addMsg(_msg, MessageType.ERROR)
+        
         rej && rej(err)
+        
         return null
       }finally{
         !apartLoad && setTimeout(this.removeCall,800) // for animation loading
+        
         console.log(`%c [Call-End]-${name||"Func"}`,'color:skyblue')   
       }
     },
@@ -133,7 +149,12 @@ const INITIAL_APP = {
     cover : "",
     content : "Web2sites Organizing-Tool for web2.5ers built by web3ers"
   },
-  base:{},
+  base:{
+    id:1,
+    pid:1,
+    pids:[],
+    isRoot:true
+  },
   authors:[],
   lastUpdate:0
 }

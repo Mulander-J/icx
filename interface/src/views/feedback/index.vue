@@ -6,7 +6,7 @@
         <div class="flex">
           <input class="slate-widget form-widget dn-text px-2" type="text" placeholder="Search" v-model="_query">
           <rt-btn class="mx-2" icon="io-search" :loading="_loading" v-throttle @click="initPagination" />
-          <rt-btn icon="md-add-round" :loading="_loading" v-throttle @click="goCreate" />
+          <rt-btn v-if="appStore.getIsOnline" icon="md-add-round" :loading="_loading" v-throttle @click="goCreate" />
         </div>
       </div>
     </div>
@@ -44,9 +44,11 @@ import { onBeforeMount,ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { InsICXFactory } from "@/hooks/useCanister"
 import { FeedbackBody } from '@/hooks/canisters/ICXFactory/type'
+import { useAppStore } from '@/store/modules/app'
 import usePagination from '@/hooks/usePagination'
 
 const router = useRouter()
+const appStore = useAppStore()
 
 const _query = ref('')
 
@@ -69,7 +71,7 @@ onBeforeMount(()=>{
 </script>
 <style scoped>
 .log-item{
-  @apply p-4 rounded-xl bg-white/40 grid gap-y-2
+  @apply p-4 rounded-xl grid gap-y-2 bg-gradient-to-r from-white/[.3] dark:from-black/[.3];
 }
 .wt-bug{
   @apply text-rose-700

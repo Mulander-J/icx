@@ -29,9 +29,7 @@ export default {
     }`
   },
   accountExplor:(id:string)=>{
-    // console.log('princple',id)
-    const publicKey = 'c12f2ae8518172d965a0e504e2a1e9d492435c3226ede2616b1b9492b93b2805'
-    return `https://dashboard.internetcomputer.org/account/${publicKey}`
+    return `https://dashboard.internetcomputer.org/account/${id}`
   },
   rockExplor:(cid:string)=>{
     return `https://ic.rocks/principal/${cid}`

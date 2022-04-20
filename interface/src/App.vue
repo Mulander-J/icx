@@ -26,8 +26,8 @@ watch(()=>appStore.isOnChain,updatePower)
 
 onBeforeMount(()=>{
   appStore.initialPower()
-  appStore.initialDark()
   updatePower()
+  appStore.initialDark()
   updateDark()
 })
 

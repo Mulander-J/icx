@@ -6,6 +6,7 @@ import {
   OiClock, GiRank3,MdRefresh,MdExpandmoreRound,IoCopy,OiLinkExternal,
   IoChatboxEllipses,IoTrashBin,MdAddRound,IoSearch,RiArrowGoBackLine,
   IoLogoTwitter,IoLogoGithub,BiTelegram,IoLogoDiscord,GiEvilBook,
+  MdModeeditRound,
 } from 'oh-vue-icons/icons'
 
 addIcons(
@@ -14,6 +15,7 @@ addIcons(
   OiClock, GiRank3,MdRefresh,MdExpandmoreRound,IoCopy,OiLinkExternal,
   IoChatboxEllipses,IoTrashBin,MdAddRound,IoSearch,RiArrowGoBackLine,
   IoLogoTwitter,IoLogoGithub,BiTelegram,IoLogoDiscord,GiEvilBook,
+  MdModeeditRound,
 );
 
 

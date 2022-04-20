@@ -8,12 +8,18 @@ import { computed } from 'vue'
 export default {
   props:{
     icon:{type:String,default:'md-refresh'},
-    loading:{type:Boolean}
+    loading:{type:Boolean},
+    hover:{type:Boolean},
   },
   setup(props:any) {
     const iconVal = computed(()=>{
-      const {icon,loading} = props
-      return loading?{name:icon,animation:'spin'}:{name:icon}
+      const {icon,loading,hover} = props
+      if(loading){
+        return {name:icon,animation:'spin'}
+      }else if(hover){
+        return {name:icon,animation:'ring',hover:true}
+      }
+      return {name:icon}
     })
     return {
       iconVal

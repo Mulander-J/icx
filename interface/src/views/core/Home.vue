@@ -6,12 +6,12 @@
         <div class="flex">
           <input class="slate-widget form-widget dn-text px-2" type="text" placeholder="Search" v-model="_query">
           <rt-btn class="mx-2" icon="io-search" :loading="_loading" v-throttle @click="queryList" />
-          <rt-btn icon="md-add-round" :loading="_loading" v-throttle @click="goCreate" />
+          <rt-btn v-show="appStore.getIsOnline" icon="md-add-round" :loading="_loading" v-throttle @click="goCreate" />
         </div>
       </div>
     </div>
     <data-view 
-      :count="_total"
+      :count="_total+1"
       :isFull="true" :hidePageNext="true"
       :isError="_isError" :isEmpty="_isEmpty" 
       :retry="initPagination" :create="goCreate"
@@ -45,6 +45,15 @@ const appStore = useAppStore()
 
 const _query = ref('')
 
+const {
+  _isError,_isEmpty,
+  _loading,_total,list,
+  queryList,initPagination,
+} = useList<typeNode>({
+  name:'L2Nodes',
+  cmd:InsICX.L2Nodes,
+})
+
 const listTrans = computed(()=>{ 
   let _resAlphabet:any = {};
   let _outFilter:any = []
@@ -64,17 +73,12 @@ const listTrans = computed(()=>{
   }
 })
 
-const {
-  _isError,_isEmpty,
-  _loading,_total,list,
-  queryList,initPagination,
-} = useList<typeNode>({
-  name:'L2Nodes',
-  cmd:InsICX.L2Nodes,
-})
-
 const goCreate = ()=>{
-  router.push('/add')
+  const id = appStore.appInfo?.base?.id
+  id && router.push({
+    name:'Create',
+    params:{ id }
+  })
 }
 
 onBeforeMount(()=>{

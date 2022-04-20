@@ -64,7 +64,7 @@ shared({ caller = _owner }) actor class ICX() {
 
     switch (XN.getNode(_nodes, #item(_id))) {
       case (?item) {
-        if(item.lastUpdate - Time.now() > MODIFY_LIMIT or _isAdd){
+        if((Time.now() - item.lastUpdate > MODIFY_LIMIT) or _isAdd){
           return  #ok(item);
         };
         return  #err("Please operate later");    

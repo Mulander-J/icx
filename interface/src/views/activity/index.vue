@@ -67,7 +67,7 @@ onBeforeMount(()=>{
 </script>
 <style scoped>
 .log-item{
-  @apply p-4 rounded-xl bg-white/40 grid gap-y-2
+  @apply p-4 rounded-xl grid gap-y-2 bg-gradient-to-r from-white/[.3] dark:from-black/[.3];
 }
 .wt-delete{
   @apply text-rose-700

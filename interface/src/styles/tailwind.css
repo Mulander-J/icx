@@ -18,6 +18,19 @@
 	.font-sc{
 		font-size: calc(100% + 2vmin);
 	}
+
+	.online .bg-main{
+		@apply bg-sky-600/[.8];
+	}
+	.offline .bg-main{
+		@apply bg-rose-600/[.6];
+	}
+	.online .txt-main{
+		@apply text-sky-400;
+	}
+	.offline .txt-main{
+		@apply text-rose-400;
+	}
 }
 
 @layer components{

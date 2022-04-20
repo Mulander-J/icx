@@ -19,7 +19,12 @@ export const appRoutes:Array<RouteRecordRaw> = [
       {
         path: 'add',
         name: 'Create',
-        component: () => import('@/views/core/Create.vue'),
+        component: () => import('@/views/core/Modify.vue'),
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        name: 'Modify',
+        component: () => import('@/views/core/Modify.vue'),
       },
       {
         path: 'info/:id(\\d+)',
