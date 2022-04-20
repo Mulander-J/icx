@@ -23,17 +23,23 @@
           </a>
         </li> 
       </ul>
-      <p class="font-pixie my-4"><strong>ICX</strong></p>
-      <p>The X-DApp on IC</p>
-      <p>Web2sites Organizing-Tool for web2.5ers built by web3ers</p>
+      <p class="font-pixie my-4"><strong>{{appInfo.title}}</strong></p>
+      <p>{{appInfo.desc}}</p>
+      <p>{{appInfo.content}}</p>
       <p>Copyright © 2022 ICX. All rights reserved.</p>
     </section>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, onBeforeMount } from 'vue'
+import { ref, onBeforeMount, computed } from 'vue'
 import { CanisterList } from '@/hooks/canisters/index'
 import { InsCycle } from '@/hooks/useCanister'
+import { useAppStore } from '@/store/modules/app'
+
+const appStore = useAppStore()
+
+const appInfo = computed(()=>appStore.appInfo.main)
+
 const community = [
   {key:'twitter',label:'twitter',link:'',icon:'io-logo-twitter'},
   {key:'telegram',label:'telegram',link:'',icon:'bi-telegram'},

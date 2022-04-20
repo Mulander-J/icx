@@ -6,16 +6,19 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, onBeforeMount, onMounted } from 'vue'
+import { watch, onBeforeUnmount, onBeforeMount, onMounted } from 'vue'
 import { useAppStore } from "@/store/modules/app";
 import { useAuthStore } from "@/store/modules/auth"
 import { updateDark } from '@/utils/dark'
+import useFakeAI from '@/hooks/useFakeAI'
 import TheMain from './layouts/TheMain.vue'
 import Loading from './layouts/Loading.vue';
 
 
 const appStore = useAppStore()
-const {initAuth} = useAuthStore()
+const { initAuth } = useAuthStore()
+const { handleGlobalClick } = useFakeAI()
+
 
 watch(()=>appStore.dark,updateDark)
 
@@ -25,7 +28,12 @@ onBeforeMount(()=>{
 })
 
 onMounted(async ()=>{
+  window.addEventListener("click", handleGlobalClick)
   await appStore.getAppNode()
+})
+
+onBeforeUnmount(()=>{
+  window.removeEventListener("click", handleGlobalClick)
 })
 
 </script>

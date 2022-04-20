@@ -44,14 +44,13 @@ const getNotifyCls = (type:number)=>{
   @apply flex flex-col grow justify-end items-end w-full mr-12;
 }
 .notifyer{
-  @apply relative rounded-md p-2 my-2 text-left w-max flex items-center justify-center;
+  @apply relative rounded-md p-2 my-2 text-left w-max flex items-center justify-center select-none;
   margin-top: 1rem;
   background: rgba(0,0,0,.2);
   font-size: 14px;
 }
 .notifyer .text{
-  @apply break-all truncate;  
-  max-width: 10em;
+  @apply break-all truncate;
 }
 
 .notify-del{

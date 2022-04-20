@@ -14,6 +14,7 @@ body {
 .pix-h2{
   font-family: ProcrastinatingPixie,Inter,sans-serif;
   font-size: calc(10px + 2vmin);
+  text-transform: uppercase;
 }
 
 /* Fade transition*/

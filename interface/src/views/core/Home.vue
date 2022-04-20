@@ -45,8 +45,6 @@ const appStore = useAppStore()
 
 const _query = ref('')
 
-const _appNode = ref<typeNode[]>([])
-
 const listTrans = computed(()=>{ 
   let _resAlphabet:any = {};
   let _outFilter:any = []

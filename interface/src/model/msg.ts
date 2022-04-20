@@ -12,5 +12,5 @@ export type Message = {
 export const INITIAL_MSG = {
   key: 'initial',
   type: MessageType.INFO,
-  text: 'Welcome!'
+  text: "Hello! I'm Bot-X."
 }
