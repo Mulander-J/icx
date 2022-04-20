@@ -55,7 +55,7 @@
 		@apply mb-2 text-lg text-gray-800 dark:text-gray-400
 	}
 	.form-widget{
-		@apply align-baseline caret-sky-500;
+		@apply align-baseline caret-gray-500;
 	}
 	.form-widget::-webkit-input-placeholder {
 		@apply text-gray-800/[.8] dark:text-gray-400/[.8];

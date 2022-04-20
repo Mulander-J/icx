@@ -7,7 +7,7 @@
         <p>{{ca.desc}}</p>
         <p>
           <label class="mr-2">IC-Rock:</label>
-          <a class="text-amber-600 hover:text-amber-600/[.8]" :href="$filters.rockExplor(ca.canisterId)" target="_blank">{{$filters.strSlice(ca.canisterId)}}</a>
+          <a v-if="ca.canisterId" class="text-amber-600 hover:text-amber-600/[.8]" :href="$filters.rockExplor(ca.canisterId)" target="_blank">{{$filters.strSlice(ca.canisterId)}}</a>
         </p>
         <p>
           <label class="mr-2">Cycle:</label>

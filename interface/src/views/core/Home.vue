@@ -52,7 +52,7 @@ const listTrans = computed(()=>{
     list.value.forEach((item:typeNode)=>{
       let k = isAlphabet(item.main.title)
       if(!!k){
-         (_resAlphabet[k] ? _resAlphabet[k]: _resAlphabet[k] = [])  && _resAlphabet[k].push(item)
+         (_resAlphabet[k] ? _resAlphabet[k]: _resAlphabet[k] = [])  && ( _resAlphabet[k].push(item))
       }else{
         _outFilter.push(item)
       }
@@ -81,17 +81,4 @@ onBeforeMount(()=>{
   initPagination()
 })
 </script>
-<style>
-.log-item{
-  @apply p-4 rounded-xl bg-white/40 grid gap-y-2
-}
-.wt-bug{
-  @apply text-rose-700
-}
-.wt-suggestion{
-  @apply text-lime-400
-}
-.wt-feature{
-  @apply text-amber-400
-}
-</style>
+<style></style>

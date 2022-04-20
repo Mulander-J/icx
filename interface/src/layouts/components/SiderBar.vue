@@ -8,13 +8,13 @@
       </router-link>
     </ul>
     <ul>
-      <li class="slate-widget navItem"  @click="triggerDark">                
+      <li class="slate-widget navItem"  @click="appStore.triggerDark">                
         <transition name="slide" mode="out-in">
           <v-icon v-if="appStore.getIsDark" name="bi-moon-stars" />
           <v-icon v-else name="bi-sun" />
         </transition>
       </li>
-      <li class="navItem" v-throttle @click="triggerOnChain">
+      <li class="navItem" v-throttle @click="appStore.triggerPower">
         <v-icon name="io-power" />
       </li>
     </ul>
@@ -23,24 +23,18 @@
 <script lang="ts" setup>
 import { appRoutes } from '@/router'
 import { useAppStore } from "@/store/modules/app"
-import { setDark,getDark } from '@/utils/dark'
 
-const appStore  = useAppStore()
 const menus = appRoutes
-const triggerDark = ()=>{
-  const _theme = getDark() === 'dark' ? 'light' : 'dark'
-  setDark(_theme)
-  appStore.setDark(_theme)
-}
-const triggerOnChain = ()=>{
-  appStore.setIsOnChain(!appStore.isOnChain)
-}
+const appStore  = useAppStore()
 </script>
 <style>
 .navItem{
   @apply cursor-pointer rounded-lg mb-2 py-1 text-center overflow-hidden
 }
-.exactActive{
+.online .exactActive{
   @apply bg-sky-400 hover:bg-sky-400/[.8] !important;
+}
+.offline .exactActive{
+  @apply bg-rose-400 hover:bg-rose-400/[.8] !important;
 }
 </style>

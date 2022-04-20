@@ -10,6 +10,7 @@ import { watch, onBeforeUnmount, onBeforeMount, onMounted } from 'vue'
 import { useAppStore } from "@/store/modules/app";
 import { useAuthStore } from "@/store/modules/auth"
 import { updateDark } from '@/utils/dark'
+import { updatePower } from '@/utils/power'
 import useFakeAI from '@/hooks/useFakeAI'
 import TheMain from './layouts/TheMain.vue'
 import Loading from './layouts/Loading.vue';
@@ -21,15 +22,19 @@ const { handleGlobalClick } = useFakeAI()
 
 
 watch(()=>appStore.dark,updateDark)
+watch(()=>appStore.isOnChain,updatePower)
 
 onBeforeMount(()=>{
+  appStore.initialPower()
+  appStore.initialDark()
+  updatePower()
   updateDark()
-  initAuth()
 })
 
 onMounted(async ()=>{
   window.addEventListener("click", handleGlobalClick)
   await appStore.getAppNode()
+  initAuth()
 })
 
 onBeforeUnmount(()=>{

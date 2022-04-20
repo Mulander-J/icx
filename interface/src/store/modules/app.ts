@@ -3,6 +3,8 @@ import { INITIAL_MSG, MessageType } from '@/model/msg'
 import { InsICX } from "@/hooks/useCanister"
 import { uuid } from '@/utils'
 import { isMobile } from '@/utils/getClient'
+import { setPower, getPower } from "@/utils/power"
+import { setDark as setTheDark, getDark } from "@/utils/dark";
 import dealErr from '@/utils/dealErr'
 
 export const useAppStore = defineStore({
@@ -10,7 +12,7 @@ export const useAppStore = defineStore({
   state: () => ({
     dark: 'light',
     isMobile: isMobile(),
-    isOnChain: false,
+    isOnChain: 'offline',
     icCalls: 0,
     icMsgs: [INITIAL_MSG],
     appInfo: INITIAL_APP,
@@ -29,13 +31,30 @@ export const useAppStore = defineStore({
   actions: {
     setDark(dark:'light'|'dark'){
       this.dark = dark
+      setTheDark(dark)
     },
-    setIsOnChain(ioc:boolean){
+    triggerDark(){
+      this.setDark(this.dark === 'dark' ? 'light' : 'dark')
+    },
+    initialDark(){
+      this.setDark(getDark()==='dark'?'dark':'light')
+    },
+
+    setIsOnChain(ioc:'online'|'offline'){
       this.isOnChain = ioc
+      setPower(ioc)
     },
+    triggerPower(){
+      this.setIsOnChain(this.isOnChain === 'online' ? 'offline' : 'online')
+    },
+    initialPower(){
+      this.setIsOnChain(getPower()==='online'?'online':'offline')
+    },
+
     setAppInfo(app:any){
       this.appInfo = {...app}
     },
+
     addCall(){
       this.icCalls++
     },
@@ -43,6 +62,7 @@ export const useAppStore = defineStore({
       this.icCalls--
       this.icCalls < 0 && ( this.icCalls = 0)
     },
+
     addMsg(text:string, type: MessageType){
       const _msgs = this.icMsgs.concat([{
         key: uuid(),
@@ -57,6 +77,7 @@ export const useAppStore = defineStore({
     clearMsg(){
       this.icMsgs.length = 0
     },
+
     async handleCall(opt:CallOpt, ...args:any){
       const {
         name,cmd,
@@ -83,6 +104,7 @@ export const useAppStore = defineStore({
         console.log(`%c [Call-End]-${name||"Func"}`,'color:skyblue')   
       }
     },
+    
     getAppNode(){
       return this.handleCall({
         name:'AppInfo',

@@ -13,12 +13,12 @@ export const appRoutes:Array<RouteRecordRaw> = [
     children:[
       {
         path: 'list',
-        name: 'NodeList',
+        name: 'List',
         component: () => import('@/views/core/Home.vue'),
       },
       {
         path: 'add',
-        name: 'NodeCreate',
+        name: 'Create',
         component: () => import('@/views/core/Create.vue'),
       },
       {
@@ -66,7 +66,7 @@ const routes: Array<RouteRecordRaw> = [
   ...appRoutes,
   {
     path: '/feedback/create',
-    name: 'FeedbackCreate',
+    name: 'Feedback_ADD',
     component: () => import('@/views/feedback/Create.vue'),
   },
   {

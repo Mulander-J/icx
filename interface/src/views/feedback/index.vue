@@ -67,7 +67,7 @@ onBeforeMount(()=>{
   initPagination()
 })
 </script>
-<style>
+<style scoped>
 .log-item{
   @apply p-4 rounded-xl bg-white/40 grid gap-y-2
 }
