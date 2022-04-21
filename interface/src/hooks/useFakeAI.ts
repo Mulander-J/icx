@@ -3,7 +3,7 @@ import { MessageType } from '@/model/msg'
 import { useAppStore } from '@/store/modules/app'
 
 const HOUR = 1_000 * 60 * 60
-const DURATION = 1_000 * 60
+const DURATION = 1_000 * 60 * 8
 
 const defaultState = {
   count: 0,

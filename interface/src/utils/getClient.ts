@@ -20,6 +20,6 @@ const browser={
   // language:(navigator.browserLanguage || navigator.language).toLowerCase()
 }
 
-export const isMobile = ()=> browser.versions.mobile||browser.versions.android||browser.versions.ios
+export const isDeviceMobile = ()=> browser.versions.mobile||browser.versions.android||browser.versions.ios
 
 export default browser

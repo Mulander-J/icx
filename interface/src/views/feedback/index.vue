@@ -28,9 +28,7 @@
               </p>         
               <p>
                 <label>Opreator:</label>              
-                <span>
-                  <a class="text-blue-600 hover:text-blue-600/[.8]" :href="$filters.accountExplor(l.opreator)" target="_blank">{{$filters.strSlice(l.opreator)}}</a>              
-                </span>            
+                <span>{{$filters.strSlice(l.opreator)}}</span>
               </p>
             </section>        
           </li>          

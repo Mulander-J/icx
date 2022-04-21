@@ -2,17 +2,18 @@ import { defineStore } from "pinia";
 import { INITIAL_MSG, MessageType } from '@/model/msg'
 import { InsICX } from "@/hooks/useCanister"
 import { uuid } from '@/utils'
-import { isMobile } from '@/utils/getClient'
+import { isDeviceMobile } from '@/utils/getClient'
 import { setPower, getPower } from "@/utils/power"
 import { setDark as setTheDark, getDark } from "@/utils/dark";
 import dealErr from '@/utils/dealErr'
+import notify from '@/components/notify/core'
 
 export const useAppStore = defineStore({
   id: "app",
   state: () => ({
     dark: 'light',
-    isMobile: isMobile(),
     isOnChain: 'write',
+    isMobile: isDeviceMobile(),
     icCalls: 0,
     icMsgs: [INITIAL_MSG],
     appInfo: INITIAL_APP,
@@ -54,6 +55,11 @@ export const useAppStore = defineStore({
       this.setIsOnChain(getPower()==='read'?'read':'write')
     },
 
+    setIsMobile(isMobile:boolean){
+      this.isMobile = isMobile
+      console.log(isMobile)
+    },
+
     setAppInfo(app:any){
       this.appInfo = {...app}
     },
@@ -65,17 +71,20 @@ export const useAppStore = defineStore({
       this.icCalls--
       this.icCalls < 0 && ( this.icCalls = 0)
     },
-
     addMsg(text:string, type: MessageType){
-      const _msgs = this.icMsgs.concat([{
-        key: uuid(),
-        text,
-        type
-      }]);
-      this.icMsgs = _msgs.slice(-5);
+      if(this.isMobile){
+        notify({content:text})
+      }else{
+        const _msgs = this.icMsgs.concat([{
+          key: uuid(),
+          text,
+          type
+        }]);
+        this.icMsgs = _msgs.slice(-5);
+      }
     },
     removeMsg(key:string){
-      this.icMsgs = this.icMsgs.filter(e=>e.key!==key)
+      this.icMsgs = this.icMsgs.filter(e=>e.key!==key)      
     },
     clearMsg(){
       this.icMsgs.length = 0

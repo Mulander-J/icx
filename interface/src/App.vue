@@ -11,6 +11,7 @@ import { useAppStore } from "@/store/modules/app";
 import { useAuthStore } from "@/store/modules/auth"
 import { updateDark } from '@/utils/dark'
 import { updatePower } from '@/utils/power'
+import { throttle } from '@/utils'
 import useFakeAI from '@/hooks/useFakeAI'
 import TheMain from './layouts/TheMain.vue'
 import Loading from './layouts/Loading.vue';
@@ -19,6 +20,10 @@ import Loading from './layouts/Loading.vue';
 const appStore = useAppStore()
 const { initAuth } = useAuthStore()
 const { handleGlobalClick } = useFakeAI()
+
+const onresize = throttle(() => {
+  appStore.setIsMobile(window.innerWidth <= 1024)
+}, 300)
 
 
 watch(()=>appStore.dark,updateDark)
@@ -33,12 +38,14 @@ onBeforeMount(()=>{
 
 onMounted(async ()=>{
   window.addEventListener("click", handleGlobalClick)
+  window.addEventListener("resize", onresize)
   await appStore.getAppNode()
   initAuth()
 })
 
 onBeforeUnmount(()=>{
   window.removeEventListener("click", handleGlobalClick)
+  window.removeEventListener("resize", onresize)
 })
 
 </script>

@@ -25,3 +25,44 @@ export const okHref =(str:string|any)=>{
   if(!str) return false
   return regxUrl.test(str)
 }
+
+export const throttle = function (
+  func: (...args: any) => any,
+  wait: number,
+  options?: { leading?: boolean; trailing?: boolean },
+): () => void {
+  let context: any
+  let args: any
+  let result: any
+  let timeout: any
+  let previous = 0
+  if (!options) options = {}
+  const later = function () {
+    previous = options?.leading === false ? 0 : +new Date()
+    timeout = null
+    result = func.apply(context, args)
+    if (!timeout) context = args = null
+  }
+  const cbk =  function() {
+    const now = +new Date()
+    if (!previous && options?.leading === false) previous = now
+    // 计算剩余时间
+    const remaining = wait - (now - previous)
+    context = this
+    // eslint-disable-next-line prefer-rest-params
+    args = arguments
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout)
+        timeout = null
+      }
+      previous = now
+      result = func.apply(context, args)
+      if (!timeout) context = args = null
+    } else if (!timeout && options?.trailing !== false) {
+      timeout = setTimeout(later, remaining)
+    }
+    return result
+  }
+  return cbk
+}

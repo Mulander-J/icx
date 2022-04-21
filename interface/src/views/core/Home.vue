@@ -19,7 +19,7 @@
       <template v-slot:default>
         <ul v-if="!_isEmpty" class="p-body">
           <NodeGroup v-if="appStore.isAppFetched" title="APP" :list="[appStore.appInfo]" />
-          <NodeGroup v-if="listTrans?.out?.length > 0" title="#" />
+          <NodeGroup v-if="listTrans?.out?.length > 0" title="#" :list="listTrans.out"/>
           <NodeGroup 
             class="my-4" 
             v-for="(_l,_k,i) in listTrans.alpha" :key="i"

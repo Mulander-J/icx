@@ -1,5 +1,5 @@
 <template>
-  <div class="ctx-center wh-full justify-between py-5">
+  <div class="wh-full py-5 grid justify-center items-center gap-y-4">
     <div class="logo-avatar font-sc"></div>
     <ul class="grid lg:grid-cols-3 grid-cols-1 gap-4 items-start text-center">
       <li v-for="ca in canisters" :key="ca.key">
@@ -15,15 +15,15 @@
         </p>
       </li>
     </ul>
-    <section class="text-center">     
-      <ul class="grid grid-cols-5 gap-x-4">
-        <li v-for="cm in community" :key="cm.key">
-          <a class="cursor-pointer  p-2 rounded-full flex">
-            <v-icon :name="cm.icon" :scale="1.6" animation="wrench" hover/>
-          </a>
-        </li> 
-      </ul>
-      <p class="font-pixie my-4"><strong>{{appInfo.title}}</strong></p>
+    <ul class="grid grid-cols-5 gap-x-4 m-4">
+      <li v-for="cm in community" :key="cm.key" class="text-center">
+        <a class="cursor-pointer p-2 rounded-full">
+          <v-icon :name="cm.icon" :scale="1.6" animation="wrench" hover/>
+        </a>
+      </li> 
+    </ul>
+    <section class="text-center pb-8">     
+      <p class="font-pixie mb-2"><strong>{{appInfo.title}}</strong></p>
       <p>{{appInfo.desc}}</p>
       <p>{{appInfo.content}}</p>
       <p>Copyright © 2022 ICX. All rights reserved.</p>

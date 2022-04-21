@@ -1,4 +1,5 @@
 import vue from "@vitejs/plugin-vue"
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import { defineConfig } from "vite"
 import path, { resolve } from "path"
 import dfxJson from "../dfx.json"
@@ -71,7 +72,7 @@ const DFX_PORT = dfxJson.networks.local.bind.split(":")[1]
 // See guide on how to configure Vite at:
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue(),vueJsx()],
   resolve: {
     alias: {
       // Here we tell Vite the "fake" modules that we want to define

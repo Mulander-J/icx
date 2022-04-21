@@ -27,7 +27,7 @@ import { useAppStore } from "@/store/modules/app"
 const menus = appRoutes
 const appStore  = useAppStore()
 </script>
-<style>
+<style scoped>
 .navItem{
   @apply cursor-pointer rounded-lg mb-2 py-1 text-center overflow-hidden
 }

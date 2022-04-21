@@ -30,7 +30,7 @@ export const appRoutes:Array<RouteRecordRaw> = [
         path: 'info/:id(\\d+)',
         name: 'Info',
         component: () => import('@/views/core/Info.vue'),
-      },
+      }
     ]
   },
   {
@@ -63,6 +63,14 @@ export const appRoutes:Array<RouteRecordRaw> = [
     component: () => import('@/views/about/index.vue'),
     meta: {
       icon: 'ri-questionnaire-fill'
+    }
+  },
+  {
+    path: '/tool',
+    name: 'Tool',
+    component: () => import('@/views/tool/index.vue'),
+    meta: {
+      icon: 'fa-tools'
     }
   },
 ]

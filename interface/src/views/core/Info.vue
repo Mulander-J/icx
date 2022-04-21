@@ -3,7 +3,7 @@
     <div class="m-5 flex items-center">
       <span class="pix-h2">INFO</span>
       <rt-btn class="ml-2" title="Back To List" icon="ri-arrow-go-back-line" v-throttle @click="$router.push('/list')" />
-      <rt-btn v-show="appStore.getIsOnline" class="mx-2" title="Create" icon="md-add-round" v-throttle @click="goCreateMain" />
+      <rt-btn v-show="appStore.getIsOnline" class="mx-2" title="Create" icon="md-add-round" v-throttle @click="goCreate" />
       <rt-btn v-show="appStore.getIsOnline" class="mr-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(_item)" />
       <rt-btn v-if="!_isRoot&&appStore.getIsOnline" :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(_item)" />
     </div>
@@ -11,11 +11,11 @@
       <div class="flex items-start flex-wrap">
         <div class="item-cover"><div class="item-img bg-main"></div></div>
         <div class="px-4">
-          <p class="text-3xl font-bold">{{_item?.main?.title || '>o<'}}</p>
-          <p class="text-xs text-zinc-800/[.8]">{{_item?.main?.desc || '>o<'}}</p>
+          <p class="text-3xl font-bold">{{_item?.main?.title || '◉◡◉'}}</p>
+          <p class="text-xs text-zinc-800/[.8]">{{_item?.main?.desc || '◉◡◉'}}</p>
         </div>        
       </div>
-      <p class="text-xl my-2">{{_item?.main?.content||'>o<'}}</p>
+      <p class="text-xl my-2">{{_item?.main?.content||'◉◡◉'}}</p>
       <div v-show="appStore.getIsOnline">
         <p class="text-sm">Participating Editors : <strong>{{_joinCount}}</strong></p>                
         <p class="text-sm">Last Update at {{$filters.dateStr(_item?.lastUpdate||0)}}</p>
@@ -26,21 +26,22 @@
       :count="_total"
       :isFull="true" :hidePageNext="true"
       :isError="_isError" :isEmpty="_isEmpty"       
-      :retry="initPagination" :create="goCreateMain"
+      :retry="initPagination" :create="goCreate"
     >
       <template v-slot:default>
         <ul v-if="!_isEmpty" class="p-body info-ul">
             <li class="bookmark-wrap" v-for="(l,i) in list" :key="i">
-              <div>
-                <span 
-                  class="txt-main" 
-                  :class="[okHref(l?.main?.content) && 'markLink']" 
-                  @click="skipBrowser(l?.main)"
-                >{{l?.main?.title || 'Link'}}</span>
+              <div>                
+                <a 
+                  v-if="okHref(l?.main?.content)" 
+                  class="txt-main markLink" 
+                  :href="l?.main?.content"
+                  target="_blank" rel="noopener noreferrer"
+                >{{l?.main?.title || 'Link'}}</a>
+                <span class="txt-main markLink" v-else>{{l?.main?.title || 'Link'}}</span>
                 <p class="text-sm" v-if="l?.main?.desc">{{l.main.desc}}</p>
               </div>
               <div v-if="appStore.getIsOnline" class="flex">
-                  <rt-btn title="Create" icon="md-add-round" v-throttle @click="goCreate(l)" />
                   <rt-btn class="mx-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(l)" />
                   <rt-btn :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(l)" />
               </div>
@@ -50,7 +51,7 @@
     </data-view>
     <no-data v-else class="m-5 mt-12 text-center">
       <p class="font-sc text-sky-500">The app-info is open for modify.</p>      
-      <div v-show="appStore.getIsOnline" class="btn-modify" @click="goModify">MODIFY</div>
+      <div v-show="appStore.getIsOnline" class="btn-modify" @click="goModify(_item)">MODIFY</div>
     </no-data>
   </div>
 </template>
@@ -84,24 +85,16 @@ const {
 const skipBack = ()=>{
   router.push('/404')
 }
-const goCreateMain = ()=>{
-  goCreate(_item.value)
-}
-const goCreate = (item:any)=>{
-  const id = item?.base?.id
+const goCreate = ()=>{
+  const id = Number(_item.value?.base?.id)
   id && router.push({
      name:'Create',
      params:{ id }
    })
 }
 const goModify = (item:any)=>{
-  const id = item?.base?.id
+  const id = Number(item?.base?.id)
   id && router.push('/edit/'+id)
-}
-
-const skipBrowser = (item:any)=>{
-  const {content=''} = item
-  !!okHref(content) && window.open(content)
 }
 
 const handleDelete = async (item:any)=>{
@@ -117,7 +110,7 @@ const handleDelete = async (item:any)=>{
 }
 
 const initialNodes = async ()=>{
-    appStore.handleCall({
+  await appStore.handleCall({
     name:'NodeById',
     cmd:InsICX.NodeById,
     cbk:async (res:any)=>{
@@ -133,7 +126,7 @@ const initialNodes = async ()=>{
       }
     },
     rej:()=>{
-       skipBack()
+      skipBack()
     },    
   },_id.value)
 }
