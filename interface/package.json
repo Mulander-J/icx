@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
-    "dev:debug": "vite --debug",
+    "dev:debug": "vite --debug --host",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview"
   },
