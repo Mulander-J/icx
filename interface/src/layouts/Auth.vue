@@ -3,7 +3,7 @@
   <div class="auth-section">
     <button v-if="!signedIn && clientReady" @click="signIn()" class="auth-button">
       Sign In
-      <img alt="" style="width: 33px; margin-right: -1em; margin-left: 0.7em;" src="img/dfinity.svg" />
+      <img alt="" style="width: 33px; margin-right: -1em; margin-left: 0.7em;" src="@img/dfinity.svg" />
     </button>
 
     <template v-if="signedIn">

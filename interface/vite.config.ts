@@ -78,6 +78,7 @@ export default defineConfig({
       // Here we tell Vite the "fake" modules that we want to define
       // ...aliases,
       '@': resolve(__dirname, './src'),
+      '@img':resolve(__dirname, './src/assets/img'),
     },
   },
   server: {

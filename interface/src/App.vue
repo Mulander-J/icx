@@ -53,6 +53,6 @@ onBeforeUnmount(()=>{
 .app-loading{
   @apply fixed top-0 bottom-0 left-0 right-0 flex flex-col justify-center items-center;
   z-index: 8000;
-  background: radial-gradient(rgba(221,187,187,.4), transparent);
+  background: radial-gradient(rgba(221,187,187,.8), transparent);
 }
 </style>

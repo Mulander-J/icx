@@ -7,6 +7,18 @@
     "ICXFactory": {
       "main": "motoko/Factory.mo",
       "type": "motoko"
+    },
+    "ICXInterface":{
+      "dependencies": [
+        "ICX","ICXFactory"
+      ],
+      "frontend": {
+        "entrypoint": "interface/dist/index.html"
+      },
+      "source": [
+        "interface/dist/"
+      ],
+      "type": "assets"
     }
   },
   "defaults": {

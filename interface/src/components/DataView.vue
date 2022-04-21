@@ -2,12 +2,12 @@
  <transition name="fade" mode="out-in">     
     <no-data v-if="isError" :isFull="isFull">
       <p class="text-rose-500">{{txtLoading}}</p>
-      <div class="slate-widget btn lgBtn" v-throttle @click="retry">{{txtRetry}}</div>
+      <div class="slate-widget btn lgBtn" v-throttle @click="retry || false">{{txtRetry}}</div>
     </no-data>
     <no-data v-else-if="isEmpty" :isFull="isFull">
       <slot name="empty">
         <p class="text-gray-800">{{txtNoData}}</p>
-        <div v-if="!hideCreate" class="slate-widget btn lgBtn" v-throttle @click="create">{{txtCreate}}</div>
+        <div v-if="!hideCreate" class="slate-widget btn lgBtn" v-throttle @click="create || false">{{txtCreate}}</div>
       </slot>
     </no-data>
     <div v-else>
@@ -16,7 +16,7 @@
         <divide class="text-center">COUNT - <strong>{{count}}</strong></divide>
         <div v-if="!hidePageNext">
           <span v-if="isEnd">END</span>
-          <div v-else class="slate-widget btn icoBtn mx-auto" v-throttle @click="nextPage">
+          <div v-else class="slate-widget btn icoBtn mx-auto" v-throttle @click="nextPage || false">
             <v-icon name="md-expandmore-round"/>
           </div>
         </div>            

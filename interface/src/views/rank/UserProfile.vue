@@ -4,7 +4,7 @@
       <div class="text-left text-2xl w-full"># {{$filters.frBN(user?.no || 0)}}</div>
       <div class="relative">
         <div class="up-heart"><HeartVue l="2.5em" c="rgba(255,255,255)"/></div>
-        <img class="up-avatar-img" src="/img/dfinity.svg" alt="">
+        <div class="up-avatar-img"></div>
       </div>
       <p class="font-pixie uppercase">{{user?.alias || 'Anonymous'}}</p>
       <p class="text-3xl my-2 font-extrabold">{{user?.point || 0}}</p>
@@ -57,11 +57,11 @@ const props = defineProps<{
 }
 
 .up-avatar-img{
-  position: relative;
+  @apply relative my-auto bg-no-repeat bg-contain bg-center;
   z-index: 10;
   width: 10em;
   height: 10em;
-  margin: 0 auto;
+  background-image: url('/img/dfinity.svg');
 }
 .ids-row{
   @apply flex justify-between items-end text-left mx-auto text-sm;
