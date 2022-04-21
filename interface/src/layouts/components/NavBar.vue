@@ -47,7 +47,7 @@ const appStore  = useAppStore()
 </script>
 <style scoped>
 .h5NavRow{
-  @apply bg-white/[.8] dark:bg-black/[.8]  grid grid-cols-4 py-1 rounded-t-lg items-center justify-items-center relative;
+  @apply bg-white/[.8] dark:bg-black/[.8]  grid grid-cols-4 py-1 rounded-t-lg items-center justify-items-center;
    z-index: 10001;
 }
 .h5NavItem{
@@ -55,10 +55,10 @@ const appStore  = useAppStore()
   transition: all .3s ease;
 }
 .online .exactActive{
-  @apply text-sky-400 hover:text-sky-400/[.8] !important;
+  @apply text-sky-500 hover:text-sky-500/[.8] !important;
 }
 .offline .exactActive{
-  @apply text-rose-400 hover:text-rose-400/[.8] !important;
+  @apply text-rose-500 hover:text-rose-500/[.8] !important;
 }
 
 .dropNav{

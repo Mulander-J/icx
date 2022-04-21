@@ -15,12 +15,6 @@
     "types": ["vite/client","node"],
     "baseUrl": ".",
     "paths": {
-      "canisters/ICX": [
-        "../.dfx/local/canisters/ICX"
-      ],
-      "canisters/ICXFactory": [
-        "../.dfx/local/canisters/ICXFactory"
-      ],
       "@/*": ["src/*"]
     }
   },

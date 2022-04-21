@@ -1,7 +1,7 @@
 import vue from "@vitejs/plugin-vue"
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { defineConfig } from "vite"
-import path, { resolve } from "path"
+import { resolve } from "path"
 import dfxJson from "../dfx.json"
 import fs from "fs"
 import inject from '@rollup/plugin-inject'

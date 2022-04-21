@@ -48,6 +48,7 @@ export const throttle = function (
     if (!previous && options?.leading === false) previous = now
     // 计算剩余时间
     const remaining = wait - (now - previous)
+    // @ts-ignore
     context = this
     // eslint-disable-next-line prefer-rest-params
     args = arguments
