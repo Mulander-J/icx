@@ -1,7 +1,7 @@
-import { BigNumber } from 'bignumber.js';
-import { Principal } from '@dfinity/principal';
-import crc32 from "crc-32";
-import { sha224 } from "js-sha256";
+import { BigNumber } from 'bignumber.js'
+import { Principal } from '@dfinity/principal'
+import crc32 from "crc-32"
+import { sha224 } from "js-sha256"
 
 export const frBN = (n:any)=>new BigNumber(n).toNumber()
 
@@ -15,7 +15,7 @@ export const isPrincipal = (txt:string)=>{
     return false
   }
 }
-const bytesToHex = function (bytes:any[]) {
+export const bytesToHex = function (bytes:any[]) {
   for (var hex:any = [], i = 0; i < bytes.length; i++) {
       hex.push((bytes[i] >>> 4).toString(16));
       hex.push((bytes[i] & 0xF).toString(16));

@@ -41,9 +41,10 @@ import { useAppStore } from "@/store/modules/app"
 const pipeInner = appRoutes.slice(0,3)
 const pipeOuter = appRoutes.slice(3)
 
+const appStore  = useAppStore()
+
 const dropShow = ref(false)
 
-const appStore  = useAppStore()
 </script>
 <style scoped>
 .h5NavRow{

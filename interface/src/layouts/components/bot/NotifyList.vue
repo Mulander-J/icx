@@ -1,10 +1,10 @@
 <template>
   <transition name="fade" mode="out-in" class="notify-rows" tag="div">    
     <transition-group v-show="msgShow" name="slide" mode="out-in">
-      <div class="notifyer" :class="getNotifyCls(ms.type)" v-for="ms in appStore.icMsgs" :key="ms.key">            
+      <div class="notifyer" :class="getNotifyCls(ms.type)" v-for="ms in authStore.icMsgs" :key="ms.key">            
         <v-icon
           class="notify-del" name="io-close"
-          @click="appStore.removeMsg(ms.key)"
+          @click="authStore.removeMsg(ms.key)"
         />
         <div class="text" :title="ms.text">{{ms.text}}</div>
       </div>
@@ -18,20 +18,20 @@
       <span class="mr-2">{{msgZero}}</span>
       <v-icon flip="horizontal" name="io-chatbox-ellipses" />
     </div>
-    <div class="slate-widget btn icoBtn" @click="appStore.clearMsg">
+    <div class="slate-widget btn icoBtn" @click="authStore.clearMsg">
       <v-icon name="io-trash-bin" title="Clear" animation="ring" hover/>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref,computed } from 'vue'
-import { useAppStore } from "@/store/modules/app"
+import { useAuthStore } from '@/store/modules/auth'
 import { MessageType } from '@/model/msg';
 
-const appStore = useAppStore()
+const authStore = useAuthStore()
 
 const msgShow = ref(true)
-const msgZero = computed(()=>appStore.icMsgs.length||0)
+const msgZero = computed(()=>authStore.icMsgs.length||0)
 
 const getNotifyCls = (type:number)=>{
   return `notify-`+ (

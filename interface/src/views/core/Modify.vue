@@ -34,7 +34,7 @@
 <script lang="ts" setup>
 import { ref, onBeforeMount, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAppStore } from "@/store/modules/app"
+import { useAuthStore } from '@/store/modules/auth'
 import { InsICX } from "@/hooks/useCanister"
 import { frBN } from '@/utils/filter'
 import { okHref } from '@/utils'
@@ -44,7 +44,7 @@ const DEFULT_FORM = {title:'',content:'',desc:'',cover:''}
 
 const route = useRoute()
 const router = useRouter()
-const appStore = useAppStore()
+const authStore = useAuthStore()
 
 const _isEdit = ref(false)
 const _base = ref({
@@ -63,7 +63,7 @@ const previewNode = computed(()=>{
 const _errMsg = ref('')
 
 const submitItem = async ()=>{
-  if(appStore.getIsLoading) return
+  if(authStore.getIsLoading) return
   const {content,title} = _formData.value
   if(!title){
     _errMsg.value = 'Title is required.'
@@ -82,7 +82,7 @@ const submitItem = async ()=>{
 
   const payloads = [_base.value.submitId,_formData.value]
 
-  await appStore.handleCall({
+  await authStore.handleCall({
     name:_isEdit.value?'Update node':'Create node',
     cmd:_isEdit.value?InsICX.updateNode:InsICX.addNode,
     okTip:true,
@@ -110,7 +110,7 @@ const initialNode = async ()=>{
   if(!_id) return false
   
   try{
-    const res = await appStore.handleCall({
+    const res = await authStore.handleCall({
       name:'NodeById',
       cmd:InsICX.NodeById
     },_id)

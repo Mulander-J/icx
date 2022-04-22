@@ -28,7 +28,7 @@ const props = defineProps<{
   @apply fixed z-50 top-0 bottom-0 left-0 right-0 bg-black/[.3] dark:bg-black/[.6];
 }
 .icxd-body {
-  @apply fixed top-1/2 left-1/2 p-4 text-center rounded-lg flex items-center justify-center;
+  @apply fixed top-1/2 left-1/2 p-4 text-center rounded-lg flex items-center justify-center bg-white dark:bg-black;
   transform: translate(-50%, -50%) scale(1);
   z-index: 1000;
   width: 82%;

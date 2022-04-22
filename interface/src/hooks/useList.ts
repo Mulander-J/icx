@@ -1,6 +1,6 @@
 import { reactive, toRefs, computed } from 'vue'
 import { MessageType } from '@/model/msg'
-import { useAppStore } from '@/store/modules/app'
+import { useAuthStore } from '@/store/modules/auth'
 
 const defaultState = {
   loading: false,
@@ -12,11 +12,11 @@ const useList= <T>(
   callOpt:{name:string,cmd:any},
   getPayloads?:any,
 ) => {
-  const appStore = useAppStore()
+  const authStore = useAuthStore()
   const state = reactive({ ...defaultState })
   const _total = computed(()=>state.list?.length||0)
   const _isEmpty = computed(() => state.list?.length <= 0)
-  const _loading = computed(()=>appStore.getIsLoading||state.loading)
+  const _loading = computed(()=>authStore.getIsLoading||state.loading)
 
   const queryList = async (isInit = false) => {
     let res: any
@@ -34,7 +34,7 @@ const useList= <T>(
         return
       }
 
-      res = await appStore.handleCall({
+      res = await authStore.handleCall({
         ...callOpt
       },...generatePayloads)
       state.list = ([ ...res]) as T[]
@@ -47,7 +47,7 @@ const useList= <T>(
   }
 
   const setError = (msg:string)=>{
-    appStore.addMsg(msg,MessageType.ERROR)
+    authStore.addMsg(msg,MessageType.ERROR)
   }
 
   const initPagination = async () => {

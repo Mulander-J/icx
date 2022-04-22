@@ -59,6 +59,7 @@
 import { onBeforeMount, onMounted, ref, computed  } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAppStore } from '@/store/modules/app'
+import { useAuthStore } from '@/store/modules/auth'
 import { InsICX } from "@/hooks/useCanister"
 import { Node as typeNode } from '@/hooks/canisters/ICX/type'
 import useList from '@/hooks/useList'
@@ -67,6 +68,7 @@ import { okHref } from '@/utils'
 const route = useRoute()
 const router = useRouter()
 const appStore = useAppStore()
+const authStore = useAuthStore()
 
 const _id = ref(0)
 const _item = ref<typeNode|null>(null)
@@ -101,7 +103,7 @@ const handleDelete = async (item:any)=>{
   // console.log('delete item',item)
   if(item?.base?.isRoot) return
   if(!item?.base?.id) return
-  appStore.handleCall({
+  authStore.handleCall({
     name:'removeNode',
     cmd:InsICX.removeNode,
     cbk:initialNodes,
@@ -110,7 +112,7 @@ const handleDelete = async (item:any)=>{
 }
 
 const initialNodes = async ()=>{
-  await appStore.handleCall({
+  await authStore.handleCall({
     name:'NodeById',
     cmd:InsICX.NodeById,
     cbk:async (res:any)=>{

@@ -1,6 +1,6 @@
 import { reactive, toRefs } from 'vue'
 import { MessageType } from '@/model/msg'
-import { useAppStore } from '@/store/modules/app'
+import { useAuthStore } from '@/store/modules/auth'
 
 const HOUR = 1_000 * 60 * 60
 const DURATION = 1_000 * 60 * 8
@@ -18,7 +18,7 @@ function Random(min:number, max:number) {
 
 const useFakeAI = () => {
   const startTime = Date.now()
-  const appStore = useAppStore()
+  const authStore = useAuthStore()
   const state = reactive({ ...defaultState })
 
   let allMsgs = FAKE_MSGS_UINT.map((e:any)=>(e[1].map((f:string)=>e[0]+' '+f))).flat()
@@ -39,7 +39,7 @@ const useFakeAI = () => {
       const _i = Random(0,allMsgs.length-1)
 
       if(allMsgs[_i]){
-        appStore.addMsg(allMsgs[_i],MessageType.INFO)
+        authStore.addMsg(allMsgs[_i],MessageType.INFO)
         state.lastTime = now
         !state._repeat && delete allMsgs[_i]
       }
@@ -49,7 +49,7 @@ const useFakeAI = () => {
   const checkHour = (now:number)=>{
     if(state._isHour) return
     if(now - startTime <= HOUR) return
-    appStore.addMsg("You have stayed here over 1 hour",MessageType.INFO)
+    authStore.addMsg("You have stayed here over 1 hour",MessageType.INFO)
     state._isHour = true
   }
 

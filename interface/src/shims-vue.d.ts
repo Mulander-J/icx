@@ -4,6 +4,8 @@ declare module '*.vue' {
   export default component
 }
 
-// declare interface Window {
-//   ethereum: any
-// }
+declare interface Window {
+  ic: {
+    plug?:any
+  } | any
+}

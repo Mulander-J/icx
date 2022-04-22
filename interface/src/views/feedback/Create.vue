@@ -19,23 +19,23 @@
         <textarea class="form-widget slate-widget p-2" v-model.trim="_formData.content" cols="25" rows="5" placeholder="Write down your advice" />
       </div>
       <div class="my-4 text-rose-500" v-show="_errMsg">{{_errMsg}}</div>
-      <div class="btn slate-widget font-pixie my-4 w-min py-2 px-8" v-throttle @click="addItem">SUBMIT</div>  
+      <div class="btn slate-widget font-pixie my-4 w-min py-2 px-8" v-throttle v-sign="addItem">SUBMIT</div>  
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { useAppStore } from "@/store/modules/app"
-import { InsICXFactory } from "@/hooks/useCanister"
+import { useAuthStore } from "@/store/modules/auth"
+import { InsICXFactory } from '@/hooks/useCanister'
 
-const appStore = useAppStore()
+const authStore = useAuthStore()
 
 const _formData = ref({type:'',content:''})
 
 const _errMsg = ref('')
 
 const addItem = async ()=>{
-  if(appStore.getIsLoading) return
+  if(authStore.getIsLoading) return
   const {content,type} = _formData.value
   if(!type){
     _errMsg.value = 'Type is required.'
@@ -45,12 +45,12 @@ const addItem = async ()=>{
     _errMsg.value = 'Content is required.'
     return
   }
-  
+
   _errMsg.value = ''
 
   const payloads = [{[type]:null},content]
 
-  await appStore.handleCall({
+  await authStore.handleCall({
     name:'Add Feedback',
     cmd:InsICXFactory.insertFeedback,
     okTip:true,

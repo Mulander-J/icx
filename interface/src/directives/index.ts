@@ -2,6 +2,8 @@
 /* eslint-disable camelcase */
 import { App } from 'vue'
 import useClipboard from 'vue-clipboard3'
+import { useAuthStore } from '@/store/modules/auth'
+
 const throttle = {
   mounted(el: HTMLElement, binding: { value: any }) {
     let throttleTime = binding.value // duration
@@ -25,7 +27,6 @@ const throttle = {
     )
   },
 }
-
 
 let copyText
 interface CopyText {
@@ -55,9 +56,29 @@ const copy = {
   },
 }
 
+const sign = {
+  beforeMount(el: HTMLElement,binding: { value: Function }) {
+    el.addEventListener(
+      'click',
+      async (event: MouseEvent) => {
+        event && event.stopImmediatePropagation()        
+        const authStore = useAuthStore()
+        if(authStore.isSign){
+          const cmd = binding.value
+          cmd && cmd()
+        }else{
+          authStore.showDialog("none")
+        }
+      },
+      true,
+    )
+  },
+}
+
 const directives = {
   throttle,
   copy,
+  sign
 }
 const registDirectives = (app: App) => {
   Object.entries(directives).forEach(([k, v]) => {
