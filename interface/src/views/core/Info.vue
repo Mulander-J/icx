@@ -5,7 +5,7 @@
       <rt-btn class="ml-2" title="Back To List" icon="ri-arrow-go-back-line" v-throttle @click="$router.push('/list')" />
       <rt-btn v-show="appStore.getIsOnline" class="mx-2" title="Create" icon="md-add-round" v-throttle @click="goCreate" />
       <rt-btn v-show="appStore.getIsOnline" class="mr-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(_item)" />
-      <rt-btn v-if="!_isRoot&&appStore.getIsOnline" :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(_item)" />
+      <!-- <rt-btn v-if="!_isRoot&&appStore.getIsOnline" :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(_item)" /> -->
     </div>
     <div class="item-card">
       <div class="flex items-start flex-wrap">
@@ -43,7 +43,7 @@
               </div>
               <div v-if="appStore.getIsOnline" class="flex">
                   <rt-btn class="mx-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(l)" />
-                  <rt-btn :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(l)" />
+                  <!-- <rt-btn :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(l)" /> -->
               </div>
             </li>
         </ul>
