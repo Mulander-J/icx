@@ -833,6 +833,8 @@ class Base {
   // 创建轨道控制
   createOrbitControls() {
     const controls = new OrbitControls(this.camera, this.renderer.domElement);
+    controls.enableZoom = false;
+    controls.enablePan = false;
     const { lookAtPosition } = this;
     controls.target.copy(lookAtPosition);
     controls.update();

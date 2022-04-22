@@ -17,8 +17,8 @@
     </ul>
     <ul class="grid grid-cols-5 gap-x-4 m-4">
       <li v-for="cm in community" :key="cm.key" class="text-center">
-        <a class="cursor-pointer p-2 rounded-full">
-          <v-icon :name="cm.icon" :scale="1.6" animation="wrench" hover/>
+        <a class="cursor-pointer p-2 rounded-full" :href="cm.link" target="_blank">
+          <v-icon :name="cm.icon" :scale="1.6" animation="wrench" hover />
         </a>
       </li> 
     </ul>
@@ -26,6 +26,7 @@
       <p class="font-pixie mb-2"><strong>{{appInfo.title}}</strong></p>
       <p>{{appInfo.desc}}</p>
       <p>{{appInfo.content}}</p>
+      <p>Built with Internet Computer</p>
       <p>Copyright © 2022 ICX. All rights reserved.</p>
     </section>
   </div>
@@ -41,10 +42,10 @@ const appStore = useAppStore()
 const appInfo = computed(()=>appStore.appInfo.main)
 
 const community = [
-  {key:'twitter',label:'twitter',link:'',icon:'io-logo-twitter'},
+  {key:'twitter',label:'twitter',link:'https://twitter.com/MulanderKilig',icon:'io-logo-twitter'},
   {key:'telegram',label:'telegram',link:'',icon:'bi-telegram'},
   {key:'discord',label:'discord',link:'',icon:'io-logo-discord'},
-  {key:'github',label:'github',link:'',icon:'io-logo-github'},
+  {key:'github',label:'github',link:'https://github.com/Mulander-J',icon:'io-logo-github'},
   {key:'doc',label:'doc',link:'',icon:'gi-evil-book'},
 ]
 const canisters = ref<any>(CanisterList.map(e=>({...e,cycle : 0})))

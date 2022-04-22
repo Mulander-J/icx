@@ -51,6 +51,7 @@ const getNotifyCls = (type:number)=>{
 }
 .notifyer .text{
   @apply break-all truncate;
+  max-width: 30em;
 }
 
 .notify-del{
