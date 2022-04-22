@@ -1,11 +1,8 @@
-import * as THREE from "https://cdn.skypack.dev/three@0.133.1";
-import ky from "https://cdn.skypack.dev/kyouka@1.2.5";
-import { OrbitControls } from "https://cdn.skypack.dev/three@0.124.0/examples/jsm/controls/OrbitControls";
-import { GLTFLoader } from "https://cdn.skypack.dev/three@0.124.0/examples/jsm/loaders/GLTFLoader";
-import { FBXLoader } from "https://cdn.skypack.dev/three@0.124.0/examples/jsm/loaders/FBXLoader";
-import { EffectComposer } from "https://cdn.skypack.dev/three@0.124.0/examples/jsm/postprocessing/EffectComposer";
-import Stats from "https://cdn.skypack.dev/three@0.124.0/examples/jsm/libs/stats.module";
-import * as dat from "https://cdn.skypack.dev/dat.gui@0.7.7";
+// @ts-nocheck
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
+import Stats from "three/examples/jsm/libs/stats.module";
 
 const calcAspect = (el: HTMLElement) => el.clientWidth / el.clientHeight;
 
@@ -376,7 +373,7 @@ function ThinFilmFresnelMap(
   refractiveIndexFilm,
   refractiveIndexBase,
   size
-) {
+) {  
   this._filmThickness = filmThickness || 380.0;
   this._refractiveIndexFilm = refractiveIndexFilm || 2;
   this._refractiveIndexBase = refractiveIndexBase || 3;
@@ -719,7 +716,7 @@ class Base {
     this.createMesh({});
     this.createLight();
     this.createOrbitControls();
-    this.addListeners();
+    // this.addListeners();
     this.setLoop();
   }
   // 创建场景
@@ -788,10 +785,6 @@ class Base {
     this.renderer = renderer;
     this.renderer.setClearColor(0x000000, 0);
   }
-  // 允许投影
-  enableShadow() {
-    this.renderer.shadowMap.enabled = true;
-  }
   // 调整渲染器尺寸
   resizeRendererToDisplaySize() {
     const { renderer } = this;
@@ -811,7 +804,7 @@ class Base {
   }
   // 创建网格
   createMesh(
-    meshObject: MeshObject,
+    meshObject: any,
     container: THREE.Scene | THREE.Mesh = this.scene
   ) {
     const {
@@ -910,80 +903,6 @@ class Base {
       }
     });
   }
-  // 创建文本
-  createText(
-    text = "",
-    config: THREE.TextGeometryParameters,
-    material: THREE.Material = new THREE.MeshStandardMaterial({
-      color: "#ffffff"
-    })
-  ) {
-    const geo = new THREE.TextGeometry(text, config);
-    const mesh = new THREE.Mesh(geo, material);
-    return mesh;
-  }
-  // 创建音效源
-  createAudioSource() {
-    const listener = new THREE.AudioListener();
-    this.camera.add(listener);
-    const sound = new THREE.Audio(listener);
-    this.sound = sound;
-  }
-  // 加载音效
-  loadAudio(url: string): Promise<AudioBuffer> {
-    const loader = new THREE.AudioLoader();
-    return new Promise((resolve) => {
-      loader.load(url, (buffer) => {
-        this.sound.setBuffer(buffer);
-        resolve(buffer);
-      });
-    });
-  }
-  // 加载模型
-  loadModel(url: string): Promise<THREE.Object3D> {
-    const loader = new GLTFLoader();
-    return new Promise((resolve, reject) => {
-      loader.load(
-        url,
-        (gltf) => {
-          const model = gltf.scene;
-          console.log(model);
-          resolve(model);
-        },
-        undefined,
-        (err) => {
-          console.log(err);
-          reject();
-        }
-      );
-    });
-  }
-  // 加载FBX模型
-  loadFBXModel(url: string): Promise<THREE.Object3D> {
-    const loader = new FBXLoader();
-    return new Promise((resolve, reject) => {
-      loader.load(
-        url,
-        (obj) => {
-          resolve(obj);
-        },
-        undefined,
-        (err) => {
-          console.log(err);
-          reject();
-        }
-      );
-    });
-  }
-  // 加载字体
-  loadFont(url: string): Promise<THREE.Font> {
-    const loader = new THREE.FontLoader();
-    return new Promise((resolve) => {
-      loader.load(url, (font) => {
-        resolve(font);
-      });
-    });
-  }
   // 创建点选模型
   createRaycaster() {
     this.raycaster = new THREE.Raycaster();
@@ -1030,62 +949,6 @@ class Base {
     const { object } = intersect;
     return target === object ? intersect : null;
   }
-  // 获取跟屏幕同像素的fov角度
-  getScreenFov() {
-    return ky.rad2deg(
-      2 * Math.atan(window.innerHeight / 2 / this.cameraPosition.z)
-    );
-  }
-  // 获取重心坐标系
-  getBaryCoord(bufferGeometry: THREE.BufferGeometry) {
-    // https://gist.github.com/mattdesl/e399418558b2b52b58f5edeafea3c16c
-    const length = bufferGeometry.attributes.position.array.length;
-    const count = length / 3;
-    const bary = [];
-    for (let i = 0; i < count; i++) {
-      bary.push(0, 0, 1, 0, 1, 0, 1, 0, 0);
-    }
-    const aCenter = new Float32Array(bary);
-    bufferGeometry.setAttribute(
-      "aCenter",
-      new THREE.BufferAttribute(aCenter, 3)
-    );
-  }
-  // 追踪鼠标速度
-  trackMouseSpeed() {
-    // https://stackoverflow.com/questions/6417036/track-mouse-speed-with-js
-    let lastMouseX = -1;
-    let lastMouseY = -1;
-    let mouseSpeed = 0;
-    window.addEventListener("mousemove", (e) => {
-      const mousex = e.pageX;
-      const mousey = e.pageY;
-      if (lastMouseX > -1) {
-        mouseSpeed = Math.max(
-          Math.abs(mousex - lastMouseX),
-          Math.abs(mousey - lastMouseY)
-        );
-        this.mouseSpeed = mouseSpeed / 100;
-      }
-      lastMouseX = mousex;
-      lastMouseY = mousey;
-    });
-    document.addEventListener("mouseleave", () => {
-      this.mouseSpeed = 0;
-    });
-  }
-  // 使用PCFSoft阴影
-  usePCFSoftShadowMap() {
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  }
-  // 使用VSM阴影
-  useVSMShadowMap() {
-    this.renderer.shadowMap.type = THREE.VSMShadowMap;
-  }
-  // 将相机的方向设为z轴
-  setCameraUpZ() {
-    this.camera.up.set(0, 0, 1);
-  }
 }
 
 class LiquidCrystal extends Base {
@@ -1110,7 +973,7 @@ class LiquidCrystal extends Base {
     this.createSphere();
     this.trackMousePos();
     this.createOrbitControls();
-    this.addListeners();
+    // this.addListeners();
     this.setLoop();
   }
   // 创建液晶材质
@@ -1160,4 +1023,5 @@ class LiquidCrystal extends Base {
     }
   }
 }
+
 export default LiquidCrystal

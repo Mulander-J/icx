@@ -9,3 +9,5 @@ declare interface Window {
     plug?:any
   } | any
 }
+
+// declare module 'three'
