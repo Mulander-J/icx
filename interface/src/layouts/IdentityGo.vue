@@ -6,7 +6,7 @@
           <span>{{authStore.providerName}}</span>          
         </h2>
         <rt-btn 
-          v-show="authStore.selectProvider!=='none'" 
+          v-show="authStore.selectProvider!=='none' || authStore.isWaiting" 
           class="absolute bottom-4 right-2" 
           icon="ri-arrow-go-back-line" 
           v-throttle @click="authStore.clearWaiting"
