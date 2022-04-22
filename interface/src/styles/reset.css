@@ -5,3 +5,9 @@
   outline: none;
   transition: color .18s;
 }
+div,button,
+p,span,
+i,a,li,
+img{
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}

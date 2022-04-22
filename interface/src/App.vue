@@ -3,7 +3,7 @@
   <Loading class="app-loading" :loading="authStore.getIsLoading">
     <p class="pix-h2">LOADING...[{{authStore.icCalls}}]</p>
   </Loading>
-  <ProviderGo />
+  <IdentityGo />
 </template>
 
 <script lang="ts" setup>
@@ -16,7 +16,7 @@ import { throttle } from '@/utils'
 import useFakeAI from '@/hooks/useFakeAI'
 import TheMain from './layouts/TheMain.vue'
 import Loading from './layouts/Loading.vue'
-import ProviderGo from './layouts/ProviderGo.vue'
+import IdentityGo from './layouts/IdentityGo.vue'
 import { InsICX } from '@/hooks/useCanister'
 
 

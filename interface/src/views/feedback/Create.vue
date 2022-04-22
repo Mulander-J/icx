@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useAuthStore } from "@/store/modules/auth"
-import { InsICXFactory } from '@/hooks/useCanister'
+import { getInsICXFactory } from '@/hooks/useCanister'
 
 const authStore = useAuthStore()
 
@@ -36,6 +36,7 @@ const _errMsg = ref('')
 
 const addItem = async ()=>{
   if(authStore.getIsLoading) return
+
   const {content,type} = _formData.value
   if(!type){
     _errMsg.value = 'Type is required.'
@@ -45,12 +46,13 @@ const addItem = async ()=>{
     _errMsg.value = 'Content is required.'
     return
   }
-
   _errMsg.value = ''
 
   const payloads = [{[type]:null},content]
 
-  await authStore.handleCall({
+  const InsICXFactory = getInsICXFactory(authStore.agent)
+  
+  InsICXFactory && await authStore.handleCall({
     name:'Add Feedback',
     cmd:InsICXFactory.insertFeedback,
     okTip:true,

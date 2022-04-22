@@ -3,17 +3,26 @@
     <transition name="fade" mode="out-in">      
       <div class="app-connect" :class="['ac-p-'+authStore.selectProvider]">
         <h2 class="ac-title pix-h2">        
-          <span>{{authStore.providerName}}</span>
+          <span>{{authStore.providerName}}</span>          
         </h2>
-        <transition name="fade" mode="out-in" class="p-4" tag="div">
+        <rt-btn 
+          v-show="authStore.selectProvider!=='none'" 
+          class="absolute bottom-4 right-2" 
+          icon="ri-arrow-go-back-line" 
+          v-throttle @click="authStore.clearWaiting"
+        />
+        <transition name="fade" mode="out-in" class="p-4" tag="div">          
           <no-data v-if="authStore.isWaiting">Waiting</no-data>
           <section v-else-if="authStore.selectProvider==='ii'">
-            <div class="pix-h2 acp-btn">              
+            <div v-if="authStore.isSign">
+              <strong class="text-2xl">{{$filters.strSlice(authStore.principalId)}}</strong> 
+              <div  class="pix-h2 acp-btn" @click="authStore.logout">              
+                <span>Logout</span>
+              </div>
+            </div>
+            <div v-else class="pix-h2 acp-btn" @click="authStore.getHttpAgent">              
               <span>Sign In</span>
-            </div>
-            <div class="pix-h2 acp-btn">              
-              <span>Logout</span>
-            </div>
+            </div>  
           </section>
           <section v-else-if="authStore.selectProvider==='plug'">
             <div v-if="!authStore.isPlugDetected">
@@ -22,7 +31,7 @@
             </div>
             <div v-else>
               <p class="my-8 text-2xl">You are going to approve plug.</p>
-              <div class="pix-h2 acp-btn" v-throttle>Connect</div>
+              <div class="pix-h2 acp-btn" v-throttle @click="authStore.getHttpAgent">Connect</div>
               <p class="text-sm underline-offset-2 underline">Connect as agree to Terms of Use & Privacy Policy</p>        
             </div>
           </section>
@@ -43,7 +52,6 @@
   </Dialog>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { useAuthStore } from '@/store/modules/auth'
 import Dialog from '@/components/Dialog.vue'
 
@@ -84,7 +92,7 @@ const authStore = useAuthStore()
 .ac-btn{
   @apply select-none p-2 px-8 my-8 mx-auto cursor-pointer rounded-lg
   flex items-center justify-between w-full
-  bg-white hover:bg-white/[.8] dark:bg-black dark:hover:bg-black/[.8];
+  bg-white/[.6] hover:bg-white/[.8] dark:bg-black/[.6] dark:hover:bg-black/[.8];
   height:3em;
 }
 .ac-btn .ic-logo{

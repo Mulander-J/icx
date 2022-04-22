@@ -35,7 +35,7 @@
 import { ref, onBeforeMount, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/store/modules/auth'
-import { InsICX } from "@/hooks/useCanister"
+import { getInsICX,InsICX } from '@/hooks/useCanister'
 import { frBN } from '@/utils/filter'
 import { okHref } from '@/utils'
 import NodeItem from './NodeItem.vue';
@@ -80,18 +80,22 @@ const submitItem = async ()=>{
   
   _errMsg.value = ''
 
-  const payloads = [_base.value.submitId,_formData.value]
+  if(authStore.agent){
+    const actor = getInsICX(authStore.agent)
 
-  await authStore.handleCall({
-    name:_isEdit.value?'Update node':'Create node',
-    cmd:_isEdit.value?InsICX.updateNode:InsICX.addNode,
-    okTip:true,
-    cbk:()=>{
-      if(!_isEdit.value){
-        _formData.value = {...DEFULT_FORM}
-      }
-    }, 
-  },...payloads)
+    const payloads = [_base.value.submitId,_formData.value]
+
+    await authStore.handleCall({
+      name:_isEdit.value?'Update node':'Create node',
+      cmd:_isEdit.value?actor.updateNode:actor.addNode,
+      okTip:true,
+      cbk:()=>{
+        if(!_isEdit.value){
+          _formData.value = {...DEFULT_FORM}
+        }
+      }, 
+    },...payloads)
+  }  
 }
 
 const checkId = ()=>{

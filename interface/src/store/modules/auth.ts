@@ -1,9 +1,15 @@
 import { defineStore } from "pinia"
+import { AuthClient } from "@dfinity/auth-client"
+import { HttpAgent } from '@dfinity/agent'
 import { useAppStore } from './app'
 import { INITIAL_MSG, MessageType } from '@/model/msg'
 import { uuid } from '@/utils'
 import dealErr from '@/utils/dealErr'
 import notify from '@/components/notify/core'
+
+// let identityProvider = "http://rwlgt-iiaaa-aaaaa-aaaaa-cai.localhost:8000/";
+let identityProvider = null;
+let localhostProvider = !!identityProvider;
 
 export const useAuthStore = defineStore({
   id: "auth",
@@ -12,6 +18,11 @@ export const useAuthStore = defineStore({
     isDialogShow: false,
     isWaiting: false,    
     selectProvider:"none" as "none"|"ii"|"plug",
+
+    authClient: null as any,
+    inInitAuthClient: false,
+    agent: null as any,
+    principalId:"",
 
     icCalls: 0,
     icMsgs: [INITIAL_MSG],
@@ -27,6 +38,9 @@ export const useAuthStore = defineStore({
           return 'Identity'
       }
     },
+    isPlug(state){
+      return state.selectProvider === 'plug'
+    },
     isPlugDetected(){
       return !!window?.ic?.plug
     },
@@ -35,11 +49,21 @@ export const useAuthStore = defineStore({
     },
   },
   actions: {
+    setPrincipal(pid:string){
+      this.principalId = pid
+    },
     setIsSign(b:boolean){
       this.isSign = b
     },
     setIsWaiting(b:boolean){
       this.isWaiting = b
+    },
+    clearWaiting(){
+      this.selectProvider = "none"
+      this.isWaiting = false
+      this.isSign = false
+      this.agent = null
+      this.principalId = ''
     },
     setProvider(name:"none"|"ii"|"plug"){
       this.selectProvider = name
@@ -53,11 +77,139 @@ export const useAuthStore = defineStore({
     },
     hideDialog(){
       this.isDialogShow = false
+      if(!this.isSign) this.selectProvider = 'none'
     },
     showLoading(){      
       this.isWaiting = true
       this.isDialogShow = true
     },
+    hideLoading(){      
+      this.isWaiting = false
+      this.hideDialog()
+    },
+
+    signOk(principal:string){           
+      console.log("principal", principal)      
+      this.principalId = principal
+      this.isDialogShow = false
+      this.isWaiting = false
+      this.isSign = true  
+    },
+
+    async getAuthClient() {
+        while (this.inInitAuthClient) {
+            await new Promise((resolve:any) => {
+                setTimeout(() => {
+                    resolve();
+                }, 100)
+            });
+        }
+        if (this.authClient) {
+            return this.authClient;
+        }
+        this.inInitAuthClient = true;
+        try {
+            this.authClient = await AuthClient.create();
+        } catch (e) {
+            console.log(e);
+        }
+        this.inInitAuthClient = false
+        return this.authClient;
+    },
+
+    async isAgentExpiration() {
+      return new Promise(async (resolve, reject) => {
+          if (this.isPlug) {
+              // resolve(await isStoicAgentExpiration())
+              resolve(null)
+              return
+          }
+  
+          await this.getAuthClient()
+          const identity = this.authClient.getIdentity()
+          if (this.authClient.isAuthenticated() && identity.getDelegation) {
+              const nextExpiration = identity.getDelegation().delegations
+                                      .map(d => d.delegation.expiration)
+                                      .reduce((current, next) => next < current ? next : current);
+              const expirationDuration  = nextExpiration - BigInt(Date.now()) * BigInt(1000_000);
+  
+              // 120 second
+              resolve(expirationDuration < BigInt(120000000000))
+          }
+  
+          resolve(true)
+      })
+    },
+    async getHttpAgent() {
+      return new Promise(async (resolve, reject) => {
+          this.showLoading()
+          if (this.isPlug) {
+              const _agent = new HttpAgent()
+              this.agent = _agent
+              this.hideLoading()
+              this.addMsg("Plug is not supported yet",MessageType.WARN)            
+              // resolve(await getStoicAgent())
+              resolve(_agent)
+              return
+          }
+  
+          await this.getAuthClient()
+          const isExpiration = await this.isAgentExpiration()
+          if (!isExpiration) {
+              let _agent = this.agent
+              if(!_agent){
+                _agent = new HttpAgent({identity: this.authClient.getIdentity()})
+                if (localhostProvider) {
+                    await _agent.fetchRootKey()
+                }
+                this.agent = _agent
+              }
+              const principal = await _agent.getPrincipal()
+              this.signOk(principal.toString())
+              resolve(_agent)
+              return
+          }
+  
+          if (this.authClient) {
+              this.authClient.login({
+                  identityProvider,
+                  maxTimeToLive: BigInt(24 * 3600_000_000_000),
+                  onSuccess: async () => {              
+                      const _agent = new HttpAgent({identity: this.authClient.getIdentity()})
+                      if (localhostProvider) {
+                          await this.agent.fetchRootKey()
+                      }
+                      const identity = this.authClient.getIdentity()
+                      this.signOk(identity.getPrincipal().toString())
+                      this.agent = _agent
+                      resolve(_agent)
+                  },
+                  onError: (e) => {
+                      const _agent = new HttpAgent()
+                      this.hideLoading()
+                      this.addMsg("You reject auth",MessageType.WARN)
+                      this.agent = _agent
+                      reject(_agent)
+                  }
+            })
+          }
+      })
+    },
+    async logout() {
+      if (this.isPlug) {
+          // stoicLogout()
+          return
+      }
+  
+      this.authClient && this.authClient.logout()
+      // this.authClient = null
+      this.agent = null
+      this.isSign = false
+      this.selectProvider = "none"
+      // this.inInitAuthClient = false
+    },
+
+
     addCall(){
       this.icCalls++
     },
@@ -65,6 +217,7 @@ export const useAuthStore = defineStore({
       this.icCalls--
       this.icCalls < 0 && ( this.icCalls = 0)
     },
+
     addMsg(text:string, type: MessageType){
       const appStore = useAppStore()
       if(appStore.isMobile){

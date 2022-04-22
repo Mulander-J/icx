@@ -25,6 +25,10 @@
           <v-icon v-else name="bi-sun" />
           <span>{{appStore.dark}}</span>
         </li>
+        <li class="dropItem" v-throttle @click="setDialogShow(true)">
+          <v-icon name="ci-icp" />
+          <span>Identity</span>
+        </li>
         <li class="dropItem" v-throttle @click="appStore.triggerPower">
           <v-icon name="io-power" />
           <span>{{appStore.isOnChain}}</span>
@@ -37,11 +41,13 @@
 import { ref } from 'vue'
 import { appRoutes } from '@/router'
 import { useAppStore } from "@/store/modules/app"
+import { useAuthStore } from "@/store/modules/auth"
 
 const pipeInner = appRoutes.slice(0,3)
 const pipeOuter = appRoutes.slice(3)
 
 const appStore  = useAppStore()
+const { setDialogShow }  = useAuthStore()
 
 const dropShow = ref(false)
 

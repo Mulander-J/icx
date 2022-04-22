@@ -14,6 +14,9 @@
           <v-icon v-else name="bi-sun" />
         </transition>
       </li>
+      <li class="slate-widget navItem" v-throttle @click="setDialogShow(true)">
+        <v-icon name="ci-icp" />
+      </li>
       <li class="navItem" v-throttle @click="appStore.triggerPower">
         <v-icon name="io-power" />
       </li>
@@ -23,9 +26,11 @@
 <script lang="ts" setup>
 import { appRoutes } from '@/router'
 import { useAppStore } from "@/store/modules/app"
+import { useAuthStore } from "@/store/modules/auth"
 
 const menus = appRoutes
 const appStore  = useAppStore()
+const { setDialogShow }  = useAuthStore()
 </script>
 <style scoped>
 .navItem{
