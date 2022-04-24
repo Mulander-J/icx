@@ -15,7 +15,10 @@
           <no-data v-if="authStore.isWaiting">Waiting</no-data>
           <section v-else-if="authStore.selectProvider==='ii'">
             <div v-if="authStore.isSign">
-              <strong class="text-2xl">{{$filters.strSlice(authStore.principalId)}}</strong> 
+              <div class="pid-row">
+                <strong>{{$filters.strSlice(authStore.principalId)}}</strong> 
+                <cp-btn :txt="authStore.principalId"/>
+              </div>             
               <div  class="pix-h2 acp-btn" @click="authStore.logout">              
                 <span>Logout</span>
               </div>
@@ -59,7 +62,6 @@ const authStore = useAuthStore()
 
 </script>
 <style scoped>
-
 .app-connect{
   @apply bg-white/[.5] dark:bg-black/[.3] relative;
   min-height: 13.25rem;
@@ -69,6 +71,10 @@ const authStore = useAuthStore()
   content:'';
   z-index:-1;
   filter:blur(4px);
+}
+.pid-row{
+  @apply grid items-center justify-center gap-x-2 text-2xl;
+  grid-template-columns: auto auto;
 }
 .ac-title{
   @apply relative w-full p-1 rounded-lg text-white dark:text-black;

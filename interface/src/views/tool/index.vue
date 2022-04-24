@@ -14,7 +14,7 @@
         <input class="form-widget slate-widget p-2" :value="accountId" readonly />
       </div>
       <div class="my-4 text-rose-500" v-show="_errMsg">{{_errMsg}}</div>
-      <div class="btn slate-widget font-pixie my-4 w-min py-2 px-8" v-throttle @click="handleSwitch">SWITCH</div>  
+      <div class="btn slate-widget font-pixie my-8 w-min py-2 px-8" v-throttle @click="handleSwitch">SWITCH</div>  
     </div>
   </div>
 </template>

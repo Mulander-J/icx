@@ -51,6 +51,7 @@ export const useAppStore = defineStore({
     },
 
     setAppInfo(app:any){
+      // console.log('setApp',app)
       this.appInfo = {...(app||INITIAL_APP)}
     },
   }

@@ -1,13 +1,14 @@
 import { defineStore } from "pinia"
 import { AuthClient } from "@dfinity/auth-client"
 import { HttpAgent } from '@dfinity/agent'
-import { useAppStore } from './app'
 import { INITIAL_MSG, MessageType } from '@/model/msg'
 import { uuid } from '@/utils'
 import dealErr from '@/utils/dealErr'
+import { useAppStore } from './app'
 import notify from '@/components/notify/core'
 
 // let identityProvider = "http://rwlgt-iiaaa-aaaaa-aaaaa-cai.localhost:8000/";
+let authClient;
 let identityProvider = null;
 let localhostProvider = !!identityProvider;
 
@@ -19,7 +20,7 @@ export const useAuthStore = defineStore({
     isWaiting: false,    
     selectProvider:"none" as "none"|"ii"|"plug",
 
-    authClient: null as any,
+    // authClient: null as any,
     inInitAuthClient: false,
     agent: null as any,
     principalId:"",
@@ -89,11 +90,12 @@ export const useAuthStore = defineStore({
     },
 
     signOk(principal:string){           
-      console.log("principal", principal)      
+      console.log("principal", principal)
       this.principalId = principal
       this.isDialogShow = false
       this.isWaiting = false
-      this.isSign = true  
+      this.isSign = true
+      this.addMsg("Sign Success",MessageType.SUCCESS)
     },
 
     async getAuthClient() {
@@ -104,17 +106,17 @@ export const useAuthStore = defineStore({
                 }, 100)
             });
         }
-        if (this.authClient) {
-            return this.authClient;
+        if (authClient) {
+            return authClient;
         }
         this.inInitAuthClient = true;
         try {
-            this.authClient = await AuthClient.create();
+            authClient = await AuthClient.create();
         } catch (e) {
             console.log(e);
         }
         this.inInitAuthClient = false
-        return this.authClient;
+        return authClient;
     },
 
     async isAgentExpiration() {
@@ -126,8 +128,8 @@ export const useAuthStore = defineStore({
           }
   
           await this.getAuthClient()
-          const identity = this.authClient.getIdentity()
-          if (this.authClient.isAuthenticated() && identity.getDelegation) {
+          const identity = authClient.getIdentity()
+          if (authClient.isAuthenticated() && identity.getDelegation) {
               const nextExpiration = identity.getDelegation().delegations
                                       .map(d => d.delegation.expiration)
                                       .reduce((current, next) => next < current ? next : current);
@@ -158,7 +160,7 @@ export const useAuthStore = defineStore({
           if (!isExpiration) {
               let _agent = this.agent
               if(!_agent){
-                _agent = new HttpAgent({identity: this.authClient.getIdentity()})
+                _agent = new HttpAgent({identity: authClient.getIdentity()})
                 if (localhostProvider) {
                     await _agent.fetchRootKey()
                 }
@@ -170,27 +172,29 @@ export const useAuthStore = defineStore({
               return
           }
   
-          if (this.authClient) {
-              this.authClient.login({
-                  identityProvider,
-                  maxTimeToLive: BigInt(24 * 3600_000_000_000),
-                  onSuccess: async () => {              
-                      const _agent = new HttpAgent({identity: this.authClient.getIdentity()})
-                      if (localhostProvider) {
-                          await this.agent.fetchRootKey()
-                      }
-                      const identity = this.authClient.getIdentity()
-                      this.signOk(identity.getPrincipal().toString())
-                      this.agent = _agent
-                      resolve(_agent)
-                  },
-                  onError: (e) => {
-                      const _agent = new HttpAgent()
-                      this.hideLoading()
-                      this.addMsg("You reject auth",MessageType.WARN)
-                      this.agent = _agent
-                      reject(_agent)
+          if (authClient) {
+            authClient.login({
+              identityProvider,
+              maxTimeToLive: BigInt(24 * 3600_000_000_000),
+              onSuccess: async () => {    
+                  console.log('httpagent',1)     
+                  const _agent = new HttpAgent({identity: authClient.getIdentity()})
+                  if (localhostProvider) {
+                      await this.agent.fetchRootKey()
                   }
+                  const identity = authClient.getIdentity()
+                  this.signOk(identity.getPrincipal().toString())
+                  this.agent = _agent
+                  resolve(_agent)
+              },
+              onError: (e) => {
+                  console.log('httpagent',e)
+                  const _agent = new HttpAgent()
+                  this.hideLoading()
+                  this.addMsg("You reject auth",MessageType.WARN)
+                  this.agent = _agent
+                  reject(_agent)
+              }
             })
           }
       })
@@ -201,8 +205,8 @@ export const useAuthStore = defineStore({
           return
       }
   
-      this.authClient && this.authClient.logout()
-      // this.authClient = null
+      authClient && authClient.logout()
+      // authClient = null
       this.agent = null
       this.isSign = false
       this.selectProvider = "none"
@@ -218,7 +222,7 @@ export const useAuthStore = defineStore({
       this.icCalls < 0 && ( this.icCalls = 0)
     },
 
-    addMsg(text:string, type: MessageType){
+    addMsg(text:string, type?: MessageType){
       const appStore = useAppStore()
       if(appStore.isMobile){
         notify({content:text})
@@ -226,7 +230,7 @@ export const useAuthStore = defineStore({
         const _msgs = this.icMsgs.concat([{
           key: uuid(),
           text,
-          type
+          type:type || MessageType.INFO
         }]);
         this.icMsgs = _msgs.slice(-5);
       }

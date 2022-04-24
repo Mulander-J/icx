@@ -14,7 +14,7 @@
           <v-icon v-else name="bi-sun" />
         </transition>
       </li>
-      <li class="slate-widget navItem" v-throttle @click="setDialogShow(true)">
+      <li class="navItem" :class="[authStore.isSign?'identity-ok':'slate-widget']" v-throttle @click="authStore.setDialogShow(true)">
         <v-icon name="ci-icp" />
       </li>
       <li class="navItem" v-throttle @click="appStore.triggerPower">
@@ -30,7 +30,7 @@ import { useAuthStore } from "@/store/modules/auth"
 
 const menus = appRoutes
 const appStore  = useAppStore()
-const { setDialogShow }  = useAuthStore()
+const authStore  = useAuthStore()
 </script>
 <style scoped>
 .navItem{
@@ -41,5 +41,8 @@ const { setDialogShow }  = useAuthStore()
 }
 .offline .exactActive{
   @apply bg-rose-400 hover:bg-rose-400/[.8] !important;
+}
+.identity-ok{
+  background: linear-gradient(45deg, #e81a91, #c865b3, #978cd8, #03acfd);
 }
 </style>

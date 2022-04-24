@@ -67,7 +67,8 @@ export default ({mode}) =>{
       proxy: {
         // This proxies all http requests made to /api to our running dfx instance
         "/api": {
-          target: `http://localhost:${DFX_PORT}`,
+          // target: `http://localhost:${DFX_PORT}`,
+          target: `https://ic0.app`,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, "/api"),
         },

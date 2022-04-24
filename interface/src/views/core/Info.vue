@@ -5,7 +5,7 @@
       <rt-btn class="ml-2" title="Back To List" icon="ri-arrow-go-back-line" v-throttle @click="$router.push('/list')" />
       <rt-btn v-show="appStore.getIsOnline" class="mx-2" title="Create" icon="md-add-round" v-throttle @click="goCreate" />
       <rt-btn v-show="appStore.getIsOnline" class="mr-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(_item)" />
-      <!-- <rt-btn v-if="!_isRoot&&appStore.getIsOnline" :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(_item)" /> -->
+      <rt-btn v-if="!_isRoot&&appStore.getIsOnline" :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(_item)" />
     </div>
     <div class="item-card">
       <div class="flex items-start flex-wrap">
@@ -26,7 +26,7 @@
       :count="_total"
       :isFull="true" :hidePageNext="true"
       :isError="_isError" :isEmpty="_isEmpty"       
-      :retry="initPagination" :create="goCreate"
+      @retry="initPagination" @create="goCreate"
     >
       <template v-slot:default>
         <ul v-if="!_isEmpty" class="p-body info-ul">
@@ -43,7 +43,7 @@
               </div>
               <div v-if="appStore.getIsOnline" class="flex">
                   <rt-btn class="mx-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(l)" />
-                  <!-- <rt-btn :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(l)" /> -->
+                  <rt-btn :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(l)" />
               </div>
             </li>
         </ul>
@@ -60,7 +60,7 @@ import { onBeforeMount, onMounted, ref, computed  } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAppStore } from '@/store/modules/app'
 import { useAuthStore } from '@/store/modules/auth'
-import { InsICX } from "@/hooks/useCanister"
+import { getInsICX, InsICX } from "@/hooks/useCanister"
 import { Node as typeNode } from '@/hooks/canisters/ICX/type'
 import useList from '@/hooks/useList'
 import { okHref } from '@/utils'
@@ -101,14 +101,19 @@ const goModify = (item:any)=>{
 
 const handleDelete = async (item:any)=>{
   // console.log('delete item',item)
-  if(item?.base?.isRoot) return
-  if(!item?.base?.id) return
-  authStore.handleCall({
-    name:'removeNode',
-    cmd:InsICX.removeNode,
-    cbk:initialNodes,
-    rej:()=>{},    
-  },item.base.id)
+  authStore.addMsg("Not open yet")
+  return
+  // if(item?.base?.isRoot) return
+  // if(!item?.base?.id) return
+  // if(authStore.agent){
+  //   const actor = getInsICX(authStore.agent)
+  //   authStore.handleCall({
+  //     name:'removeNode',
+  //     cmd:actor.removeNode,
+  //     cbk:initialNodes,
+  //     rej:()=>{},    
+  //   },item.base.id)
+  // }
 }
 
 const initialNodes = async ()=>{

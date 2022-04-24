@@ -13,7 +13,8 @@ shared(msg) actor class ICXFactory() {
   
     //  CansiterIds
     private var _owner : Principal = msg.caller;
-    private var _mainCanisterId : Principal = Principal.fromText("ai7t5-aibaq-aaaaa-aaaaa-c");
+    // private var _mainCanisterId : Principal = Principal.fromText("ai7t5-aibaq-aaaaa-aaaaa-c");
+    private var _mainCanisterId : Principal = Principal.fromText("jki7y-niaaa-aaaal-qaw2a-cai");
     //  Feedback Data
     private stable var _feedbacks: List.List<Work.FeedbackBody> = List.nil();
     //  Logger Data
@@ -36,18 +37,18 @@ shared(msg) actor class ICXFactory() {
         return _owner;
     };
     public shared({ caller }) func setMainCanisterId(_main_ : Text) : async Principal {
-        // _onlyOwner(caller);
+        _onlyOwner(caller);
         _mainCanisterId := Principal.fromText(_main_);
         return _mainCanisterId;
     };
     
     public shared({ caller }) func EmptyLogger() : async Nat{
-        // _onlyOwner(caller);
+        _onlyOwner(caller);
         _loggers := List.nil();
         return List.size(_loggers);
     };
     public shared({ caller }) func EmptyFeedbacks() : async Nat{
-        // _onlyOwner(caller);
+        _onlyOwner(caller);
         _feedbacks := List.nil();
         return List.size(_feedbacks);
     };    
@@ -73,7 +74,7 @@ shared(msg) actor class ICXFactory() {
         _ref_:Text,
         _op_: Principal,      
     ) : async Int {
-        // if( caller == _mainCanisterId){
+        if( caller == _mainCanisterId){
             _loggers := List.push<Work.WorkEvent>(
                 {
                     level = _level_;
@@ -86,8 +87,8 @@ shared(msg) actor class ICXFactory() {
                 _loggers
             );
             return List.size(_loggers);
-        // };
-        // return -1;
+        };
+        return -1;
     };
 
     /*query call*/

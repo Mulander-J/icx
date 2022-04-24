@@ -11,13 +11,12 @@
       </div>
     </div>
     <data-view 
-      :count="_total+1"
-      :isFull="true" :hidePageNext="true"
-      :isError="_isError" :isEmpty="_isEmpty" 
-      :retry="initPagination" :create="goCreate"
+      :count="_total+1" :hidePageNext="true"
+      :isFull="true" :isError="_isError"
+      @retry="initPagination" @create="goCreate"
     >
       <template v-slot:default>
-        <ul v-if="!_isEmpty" class="p-body">
+        <ul class="p-body">
           <NodeGroup v-if="appStore.isAppFetched" title="APP" :list="[appStore.appInfo]" />
           <NodeGroup v-if="listTrans?.out?.length > 0" title="#" :list="listTrans.out"/>
           <NodeGroup 

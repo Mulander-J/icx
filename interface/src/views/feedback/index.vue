@@ -14,7 +14,7 @@
       :count="total" 
       :isFull="true" :isEnd="_isEnd" 
       :isError="_isError" :isEmpty="_isEmpty" 
-      :retry="initPagination" :create="goCreate" :nextPage="nextPage"
+      @retry="initPagination" @create="goCreate" @nextPage="nextPage"
     >
       <template v-slot:default>
         <ul v-if="!_isEmpty" class="p-body">

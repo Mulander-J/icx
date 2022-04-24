@@ -17,7 +17,7 @@
       :count="total" 
       :isFull="true" :hideCreate="true" 
       :isEnd="_isEnd" :isError="_isError" :isEmpty="_isEmpty" 
-      :retry="initPagination" :nextPage="nextPage"
+      @retry="initPagination" @nextPage="nextPage"
     >
       <ul class="p-body grid grid-cols-1 gap-y-4 my-4" v-if="!_isEmpty">
         <li class="userCard" v-for="(l,i) in list" :key="i">

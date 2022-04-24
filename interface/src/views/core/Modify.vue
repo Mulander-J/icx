@@ -22,7 +22,7 @@
         <textarea class="form-widget slate-widget p-2" v-model.trim="_formData.content" cols="25" rows="3" placeholder="Content" />
       </div>
       <div class="my-4 text-rose-500" v-show="_errMsg">{{_errMsg}}</div>
-      <div class="btn slate-widget font-pixie my-4 w-min py-2 px-8" v-throttle @click="submitItem">SUBMIT</div>  
+      <div class="btn slate-widget font-pixie my-4 w-min py-2 px-8" v-throttle v-sign="submitItem">SUBMIT</div>  
     </div>
     <ul>
       <divide class="pix-h2">Preview</divide>
@@ -35,7 +35,8 @@
 import { ref, onBeforeMount, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/store/modules/auth'
-import { getInsICX,InsICX } from '@/hooks/useCanister'
+import { useAppStore } from '@/store/modules/app'
+import { getInsICX, InsICX } from '@/hooks/useCanister'
 import { frBN } from '@/utils/filter'
 import { okHref } from '@/utils'
 import NodeItem from './NodeItem.vue';
@@ -45,12 +46,14 @@ const DEFULT_FORM = {title:'',content:'',desc:'',cover:''}
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
+const appStore = useAppStore()
 
 const _isEdit = ref(false)
 const _base = ref({
   level:1,
   pid:1,
-  submitId:1
+  submitId:1,
+  isRoot: false
 })
 const _formData = ref({...DEFULT_FORM})
 const previewNode = computed(()=>{
@@ -90,6 +93,12 @@ const submitItem = async ()=>{
       cmd:_isEdit.value?actor.updateNode:actor.addNode,
       okTip:true,
       cbk:()=>{
+        if(_base.value.isRoot){
+          appStore.setAppInfo({
+            ...appStore.appInfo,
+            main:{..._formData.value}
+          })
+        }
         if(!_isEdit.value){
           _formData.value = {...DEFULT_FORM}
         }
@@ -130,7 +139,8 @@ const initialNode = async ()=>{
         _base.value = {
           submitId:_id,
           level:frBN(base.level),
-          pid:frBN(base.pid)
+          pid:frBN(base.pid),
+          isRoot: base.isRoot
         }
       }else{
         if(base.level<=2 && base.level>=1){
@@ -140,7 +150,8 @@ const initialNode = async ()=>{
           _base.value = {
             submitId:frBN(base.id),
             level:frBN(base.level)+1,
-            pid:frBN(base.id)
+            pid:frBN(base.id),
+            isRoot: false
           }
         }else{
           throw Error('Wrong Level')

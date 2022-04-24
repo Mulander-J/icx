@@ -9,9 +9,9 @@
         <label>TYPE</label>
         <select class="slate-widget p-2" v-model="_formData.type" placeholder="Please Select">
           <option value="" selected disabled>-Select Type</option>
-          <option value="bug">bug</option>
-          <option value="feature">feature</option>
-          <option value="suggestion">suggestion</option>
+          <option value="bug" class="text-rose-500">bug</option>
+          <option value="feature" class="text-amber-500">feature</option>
+          <option value="suggestion" class="text-lime-500">suggestion</option>
         </select>
       </div>
       <div class="form-item">
