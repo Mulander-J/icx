@@ -26,6 +26,8 @@
 ```
 # ICX
 
+> [Mainnet App](https://jeksq-wyaaa-aaaal-qaw3a-cai.ic0.app/)
+
 `Web2sites` Organizing-Tool for `web2.5ers` built by `web3ers`.
 
 ## License
@@ -37,6 +39,20 @@
 ### Intro
 
 The ICX is regard as a tool or station, where users can manage bookmarks via Internet Computer.
+
+### Features
+
+- Home: Manage Bookmarks
+- Rank: Show User Point
+- Activity: Show loggers
+- Feedback: Send report
+- About: Intro of app
+- Tool: Principal to account
+- Identity Dialog
+- Dark/Light mode switch
+- Readonly/Write mode switch
+
+### Roles
 
 User will access all rights to post/update/delete any contents.
 
@@ -109,6 +125,14 @@ Maybe DAO in the future.
 - LOADING
 
 ![loading](/docs/human.gif)
+
+### Figma Sketch
+
+![figma_1](/docs/figma_1.png)
+
+![figma_2](/docs/figma_2.png)
+
+![figma_3](/docs/figma_3.png)
 
 ## Tech Rule
 
