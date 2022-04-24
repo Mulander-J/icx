@@ -24,7 +24,8 @@ shared({ caller = _owner }) actor class ICX() {
   // private let MODIFY_LIMIT = 5_000_000_000;
   private let MODIFY_LIMIT = 1_000_000_000;
   //  Actor Worker
-  private let _wk : Work.WorkInstance = actor("hozae-racaq-aaaaa-aaaaa-c");
+  // private var _wk : Work.WorkInstance = actor("hozae-racaq-aaaaa-aaaaa-c");
+  private var _wk : Work.WorkInstance = actor("jnjzm-aqaaa-aaaal-qaw2q-cai");
   //  Lite User Data & Entries
   private stable var _userEntries : [(Principal, User.UserInfo)] = [];
   private var _addrUserMap = HashMap.fromIter<Principal, User.UserInfo>(_userEntries.vals(), 10, Principal.equal, Principal.hash);
@@ -100,6 +101,12 @@ shared({ caller = _owner }) actor class ICX() {
         return false;
       };
     }
+  };
+
+  public shared({ caller }) func setWorkActor(_work_ : Text) : async Text {
+    assert (caller == _owner);
+    _wk := actor(_work_);
+    return _work_;
   };
 
   public func acceptCycles() : async Nat {
@@ -256,6 +263,9 @@ shared({ caller = _owner }) actor class ICX() {
   public shared query func NodeByPid(_pid_: Nat) : async [XN.Node] {
     List.toArray(XN.getNodes(_nodes,#pid(_pid_)));
   };
+  public shared query func Owner() :async Principal{
+      _owner;
+  };
   public query func getCycles() : async Nat {
       ExperimentalCycles.balance();
   };
@@ -271,11 +281,4 @@ shared({ caller = _owner }) actor class ICX() {
   system func postupgrade() {
     _userEntries := [];
   };
-  
-  // system func heartbeat() : async () {
-  //   if (_heart % 5 == 0) {
-  //     await ring();
-  //   };
-  //   _heart += 1;
-  // };
 };
