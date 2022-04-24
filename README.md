@@ -121,6 +121,7 @@ Maybe DAO in the future.
 ### Services/Canister
 
 #### 1.ICX
+
 Core: `jki7y-niaaa-aaaal-qaw2a-cai`
 
 - User
@@ -130,6 +131,7 @@ Core: `jki7y-niaaa-aaaal-qaw2a-cai`
   - Bookmark(Lv3)
 
 #### 2.Factory
+
 Factory: `jnjzm-aqaaa-aaaal-qaw2q-cai`
 
 - Feedback
@@ -156,6 +158,7 @@ To run this project, you will need to add the following environment variables to
 ### Commands
 
 Local Run
+
 ```bash
 #1.enter icx
 cd icx
@@ -216,6 +219,7 @@ icx
 ### Data & Type
 
 Public Data on Internet Computer
+
 ```
 UserInfo {
   id: Text;
