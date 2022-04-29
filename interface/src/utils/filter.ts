@@ -49,7 +49,7 @@ export default {
   frBN,
   mtkTime,
   dateStr:(t:bigint|number|any)=>mtkTime(t).toISOString(),
-  strSlice: (str: string, front = 10, behind = 4): string => {
+  strSlice: (str: string, front = 6, behind = 3): string => {
     if (typeof str !== 'string' || str.length === 0) return ''
     if (front + behind >= str.length) return str
     return `${str.slice(0, front)}${front < str.length ? '...' : ''}${

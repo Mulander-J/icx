@@ -24,7 +24,7 @@ dfx canister --network=ic call $icx initialNodes
 
 
 #start
-dfx canister --network=ic start --alll
+dfx canister --network=ic start --all
 #Stop
 dfx canister --network=ic stop --all
 #Delete

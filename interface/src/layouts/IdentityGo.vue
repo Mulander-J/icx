@@ -32,6 +32,15 @@
               <p class="my-8 text-2xl">Please Install Plug.</p>
               <a class="pix-h2 acp-btn" href="https://plugwallet.ooo/" target="_blank">INSTALL</a>
             </div>
+            <div v-else-if="authStore.isSign">
+              <div class="pid-row">
+                <strong>{{$filters.strSlice(authStore.principalId)}}</strong> 
+                <cp-btn :txt="authStore.principalId"/>
+              </div>             
+              <div  class="pix-h2 acp-btn" @click="authStore.logout">              
+                <span>Logout</span>
+              </div>
+            </div>
             <div v-else>
               <p class="my-8 text-2xl">You are going to approve plug.</p>
               <div class="pix-h2 acp-btn" v-throttle @click="authStore.getHttpAgent">Connect</div>

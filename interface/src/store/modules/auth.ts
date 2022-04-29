@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import { AuthClient } from "@dfinity/auth-client"
 import { HttpAgent } from '@dfinity/agent'
+import { cidICX, cidICXFactory } from '@/hooks/canisters'
 import { INITIAL_MSG, MessageType } from '@/model/msg'
 import { uuid } from '@/utils'
 import dealErr from '@/utils/dealErr'
@@ -121,12 +122,6 @@ export const useAuthStore = defineStore({
 
     async isAgentExpiration() {
       return new Promise(async (resolve, reject) => {
-          if (this.isPlug) {
-              // resolve(await isStoicAgentExpiration())
-              resolve(null)
-              return
-          }
-  
           await this.getAuthClient()
           const identity = authClient.getIdentity()
           if (authClient.isAuthenticated() && identity.getDelegation) {
@@ -146,12 +141,21 @@ export const useAuthStore = defineStore({
       return new Promise(async (resolve, reject) => {
           this.showLoading()
           if (this.isPlug) {
-              const _agent = new HttpAgent()
-              this.agent = _agent
-              this.hideLoading()
-              this.addMsg("Plug is not supported yet",MessageType.WARN)            
-              // resolve(await getStoicAgent())
-              resolve(_agent)
+              try{
+                const whitelist = [cidICX,cidICXFactory]
+                await window?.ic?.plug?.requestConnect({whitelist});
+                const _agent = window?.ic?.plug?.agent
+                const _identity = await _agent._identity
+                const principal = _identity._principal.toString()
+                this.signOk(principal)
+                this.agent = _agent
+                resolve(_agent)
+              }catch(e:any){
+                this.addMsg(e.message||e,MessageType.WARN)
+                reject(null)
+              }finally{
+                this.hideLoading()
+              }
               return
           }
   
@@ -200,17 +204,14 @@ export const useAuthStore = defineStore({
       })
     },
     async logout() {
-      if (this.isPlug) {
-          // stoicLogout()
-          return
+      if (!this.isPlug) {
+        authClient && authClient.logout()
+        // authClient = null
+        // this.inInitAuthClient = false
       }
-  
-      authClient && authClient.logout()
-      // authClient = null
       this.agent = null
       this.isSign = false
       this.selectProvider = "none"
-      // this.inInitAuthClient = false
     },
 
 
