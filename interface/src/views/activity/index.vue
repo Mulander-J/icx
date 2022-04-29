@@ -77,6 +77,6 @@ onBeforeMount(()=>{
   @apply text-amber-400
 }
 .wt-initial{
-  @apply text-purple-500
+  @apply text-purple-600
 }
 </style>

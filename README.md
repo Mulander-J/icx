@@ -222,8 +222,8 @@ icx
 │ │ ├ styles   # css
 │ │ ├ utils   # tools
 │ │ ├ views   # pages
-│ │ ├ App.vue   # source code
-│ │ └ main.ts   # source code
+│ │ ├ App.vue   # Main Template
+│ │ └ main.ts   # Main Entry
 │ ├ src   # source code
 │ ├ index.html    # page entry
 │ ├ ...

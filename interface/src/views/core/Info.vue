@@ -6,6 +6,9 @@
       <rt-btn v-show="appStore.getIsOnline" class="mx-2" title="Create" icon="md-add-round" v-throttle @click="goCreate" />
       <rt-btn v-show="appStore.getIsOnline" class="mr-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(_item)" />
       <rt-btn v-if="!_isRoot&&appStore.getIsOnline" :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(_item)" />
+      <a :href="share_twitter" target="_blank" class="ml-2">
+        <v-icon name="ri-share-fill" color="rgb(29, 155, 240)"/>
+      </a>
     </div>
     <div class="item-card">
       <div class="flex items-start flex-wrap">
@@ -74,6 +77,12 @@ const _id = ref(0)
 const _item = ref<typeNode|null>(null)
 const _isRoot = computed(()=> _item.value?.base?.isRoot || false)
 const _joinCount = computed(()=>_item.value?.authors?.length || 0)
+
+const share_twitter = computed(()=>{
+  const url = encodeURIComponent(window.location.href)
+  const ctx = encodeURIComponent('People of the Metaverse, I am now fighting an evil creature, fighting to defend the Earth, I need your strength, please raise your hands, give me some energy!')
+  return `https://twitter.com/share?text=${ctx}&url=${url}&hashtags=icx`
+})
 
 const {
   _isError,_isEmpty,
