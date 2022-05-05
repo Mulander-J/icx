@@ -1,4 +1,4 @@
-import ExperimentalCycles "mo:base/ExperimentalCycles";
+import Cycles "mo:base/ExperimentalCycles";
 import Principal "mo:base/Principal";
 import Result "mo:base/Result";
 import Text "mo:base/Text";
@@ -25,11 +25,20 @@ shared(msg) actor class ICXFactory() {
     private func _onlyOwner(_caller: Principal) {
         assert(_caller == _owner);
     };
-    public func acceptCycles() : async Nat {
-        return ExperimentalCycles.accept(ExperimentalCycles.available());
-    };
     
-    /*update call*/  
+    /*update call*/
+
+    public func acceptCycles(_c: Nat) : async Nat {
+        let amount = Cycles.available();
+        
+        if(amount == 0) return 0;
+        
+        let acceptable =
+            if (_c <= amount and _c > 0) _c
+            else amount;
+
+        return Cycles.accept(acceptable);
+    };
 
     public shared({ caller }) func setOwner(_owner_ : Text) : async Principal{
         _onlyOwner(caller);
@@ -112,6 +121,6 @@ shared(msg) actor class ICXFactory() {
         _mainCanisterId;
     };
     public query func getCycles() : async Nat {
-        ExperimentalCycles.balance();
+        Cycles.balance();
     };
 };

@@ -28,6 +28,8 @@
 
 > [Mainnet App](https://jeksq-wyaaa-aaaal-qaw3a-cai.ic0.app/)
 
+> Cycle Manage: Func `acceptCycles(_c:Nat)`
+
 `Web2sites` Organizing-Tool for `web2.5ers` built by `web3ers`.
 
 ## License
@@ -42,15 +44,23 @@ The ICX is regard as a tool or station, where users can manage bookmarks via Int
 
 ### Features
 
+Supported
+
 - Home: Manage Bookmarks
 - Rank: Show User Point
 - Activity: Show loggers
 - Feedback: Send report
 - About: Intro of app
 - Tool: Principal to account
-- Identity Dialog
+- Identity: Internet Identity & Plug
 - Dark/Light mode switch
 - Readonly/Write mode switch
+
+Coming Soon
+
+- Vote
+- ICNS
+- Profile Picture
 
 ### Roles
 

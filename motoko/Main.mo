@@ -1,4 +1,4 @@
-import ExperimentalCycles "mo:base/ExperimentalCycles";
+import Cycles "mo:base/ExperimentalCycles";
 import Debug "mo:base/Debug";
 import HashMap "mo:base/HashMap";
 import List "mo:base/List";
@@ -12,6 +12,7 @@ import Text "mo:base/Text";
 import Time "mo:base/Time";
 import User "./types/User";
 import Work "./types/Work";
+
 import XN "./modules/XNode";
 import DT "./modules/DateTime";
 import AID "./modules/AID/AccountId";
@@ -109,11 +110,19 @@ shared({ caller = _owner }) actor class ICX() {
     return _work_;
   };
 
-  public func acceptCycles() : async Nat {
-      return ExperimentalCycles.accept(ExperimentalCycles.available());
-  };
-
   /*update call*/
+
+  public func acceptCycles(_c: Nat) : async Nat {
+    let amount = Cycles.available();
+    
+    if(amount == 0) return 0;
+    
+    let acceptable =
+      if (_c <= amount and _c > 0) _c
+      else amount;
+
+    return Cycles.accept(acceptable);
+  };
 
   public shared({ caller }) func initialNodes() : async Nat{
     assert (caller == _owner);
@@ -267,7 +276,7 @@ shared({ caller = _owner }) actor class ICX() {
       _owner;
   };
   public query func getCycles() : async Nat {
-      ExperimentalCycles.balance();
+      Cycles.balance();
   };
 
 
