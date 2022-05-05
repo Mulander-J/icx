@@ -109,6 +109,7 @@ const authStore = useAuthStore()
   flex items-center justify-between w-full
   bg-white/[.6] hover:bg-white/[.8] dark:bg-black/[.6] dark:hover:bg-black/[.8];
   height:3em;
+  transition: .3s all;
 }
 .ac-btn .ic-logo{
   width:3em;

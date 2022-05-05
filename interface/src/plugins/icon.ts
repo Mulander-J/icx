@@ -7,6 +7,7 @@ import {
   IoChatboxEllipses,IoTrashBin,MdAddRound,IoSearch,RiArrowGoBackLine,
   IoLogoTwitter,IoLogoGithub,BiTelegram,IoLogoDiscord,GiEvilBook,
   MdModeeditRound,FaTools,HiSwitchVertical,MdMorehoriz,RiShareFill,
+  GiMailedFist,IoSnow,
 } from 'oh-vue-icons/icons'
 
 addIcons(
@@ -16,6 +17,7 @@ addIcons(
   IoChatboxEllipses,IoTrashBin,MdAddRound,IoSearch,RiArrowGoBackLine,
   IoLogoTwitter,IoLogoGithub,BiTelegram,IoLogoDiscord,GiEvilBook,
   MdModeeditRound,FaTools,HiSwitchVertical,MdMorehoriz,RiShareFill,
+  GiMailedFist,IoSnow,
 );
 
 

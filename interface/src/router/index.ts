@@ -42,6 +42,14 @@ export const appRoutes:Array<RouteRecordRaw> = [
     }
   },
   {
+    path: '/vote',
+    name: 'Vote',
+    component: () => import('@/views/vote/index.vue'),
+    meta: {
+      icon: 'gi-mailed-fist'
+    }
+  },
+  {
     path: '/activity',
     name: 'activity',
     component: () => import('@/views/activity/index.vue'),

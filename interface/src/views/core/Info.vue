@@ -2,20 +2,22 @@
   <div>
     <div class="m-5 flex items-center">
       <span class="pix-h2">INFO</span>
-      <rt-btn class="ml-2" title="Back To List" icon="ri-arrow-go-back-line" v-throttle @click="$router.push('/list')" />
+      <rt-btn class="mx-2" title="Back To List" icon="ri-arrow-go-back-line" v-throttle @click="$router.push('/list')" />
       <rt-btn v-show="appStore.getIsOnline" class="mx-2" title="Create" icon="md-add-round" v-throttle @click="goCreate" />
-      <rt-btn v-show="appStore.getIsOnline" class="mr-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(_item)" />
-      <rt-btn v-if="!_isRoot&&appStore.getIsOnline" :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(_item)" />
-      <a :href="share_twitter" target="_blank" class="ml-2">
+      <rt-btn v-show="appStore.getIsOnline" class="mx-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(_item)" />
+      <rt-btn v-if="!_isRoot&&appStore.getIsOnline" :hover="true" class="mx-2" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(_item)" />
+      <rt-btn icon="io-snow" class="mx-2" title="Frozen" @click="goForzen"/>
+      <a :href="share_twitter" target="_blank">
         <v-icon name="ri-share-fill" color="rgb(29, 155, 240)"/>
       </a>
     </div>
+    <p class="px-5 text-sm">Data will be erased regularly. Freezing data through voting or just brain memory.</p>
     <div class="item-card">
       <div class="flex items-start flex-wrap">
         <div class="item-cover"><div class="item-img bg-main"></div></div>
         <div class="px-4">
           <p class="text-3xl font-bold">{{_item?.main?.title || '◉◡◉'}}</p>
-          <p class="text-xs text-zinc-800/[.8]">{{_item?.main?.desc || '◉◡◉'}}</p>
+          <p class="text-xs">{{_item?.main?.desc || '◉◡◉'}}</p>
         </div>        
       </div>
       <p class="text-xl my-2">{{_item?.main?.content||'◉◡◉'}}</p>
@@ -110,19 +112,23 @@ const goModify = (item:any)=>{
 
 const handleDelete = async (item:any)=>{
   // console.log('delete item',item)
+  // authStore.addMsg("Not open yet")
+  // return
+  if(item?.base?.isRoot) return
+  if(!item?.base?.id) return
+  if(authStore.agent){
+    const actor = getInsICX(authStore.agent)
+    authStore.handleCall({
+      name:'removeNode',
+      cmd:actor.removeNode,
+      cbk:initialNodes,
+      rej:()=>{},    
+    },item.base.id)
+  }
+}
+
+const goForzen = ()=>{
   authStore.addMsg("Not open yet")
-  return
-  // if(item?.base?.isRoot) return
-  // if(!item?.base?.id) return
-  // if(authStore.agent){
-  //   const actor = getInsICX(authStore.agent)
-  //   authStore.handleCall({
-  //     name:'removeNode',
-  //     cmd:actor.removeNode,
-  //     cbk:initialNodes,
-  //     rej:()=>{},    
-  //   },item.base.id)
-  // }
 }
 
 const initialNodes = async ()=>{
@@ -132,6 +138,7 @@ const initialNodes = async ()=>{
     cbk:async (res:any)=>{
       if(res.length>0){
         _item.value = {...res[0]}
+        console.log('_item',_item.value)
         if(res[0].base.isRoot) {
           appStore.setAppInfo(res[0])
           return false
@@ -139,7 +146,7 @@ const initialNodes = async ()=>{
         await initPagination()
       }else{
         skipBack()
-      }
+      }    
     },
     rej:()=>{
       skipBack()
