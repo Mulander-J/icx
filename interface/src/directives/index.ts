@@ -64,8 +64,12 @@ const sign = {
         event && event.stopImmediatePropagation()        
         const authStore = useAuthStore()
         if(authStore.isSign){
-          const cmd = binding.value
-          cmd && cmd()
+          const payloads = binding.value
+          if(Array.isArray(payloads)){
+            payloads[0](...payloads.slice(1))
+          }else if (!!payloads){
+            payloads()
+          }
         }else{
           authStore.showDialog("none")
         }

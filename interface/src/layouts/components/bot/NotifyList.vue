@@ -24,7 +24,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref,computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useAuthStore } from '@/store/modules/auth'
 import { MessageType } from '@/model/msg';
 
@@ -32,6 +32,11 @@ const authStore = useAuthStore()
 
 const msgShow = ref(true)
 const msgZero = computed(()=>authStore.icMsgs.length||0)
+watch(()=>authStore.icMsgs,(s)=>{
+  if(s.length>0){
+    msgShow.value = true
+  }
+},{deep:true})
 
 const getNotifyCls = (type:number)=>{
   return `notify-`+ (

@@ -36,7 +36,4 @@ onMounted(()=>{
   left: 0;
   border-radius: 100%;
 }
-/* .bot-wrapper:hover .liquid-crystal::after{
-  background: radial-gradient(#201d32, transparent);
-} */
 </style>

@@ -58,6 +58,5 @@ const onScroll = ()=>{
 }
 .main-bot{
   @apply hidden lg:flex fixed right-10 bottom-10;
-  min-height: 20em;
 }
 </style>

@@ -5,13 +5,17 @@
       <rt-btn class="mx-2" title="Back To List" icon="ri-arrow-go-back-line" v-throttle @click="$router.push('/list')" />
       <rt-btn v-show="appStore.getIsOnline" class="mx-2" title="Create" icon="md-add-round" v-throttle @click="goCreate" />
       <rt-btn v-show="appStore.getIsOnline" class="mx-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(_item)" />
-      <rt-btn v-if="!_isRoot&&appStore.getIsOnline" :hover="true" class="mx-2" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(_item)" />
+      <rt-btn
+        class="mx-2" v-if="!_isRoot&&appStore.getIsOnline" 
+        :hover="true" title="Delete" icon="io-trash-bin"
+        v-throttle @click="openRmPop(_item)"
+      />
       <rt-btn icon="io-snow" class="mx-2" title="Frozen" @click="goForzen"/>
       <a :href="share_twitter" target="_blank">
         <v-icon name="ri-share-fill" color="rgb(29, 155, 240)"/>
       </a>
     </div>
-    <p class="px-5 text-sm">Data will be erased regularly. Freezing data through voting or just brain memory.</p>
+    <p class="px-5 text-sm select-none">Data will be erased regularly. Freezing data through voting or just brain memory.</p>
     <div class="item-card">
       <div class="flex items-start flex-wrap">
         <div class="item-cover"><div class="item-img bg-main"></div></div>
@@ -48,7 +52,7 @@
               </div>
               <div v-if="appStore.getIsOnline" class="flex">
                   <rt-btn class="mx-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(l)" />
-                  <rt-btn :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="handleDelete(l)" />
+                  <rt-btn :hover="true" title="Delete" icon="io-trash-bin" v-throttle @click="openRmPop(l)" />
               </div>
             </li>
         </ul>
@@ -58,6 +62,9 @@
       <p class="font-sc text-sky-500">The app-info is open for modify.</p>      
       <div v-show="appStore.getIsOnline" class="btn-modify" @click="goModify(_item)">MODIFY</div>
     </no-data>
+    <Dialog :show="_rmPop.isShow" @cancelCb="_rmPop.isShow = false">
+      <RemovePop :target="_rmPop.check" :isShow="_rmPop.isShow" @onPass="handleDelete" />
+    </Dialog>
   </div>
 </template>
 <script lang="ts" setup>
@@ -69,6 +76,8 @@ import { getInsICX, InsICX } from "@/hooks/useCanister"
 import { Node as typeNode } from '@/hooks/canisters/ICX/type'
 import useList from '@/hooks/useList'
 import { okHref } from '@/utils'
+import Dialog from '@/components/Dialog.vue'
+import RemovePop from '@/layouts/components/RemovePop.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -79,6 +88,11 @@ const _id = ref(0)
 const _item = ref<typeNode|null>(null)
 const _isRoot = computed(()=> _item.value?.base?.isRoot || false)
 const _joinCount = computed(()=>_item.value?.authors?.length || 0)
+const _rmPop = ref<any>({
+  isShow: false,
+  data: null,
+  check: ''
+})
 
 const share_twitter = computed(()=>{
   const url = encodeURIComponent(window.location.href)
@@ -110,8 +124,17 @@ const goModify = (item:any)=>{
   id && router.push('/edit/'+id)
 }
 
-const handleDelete = async (item:any)=>{
-  // console.log('delete item',item)
+const openRmPop = (data:any)=>{
+  _rmPop.value = {
+    data,
+    isShow: true,
+    check: data.main.title
+  }
+}
+const handleDelete = async ()=>{
+  _rmPop.value.isShow = false
+  const item = _rmPop.value.data
+  // console.log('item', item)
   // authStore.addMsg("Not open yet")
   // return
   if(item?.base?.isRoot) return
