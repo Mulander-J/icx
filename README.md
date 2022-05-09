@@ -28,7 +28,7 @@
 
 > [Mainnet App](https://jeksq-wyaaa-aaaal-qaw3a-cai.ic0.app/)
 
-> Cycle Manage: Func `acceptCycles(_c:Nat)`
+> Cycle Donate/Manage: Func `acceptCycles(_c:Nat)`
 
 `Web2sites` Organizing-Tool for `web2.5ers` built by `web3ers`.
 
@@ -61,6 +61,7 @@ Coming Soon
 - Vote
 - ICNS
 - Profile Picture
+- Offline Mode
 
 ### Roles
 
