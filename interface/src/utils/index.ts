@@ -8,6 +8,11 @@ export const uuid = ()=>{
     return v.toString(16);
     });
 }
+export const wait = (ms:number) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {resolve(ms)}, ms)
+  })
+}
 
 export const Alphabets = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 export const alphabetMap = Object.fromEntries(Alphabets.map(l=>[l,[]]))

@@ -24,10 +24,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
 import { useAuthStore } from "@/store/modules/auth"
 import { getInsICXFactory } from '@/hooks/useCanister'
 
+const { proxy } = getCurrentInstance() as any
 const authStore = useAuthStore()
 
 const _formData = ref({type:'',content:''})
@@ -48,17 +49,18 @@ const addItem = async ()=>{
   }
   _errMsg.value = ''
 
-  const payloads = [{[type]:null},content]
-
-  const InsICXFactory = getInsICXFactory(authStore.agent)
-  
-  InsICXFactory && await authStore.handleCall({
-    name:'Add Feedback',
-    cmd:InsICXFactory.insertFeedback,
-    okTip:true,
-    cbk:()=>{
-      _formData.value = {type:'',content:''}
-    }, 
-  },...payloads)
+  proxy.$verify({},async (res:boolean)=>{
+    if(!res) return
+    const payloads = [{[type]:null},content]
+    const InsICXFactory = getInsICXFactory(authStore.agent)
+    InsICXFactory && await authStore.handleCall({
+      name:'Add Feedback',
+      cmd:InsICXFactory.insertFeedback,
+      okTip:true,
+      cbk:()=>{
+        _formData.value = {type:'',content:''}
+      }, 
+    },...payloads)
+  })
 }
 </script>

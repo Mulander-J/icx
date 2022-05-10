@@ -1,5 +1,5 @@
 <template>
-  <div class="icx-dialog">
+  <div>
     <div class="icxd-mask" v-show="show && !noMask" @click="!noEscMask && $emit('cancelCb')" />
     <transition name="topScale">
       <div class="icxd-body" v-show="show" :style="width ? `max-width:${width}px;` : ''">

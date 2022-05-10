@@ -1,5 +1,6 @@
 import { App } from 'vue'
 import filters from '@/utils/filter'
+import verify from '@/components/verify/index'
 
 
 declare module '@vue/runtime-core' {
@@ -10,6 +11,7 @@ declare module '@vue/runtime-core' {
 
 const registerGlobProp = (app: App) => {
   app.config.globalProperties.$filters = filters
+  app.config.globalProperties.$verify = verify
 }
 
 export default registerGlobProp

@@ -32,7 +32,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, onBeforeMount, onMounted, computed } from 'vue'
+import { ref, onBeforeMount, onMounted, computed, getCurrentInstance } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/store/modules/auth'
 import { useAppStore } from '@/store/modules/app'
@@ -43,6 +43,7 @@ import NodeItem from './NodeItem.vue';
 
 const DEFULT_FORM = {title:'',content:'',desc:'',cover:''}
 
+const { proxy } = getCurrentInstance() as any
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
@@ -65,7 +66,7 @@ const previewNode = computed(()=>{
 
 const _errMsg = ref('')
 
-const submitItem = async ()=>{
+const submitItem = async ()=>{  
   if(authStore.getIsLoading) return
   const {content,title} = _formData.value
   if(!title){
@@ -83,7 +84,11 @@ const submitItem = async ()=>{
   
   _errMsg.value = ''
 
-  if(authStore.agent){
+  proxy.$verify({},async (res:boolean)=>{
+    if(!res) return
+
+    if(!authStore.agent) return
+
     const actor = getInsICX(authStore.agent)
 
     const payloads = [_base.value.submitId,_formData.value]
@@ -104,7 +109,7 @@ const submitItem = async ()=>{
         }
       }, 
     },...payloads)
-  }  
+  }) 
 }
 
 const checkId = ()=>{
