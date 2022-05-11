@@ -20,10 +20,10 @@ import Base "./types/Base";
 
 shared({ caller = _owner }) actor class ICX() {
   //  Static val
-  private let TITLE_MAX = 10;
+  private let TITLE_MAX = 20;
   private let MODIFY_POINT = 10;
-  // private let MODIFY_LIMIT = 5_000_000_000;
-  private let MODIFY_LIMIT = 1_000_000_000;
+  private let TIME_UNIT = 1_000_000_000;
+  private let MODIFY_LIMIT = 5;
   //  Actor Worker
   // private var _wk : Work.WorkInstance = actor("hozae-racaq-aaaaa-aaaaa-c");
   private var _wk : Work.WorkInstance = actor("jnjzm-aqaaa-aaaal-qaw2q-cai");
@@ -66,10 +66,10 @@ shared({ caller = _owner }) actor class ICX() {
 
     switch (XN.getNode(_nodes, #item(_id))) {
       case (?item) {
-        if((Time.now() - item.lastUpdate > MODIFY_LIMIT) or _isAdd){
+        if((Time.now() - item.lastUpdate > (MODIFY_LIMIT * TIME_UNIT)) or _isAdd){
           return  #ok(item);
         };
-        return  #err("Please operate later");    
+        return  #err("Please operate "#Nat.toText(MODIFY_LIMIT)#"s later");    
       };
       case _ {
         return #err("Node not find");
