@@ -31,6 +31,15 @@ Thus I tried to develop a distributed and erasable bookmarking tool for multi-pe
 ## What it does
 The ICX is regard as a tool or station, where users can manage bookmarks via Internet Computer.
 Edit access to data is open to all inludes modify & delete. A vote is required to decide whether the data will be stored permanently.
+## User Guide
+1.Click power button at bottom left to switch read/write mode.
+
+2.The node hierarchy is designed as three levels. 
+
+- a.App Node
+- b.Collection Node
+- C.Bookmark Node
+
 ## How we built it
 Around 3 weeks, Start with a figma draft of this product, develop backend in motoko and then develop frontend in vue.
 ## Challenges we ran into
