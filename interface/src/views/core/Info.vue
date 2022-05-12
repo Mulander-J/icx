@@ -2,7 +2,7 @@
   <div>
     <div class="m-5 flex items-center">
       <span class="pix-h2">INFO</span>
-      <rt-btn class="mx-2" title="Back To List" icon="ri-arrow-go-back-line" v-throttle @click="$router.push('/list')" />
+      <rt-btn class="mx-2" title="Back To List" icon="ri-arrow-go-back-line" v-throttle @click="$router.push('/app')" />
       <rt-btn v-show="appStore.getIsOnline" class="mx-2" title="Create" icon="md-add-round" v-throttle @click="goCreate" />
       <rt-btn v-show="appStore.getIsOnline" class="mx-2" title="Modify" icon="md-modeedit-round" v-throttle @click="goModify(_item)" />
       <rt-btn
@@ -10,12 +10,12 @@
         :hover="true" title="Delete" icon="io-trash-bin"
         v-throttle @click="openRmPop(_item)"
       />
-      <rt-btn icon="io-snow" class="mx-2" title="Frozen" @click="goForzen"/>
+      <rt-btn v-if="!_isRoot" icon="io-snow" class="mx-2" title="Frozen" @click="goForzen"/>
       <a :href="share_twitter" target="_blank">
         <v-icon name="ri-share-fill" color="rgb(29, 155, 240)"/>
       </a>
     </div>
-    <p class="px-5 text-sm select-none">Data will be erased regularly. Freezing data through voting or just brain memory.</p>
+    <p class="px-5 text-sm select-none" v-if="!_isRoot">Data will be erased regularly. Freezing data through voting or just brain memory.</p>
     <div class="item-card">
       <div class="flex items-start flex-wrap">
         <div class="item-cover"><div class="item-img bg-main"></div></div>
@@ -86,7 +86,12 @@ const authStore = useAuthStore()
 
 const _id = ref(0)
 const _item = ref<typeNode|null>(null)
-const _isRoot = computed(()=> _item.value?.base?.isRoot || false)
+const _isRoot = computed(()=> {
+  if(_item.value){
+    return _item.value?.base?.isRoot || false
+  }
+  return true
+})
 const _joinCount = computed(()=>_item.value?.authors?.length || 0)
 const _rmPop = ref<any>({
   isShow: false,
@@ -121,7 +126,7 @@ const goCreate = ()=>{
 }
 const goModify = (item:any)=>{
   const id = Number(item?.base?.id)
-  id && router.push('/edit/'+id)
+  id && router.push('/app/edit/'+id)
 }
 
 const openRmPop = (data:any)=>{
@@ -151,7 +156,7 @@ const handleDelete = async ()=>{
 }
 
 const goForzen = ()=>{
-  authStore.addMsg("Not open yet")
+  router.push(`/vote/frozen/${_id.value}`)
 }
 
 const initialNodes = async ()=>{

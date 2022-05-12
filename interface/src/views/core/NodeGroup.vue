@@ -4,7 +4,7 @@
     <div class="grid gap-8 xl:grid-cols-5 lg:grid-cols-3 grid-cols-2">
       <NodeItem 
         v-for="(ll,i) in list" :key="i" :item="ll"
-        @click="$router.push('/info/'+ll?.base?.id||'0')"
+        @click="$router.push('/app/info/'+ll?.base?.id||'0')"
       />
     </div>
   </li>

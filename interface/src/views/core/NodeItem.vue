@@ -2,7 +2,10 @@
   <section class="node-card">
     <div class="node-cover">
       <div class="cover-avatar bg-main"></div>
-    </div>    
+    </div>
+    <div class="snow" v-if="item?.base?.isRoot">
+      <v-icon name="io-snow"  animation='spin' hover />
+    </div>
     <div class="node-text">
       <p class="text-md lg:text-3xl font-bold ">{{item?.main?.title || '◉◡◉'}}</p>
       <p class="text-xs">{{item?.main?.desc || '◉◡◉'}}</p>
@@ -28,6 +31,9 @@ export default {
 }
 .node-card:hover.node-card::after{
   @apply -top-2 -left-2;
+}
+.snow{
+  @apply absolute -top-2 right-2;
 }
 .node-text{
   @apply md:col-span-2;

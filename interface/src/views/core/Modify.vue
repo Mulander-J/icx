@@ -2,12 +2,11 @@
   <div class="p-5">
     <h2 class="pix-h2 flex items-center">      
       <span>{{_isEdit?'MODIFY':'CREATE'}} NODE</span>
-      <rt-btn class="ml-2" icon="ri-arrow-go-back-line" v-throttle @click="$router.push('/list')" />
+      <rt-btn class="ml-2" icon="ri-arrow-go-back-line" v-throttle @click="$router.push('/app')" />
     </h2>
     <div class="lg:w-1/2 w-full">
       <div class="form-item">
-        <label>Parent ID</label>
-        <div class="form-widget slate-widget p-2 cursor-not-allowed">{{_base.pid}}</div>
+        <label>Parent ID : <strong>{{_base.pid}}</strong></label>
       </div>
       <div class="form-item">
         <label>Title</label>        
@@ -27,7 +26,11 @@
     <ul>
       <divide class="pix-h2">Preview</divide>
       <p class="slate-widget txt-main my-4 p-2 w-min select-none">Node.Lv<strong>{{_base.level}}</strong></p>
-      <NodeItem :item="previewNode" />
+      <NodeItem v-if="_base.level == 2" :item="previewNode" />
+      <div v-else class="slate-widget p-4 w-max">
+          <a :title="_formData.content||'◉◡◉'">{{_formData.title||'◉◡◉'}}</a>
+          <p class="text-sm">{{_formData.desc||'◉◡◉'}}</p>
+      </div>      
     </ul>
   </div>
 </template>

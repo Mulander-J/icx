@@ -60,7 +60,7 @@ const {
 })
 
 const goCreate = ()=>{  
-  router.push('/feedback/create')
+  router.push('/feedback/add')
 }
 
 onBeforeMount(()=>{

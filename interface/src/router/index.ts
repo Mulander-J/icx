@@ -3,17 +3,17 @@ import { getServeRunning } from '@/utils'
 
 export const appRoutes:Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '/app',
     name: 'Square',
     component: () => import('@/layouts/ParentView.vue'),
-    redirect:'/list',
+    redirect:'/app/square',
     meta: {
       icon: 'hi-solid-home'
     },
     children:[
       {
-        path: 'list',
-        name: 'List',
+        path: 'square',
+        name: 'Square',
         component: () => import('@/views/core/Home.vue'),
       },
       {
@@ -44,10 +44,23 @@ export const appRoutes:Array<RouteRecordRaw> = [
   {
     path: '/vote',
     name: 'Vote',
-    component: () => import('@/views/vote/index.vue'),
+    redirect:'/vote/list',
+    component: () => import('@/layouts/ParentView.vue'),
     meta: {
       icon: 'gi-mailed-fist'
-    }
+    },
+    children:[
+      {
+        path: 'list',
+        name: 'Votes',
+        component: () => import('@/views/vote/index.vue'),
+      },
+      {
+        path: 'frozen/:id(\\d+)',
+        name: 'Frozen',
+        component: () => import('@/views/vote/Frozen.vue'),
+      }
+    ]
   },
   {
     path: '/activity',
@@ -59,11 +72,24 @@ export const appRoutes:Array<RouteRecordRaw> = [
   },
   {
     path: '/feedback',
-    name: 'feedback',
-    component: () => import('@/views/feedback/index.vue'),
+    name: 'Feedback',
+    redirect:'/feedback/list',    
+    component: () => import('@/layouts/ParentView.vue'),
     meta: {
       icon: 'md-feedback-round'
-    }
+    },
+    children:[
+      {
+        path: 'list',
+        name: 'Report',
+        component: () => import('@/views/feedback/index.vue'),
+      },
+      {
+        path: 'add',
+        name: 'Feedback_ADD',
+        component: () => import('@/views/feedback/Create.vue'),
+      },
+    ]
   },
   {
     path: '/about',
@@ -84,12 +110,12 @@ export const appRoutes:Array<RouteRecordRaw> = [
 ]
 
 const routes: Array<RouteRecordRaw> = [
-  ...appRoutes,
   {
-    path: '/feedback/create',
-    name: 'Feedback_ADD',
-    component: () => import('@/views/feedback/Create.vue'),
+    path: '/',
+    name: 'Root',
+    redirect:'/app',
   },
+  ...appRoutes,
   {
     path: '/sat',
     name: 'sat',
