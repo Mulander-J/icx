@@ -2,7 +2,7 @@
   <div class="min-h-full relative">
     <div class="p-header">
       <div class="ph-box">
-        <h2 class="pix-h2">HOME</h2>
+        <h2 class="pix-h2">SQUARE</h2>
         <div class="flex">
           <input class="slate-widget form-widget dn-text px-2" type="text" placeholder="Search" v-model="_query">
           <rt-btn class="mx-2" icon="io-search" :loading="_loading" v-throttle @click="queryList" />

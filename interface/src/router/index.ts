@@ -4,7 +4,7 @@ import { getServeRunning } from '@/utils'
 export const appRoutes:Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
+    name: 'Square',
     component: () => import('@/layouts/ParentView.vue'),
     redirect:'/list',
     meta: {

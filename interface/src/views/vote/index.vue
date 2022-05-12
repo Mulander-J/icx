@@ -12,7 +12,10 @@
         <p><label>Reason: </label>{{n.reason}}</p>
        <div>
           <div class="voteBar" v-for="(v,vi) in n.votes" :key="vi">
-            <label>{{v.key}}/{{v.count}}</label>
+            <div class="flex">
+              <label>{{v.key}}/{{v.count}}</label>
+              <rt-btn class="mx-2" title="Vote" :hover="true" icon="gi-mailed-fist" />
+            </div>
             <div class="line">
               <div class="track" :style="{width:`${calcW(n,v)}%`}"></div>
             </div>

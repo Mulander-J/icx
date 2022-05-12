@@ -46,26 +46,27 @@ The ICX is regard as a tool or station, where users can manage bookmarks via Int
 
 Supported
 
-- Home: Manage Bookmarks
-- Rank: Show User Point
-- Activity: Show loggers
-- Feedback: Send report
-- About: Intro of app
-- Tool: Principal to account
-- Identity: Internet Identity & Plug
-- Dark/Light mode switch
-- Readonly/Write mode switch
+- Page Home: Open Square. 100% Open to manage bookmarks
+- Page Rank: Show User Point. Update after user modify.
+- Page Activity: Show loggers.
+- Page Feedback: Send report.
+- Page About: Intro of app.
+- Page Tool: Principal to account.
+- Identity: Internet Identity & Plug.
+- Dark/Light mode switch.(bottom left)
+- Readonly/Write mode switch.(bottom left)
 
 Coming Soon
 
 - Vote
+- Personal User Canister Management.
+- Fork datas from suqare to user's own canister.
 - ICNS
 - Profile Picture
-- Offline Mode
 
 ### Roles
 
-User will access all rights to post/update/delete any contents.
+User will access all rights to post/update/delete any contents at square.
 
 Therefor comes out several roles.
 
@@ -180,7 +181,7 @@ Frontend: `jeksq-wyaaa-aaaal-qaw3a-cai`
 
 // coming soon
 
-#### 5.Token
+#### 5.USer Canister
 
 // coming soon
 
