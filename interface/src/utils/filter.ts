@@ -7,6 +7,8 @@ export const frBN = (n:any)=>new BigNumber(n).toNumber()
 
 const mtkTime = (value:bigint|number|any)=>new Date(Math.floor(frBN(value)/1e6))
 
+export const txt2Principal = (text:string)=>Principal.fromText(text)
+
 export const isPrincipal = (txt:string)=>{
   try{
     let _p = Principal.fromText(txt) 

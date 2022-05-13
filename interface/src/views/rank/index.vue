@@ -29,14 +29,14 @@
                 <span class="text-sm">Point</span>
               </p>
             </div>
-            <div class="cursor-pointer z-20" title="SEND" v-throttle @click="tryCallUser(l)" >
+            <div class="cursor-pointer z-20" title="More" v-throttle @click="tryCallUser(l)" >
               <v-icon name="md-send-round" hover animation="flash" />
             </div>
         </li>
       </ul>
     </data-view>
     <DialogVue :show="_dialogOpt.isShow" @cancelCb="tryCallUser(null)">
-      <UserProfile :user="_dialogOpt.data" />
+      <UserProfile v-if="_dialogOpt.isShow && _dialogOpt.data" :user="_dialogOpt.data" />
     </DialogVue>
   </div>
 </template>

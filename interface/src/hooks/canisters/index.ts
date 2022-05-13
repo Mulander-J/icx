@@ -7,3 +7,8 @@ export const CanisterList = [
   {key:'icxFactory',label:'ICX FACTORY',desc:'The logger & tools of icx.',canisterId:cidICXFactory},
   {key:'interface',label:'INTERFACE',desc:'The front canister of icx.',canisterId:cidICXInterface},
 ]
+
+/*  ICNS-Mainnet  */
+
+export const cidIcnRegistry = 'c7nxw-iiaaa-aaaam-aacaq-cai'
+export const cidIcnResolver = 'cwo4k-6aaaa-aaaam-aacba-cai'
