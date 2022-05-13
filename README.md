@@ -52,6 +52,7 @@ Supported
 - Page Feedback: Send report.
 - Page About: Intro of app.
 - Page Tool: Principal to account.
+- IC-Naming
 - Identity: Internet Identity & Plug.
 - Dark/Light mode switch.(bottom left)
 - Readonly/Write mode switch.(bottom left)
@@ -61,7 +62,6 @@ Coming Soon
 - Vote
 - Personal User Canister Management.
 - Fork datas from suqare to user's own canister.
-- ICNS
 - Profile Picture
 
 ### Roles

@@ -62,6 +62,7 @@ The cost of creating the Canister is borne by the user.
 - Page Feedback: Send report.
 - Page About: Intro of app.
 - Page Tool: Principal to account.
+- IC-Naming
 - Identity: Internet Identity & Plug.
 - Dark/Light mode switch.(bottom left)
 - Readonly/Write mode switch.(bottom left)
@@ -71,7 +72,6 @@ The cost of creating the Canister is borne by the user.
 - Vote
 - Personal User Canister Management.
 - Fork datas from suqare to user's own canister.
-- ICNS
 - Profile Picture
 
 ## How we built it
