@@ -219,6 +219,10 @@ onMounted(initialNodes)
   @apply flex justify-between items-center py-4;
   border-top: 2px solid rgba(255,255,255,.2);
 }
+.bookmark-wrap:hover{
+  @apply relative bg-gradient-to-l from-white/[.4] dark:from-black/[.4];
+  z-index: 1000;
+}
 .info-ul{
    counter-reset: section;
 }
