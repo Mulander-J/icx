@@ -1,0 +1,16 @@
+.DS_Store
+.idea
+.vscode
+.fleet
+
+*.local
+
+node_modules
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+dist
+dist-ssr
+
+.dfx
